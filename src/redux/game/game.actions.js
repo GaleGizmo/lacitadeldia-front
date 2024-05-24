@@ -1,16 +1,20 @@
-import { APIGetPhrase } from "../../shared/api.js";
+import {  APIGame } from "../../shared/api.js";
 
-const getPhraseOfTheDay = () => {
-  return async (dispatch) => {
-    dispatch({ type: "CLEAR_PHRASE" });
-    try {
-      const response = await APIGetPhrase.get("/");
-      dispatch({ type: "FETCH_PHRASE_SUCCESS", payload: response.data.quote });
-    } catch (err) {
-      dispatch({ type: "FETCH_PHRASE_FAILURE", payload: err.message });
-    }
-  };
-};
+const startGame =(userUUID)=> async (dispatch) => {
+  try {
+    const response = await APIGame.post("/start", {userUUID});
+    console.log(response.data);
+    dispatch({ type: "START_GAME_SUCCESS", payload: response.data });
+  } catch (err) {
+    dispatch({ type: "START_GAME_FAILURE", payload: err.message });
+  }
+  
+}
+const updatePhrase=(phraseUpdated)=>({
+ 
+    type: "UPDATE_PHRASE",
+    payload: phraseUpdated,
+  })
 
 
 const setMaximumTries = (maxTries) => ({
@@ -28,10 +32,11 @@ const nextTry = () => ({ type: "NEXT_TRY" });
 const clearWord = () => ({ type: "CLEAR_WORD" });
 
 export {
+  startGame,
   addLetter,
   clearWord,
   deleteLastLetter,
-  getPhraseOfTheDay,
+  updatePhrase,
   setMaximumTries,
   nextTry,
 };

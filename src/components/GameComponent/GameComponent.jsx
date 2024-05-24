@@ -1,44 +1,49 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getPhraseOfTheDay, setMaximumTries } from "../redux/game/game.actions";
-import TryWord from "../components/TryWord/TryWord";
-import Keyboard from "../components/Keyboard/Keyboard";
-import ShowPhrase from "../components/ShowPhrase/ShowPhrase";
-import countDistinctConsonants from "../customhooks/countConsonants";
-import getOrCreateUUId from "../customhooks/uuid";
+import {startGame } from "../../redux/game/game.actions";
+import TryWord from "../TryWord/TryWord";
+import Keyboard from "../Keyboard/Keyboard";
+import ShowPhrase from "../ShowPhrase/ShowPhrase";
+
+import getOrCreateUUId from "../../customhooks/uuid";
 
 
 
 const GameComponent = () => {
   const dispatch = useDispatch();
   const userId = getOrCreateUUId(); // Obtener el UUID del usuario
-
-  useEffect(() => {
-    dispatch(getPhraseOfTheDay(userId)); // Pasar el userId al iniciar el juego
-  }, [dispatch, userId]);
-
-  const { phrase, triedWords, maximumTries } = useSelector((state) => state.gameReducer);
   const [wordsToTry, setWordsToTry] = useState([]);
-
+  
+ 
+  const  game = useSelector((state) => state.gameReducer);
   useEffect(() => {
-    if (phrase) {
-      const distinctConsonants = countDistinctConsonants(phrase);
-      const maxTries = Math.ceil(distinctConsonants / 3);
-      dispatch(setMaximumTries(maxTries));
-    }
-  }, [phrase, dispatch]);
+   
+    dispatch(startGame(userId));
+  }, [dispatch, userId]);
 
   useEffect(() => {
     const words = [];
-    for (let i = 0; i < maximumTries; i++) {
+    for (let i = 0; i < game.maximumTries; i++) {
       words.push(<TryWord key={i} index={i} />);
     }
     setWordsToTry(words);
-  }, [triedWords, maximumTries]);
+  }, [game.triedWords, game.maximumTries]);
+  
+  if (game.loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (game.error) {
+    return <div>Error: {game.error}</div>;
+  }
+
+  
+
+ 
 
   return (
     <div className="game">
-      {wordsToTry}
+     {wordsToTry}
       <ShowPhrase />
       <Keyboard userId={userId} /> {/* Pasar el userId al teclado */}
     </div>

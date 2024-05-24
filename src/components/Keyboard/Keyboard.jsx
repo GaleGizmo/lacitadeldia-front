@@ -19,7 +19,7 @@ const Keyboard = ({userId}) => {
   const lettersUp = "QWERTYUIOP".split(""); 
   const lettersMiddle = "ASDFGHJKLÑ".split("");
   const lettersDown = "ZXCVBNM".split("");
-  const { wordToTry, isGameOver } = useSelector((reducer) => reducer.gameReducer);
+  const { phrase, wordToTry, isGameOver } = useSelector((reducer) => reducer.gameReducer);
   const [result, verifyWord, isVerifying] = useCheckWord();
   // Función para manejar el clic en una tecla del teclado
   const handleClick = (content) => {
@@ -62,14 +62,14 @@ const Keyboard = ({userId}) => {
       {/* Mapea las letras del teclado y renderiza cada tecla */}
       <div className="keys">
         {lettersUp.map((letter) => (
-          <div key={letter} onClick={() => !isGameOver && handleClick(letter)} className="key">
+          <div key={letter} onClick={() => !isGameOver && handleClick(letter)} className={`key ${phrase.includes(letter) ? "in-phrase":""}`}>
             {letter}
           </div>
         ))}
       </div>
       <div className="keys">
         {lettersMiddle.map((letter) => (
-          <div key={letter} onClick={() => !isGameOver && handleClick(letter)} className="key">
+          <div key={letter} onClick={() => !isGameOver && handleClick(letter)}  className={`key ${phrase.includes(letter) ? "in-phrase":""}`}>
             {letter}
           </div>
         ))}
@@ -79,7 +79,7 @@ const Keyboard = ({userId}) => {
           <DeleteIcon />
         </div>
         {lettersDown.map((letter) => (
-          <div key={letter} onClick={() => !isGameOver && handleClick(letter)} className="key">
+          <div key={letter} onClick={() => !isGameOver && handleClick(letter)} className={`key ${phrase.includes(letter) ? "in-phrase":""}`}>
             {letter}
           </div>
         ))}
