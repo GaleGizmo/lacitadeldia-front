@@ -1,6 +1,6 @@
 import { v4 as uuidv4 } from 'uuid';
 
-export const getOrCreateUUID = () => {
+ const getOrCreateUUID = () => {
   let uuid = localStorage.getItem('userUUID');
   if (!uuid) {
     uuid = uuidv4();
@@ -8,3 +8,4 @@ export const getOrCreateUUID = () => {
   }
   return uuid;
 };
+export default getOrCreateUUID;

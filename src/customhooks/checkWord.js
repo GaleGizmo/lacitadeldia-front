@@ -9,8 +9,8 @@ function useCheckWord() {
     setIsVerifying(true);
     checkWord(word, userId)
       .then(response => {
-        console.log( response.data);
-        setResult(response.data.wordFound);
+        console.log( response);
+        setResult(response.wordFound);
         setIsVerifying(false);
       })
       .catch(error => {
