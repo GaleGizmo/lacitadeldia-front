@@ -1,51 +1,92 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {startGame } from "../../redux/game/game.actions";
+import {
+
+  gameOver,
+  getExistingGame,
+  startGame,
+} from "../../redux/game/game.actions";
 import TryWord from "../TryWord/TryWord";
 import Keyboard from "../Keyboard/Keyboard";
 import ShowPhrase from "../ShowPhrase/ShowPhrase";
-
+import "./game.css";
 import getOrCreateUUId from "../../customhooks/uuid";
-
-
+import { toast } from "sonner";
+import { getPhraseOfTheDay, updateGame } from "../../shared/api";
+import { checkEndGame } from "../../shared/checkEndGame";
 
 const GameComponent = () => {
   const dispatch = useDispatch();
   const userId = getOrCreateUUId(); // Obtener el UUID del usuario
   const [wordsToTry, setWordsToTry] = useState([]);
-  
- 
-  const  game = useSelector((state) => state.gameReducer);
-  useEffect(() => {
-   
-    dispatch(startGame(userId));
-  }, [dispatch, userId]);
+  const gameId = localStorage.getItem("gameId");
+  const phraseNumber = localStorage.getItem("phraseNumber");
+  const [isInitialized, setIsInitialized] = useState(false);
+  let game = useSelector((state) => state.gameReducer);
 
   useEffect(() => {
+    const initializeGame = async () => {
+      const phrase = await getPhraseOfTheDay();
+      if (phraseNumber != phrase.number) {
+        console.log("phrase number en local y en back no coinciden");
+        localStorage.setItem("phraseNumber", phrase.number);
+        localStorage.removeItem("gameId");
+        localStorage.removeItem("activeGame");
+        dispatch(startGame(userId));
+      } else if (gameId) {
+        dispatch(getExistingGame(gameId));
+      } else {
+        dispatch(startGame(userId));
+      }
+      setIsInitialized(true);
+    };
+    initializeGame();
+  }, []);
+
+
+  useEffect(() => {
+   
+    if (!isInitialized) return;
+ 
     const words = [];
     for (let i = 0; i < game.maximumTries; i++) {
       words.push(<TryWord key={i} index={i} />);
     }
     setWordsToTry(words);
-  }, [game.triedWords, game.maximumTries]);
-  
+    const endGameResult = checkEndGame(game.phrase, game.maximumTries, game.currentTry);
+    if (endGameResult && game.isGameOver==="" ) {
+      console.log("resultado", endGameResult);
+      dispatch(gameOver(endGameResult));
+    }
+   
+    if (gameId) {
+      updateGame(gameId, game);
+    }
+  }, [game.phrase, game.triedWords, game.isGameOver, game.currentTry]);
+
+  useEffect(() => {
+   if(game.isGameOver==="win"){
+    toast.success("¡Bien hecho!", {style:{background: "#51e651"}});
+
+   } else if(game.isGameOver==="lose"){
+   toast.error("Has perdido, lo siento");
+   }
+  }, [game.isGameOver]);
+
   if (game.loading) {
-    return <div>Loading...</div>;
+    return <div className="loader"></div>;
   }
 
   if (game.error) {
     return <div>Error: {game.error}</div>;
   }
 
-  
-
- 
-
   return (
     <div className="game">
-     {wordsToTry}
-      <ShowPhrase />
-      <Keyboard userId={userId} /> {/* Pasar el userId al teclado */}
+      <div className="words">{wordsToTry} </div>
+      <ShowPhrase  triedWords={game.triedWords} />
+      <Keyboard userId={userId} />
     </div>
   );
 };

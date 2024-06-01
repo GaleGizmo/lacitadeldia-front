@@ -16,9 +16,14 @@ export const APIGetPhrase = axios.create({
   headers: APIHeaders,
 });
 export const APIGame = axios.create({
-  baseURL: import.meta.env.VITE_APP_GAME_URL,
+  baseURL: "http://localhost:8000/game",
   headers: APIHeaders,
 });
+
+export const APIUser= axios.create({
+  baseURL: "http://localhost:8000/user",
+  headers: APIHeaders,
+})
 
 export const checkWord = async (word, userId) => {
   try {
@@ -32,10 +37,19 @@ export const checkWord = async (word, userId) => {
 export const getPhraseOfTheDay = async () => {
   try {
     const response = await APIGetPhrase.get('/');
-
-    return response.data.quote;
+   
+    return response.data;
   } catch (error) {
     console.error('Error al obtener la frase del día:', error);
     throw error;
   }
 };
+export const updateGame = async (gameId, gameData) =>{
+  try {
+    const response = await APIGame.put(`/update/${gameId}`, {gameData});
+    localStorage.setItem('activeGame', JSON.stringify(response.data));
+    return response.data
+  } catch (err) {
+    console.error('Error al actualizar el juego:', err);
+  }
+}

@@ -10,8 +10,9 @@ const TryWord = ({index}) => {
     const active = index === currentTry;
   const wordToShow = active ? wordToTry : (triedWords[index])||'';
     for (let i = 0; i < 5; i++){
+      if (phrase){
         const isInPhrase = phrase.includes(wordToShow[i]);
-        letterBoxes.push(<LetterBox isBoxActive={false} boxContent={wordToShow[i] || ""}  key={i} isLetterInPhrase={isInPhrase}/>)
+        letterBoxes.push(<LetterBox isBoxActive={false} boxContent={wordToShow[i] || ""}  key={i} isLetterInPhrase={isInPhrase}/>)}
     }
   return (
     <div className="wordToTry">

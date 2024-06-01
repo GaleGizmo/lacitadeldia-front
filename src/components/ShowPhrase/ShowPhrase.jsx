@@ -1,67 +1,63 @@
+/* eslint-disable react/prop-types */
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import removeAccents from "../../customhooks/removeAccents";
 import "./showPhrase.css";
-import { getPhraseOfTheDay } from "../../shared/api";
+import { getPhraseOfTheDay, updateGame } from "../../shared/api";
 import { useDispatch } from 'react-redux';
-import { updatePhrase } from "../../redux/game/game.actions";
+import { gameOver, updatePhrase } from "../../redux/game/game.actions";
+import processPhraseToShow from "../../customhooks/hideLetters";
+import { checkEndGame } from "../../shared/checkEndGame";
+import isLetter from "../../customhooks/isLetter";
 
-const isLetter = (char) => /[a-zA-Z]/.test(char);
 
-//sustituye las letras que no se han encontrado en la frase por "_"
-const processPhraseToShow = (phrase, wordsToCheck) => {
-  const plainPhrase = removeAccents(phrase);
-  return plainPhrase
-    .split("")
-    .map((char) => {
-      if (isLetter(char) && !wordsToCheck.some((word) => word.includes(char))) {
-        return "_";
-      }
-      return char;
-    })
-    .join("");
-};
-
-const ShowPhrase = () => {
-  const { triedWords, isGameOver, isWin } = useSelector(
-    (state) => state.gameReducer
-  );
+const ShowPhrase = ({triedWords}) => {
+  // let { triedWords, isGameOver, isWin, currentTry, maximumTries } = useSelector(
+  //   (state) => state.gameReducer
+  // );
   const dispatch = useDispatch();
-  const [showEndGameAlert, setShowEndGameAlert] = useState(false);
+  // const [showEndGameAlert, setShowEndGameAlert] = useState(false);
   const [phraseToWords, setPhraseToWords] = useState([]);
   
   useEffect(() => {
-    if (isGameOver) {
-      setShowEndGameAlert(true);
-    }
-  }, [isGameOver]);
-
-  useEffect(() => {
-    if (showEndGameAlert) {
-      if (isWin) {
-        alert("Has ganado, felicidades");
-      } else {
-        alert("Has perdido, no hay más intentos");
-      }
-    }
-  }, [showEndGameAlert, isWin]);
-
-  useEffect(() => {
     const fetchPhrase = async () => {
       try {
+        // const gameId=localStorage.getItem("gameId");
         const fetchedPhrase = await getPhraseOfTheDay();
-        const processPhrase = processPhraseToShow(fetchedPhrase, triedWords);
+        console.log("palabras intentadas", triedWords);
+        const processPhrase = processPhraseToShow(fetchedPhrase.quote, triedWords);
         dispatch(updatePhrase(processPhrase));
+      //   if (checkEndGame(processPhrase, maximumTries, currentTry )==="win"){
+      //     isWin=true;
+      //     isGameOver=true;
+      //     dispatch(gameOver(isWin))
+      //   }
+      //   if (checkEndGame(processPhrase, maximumTries, currentTry)==="lose"){
+
+      //     isWin=false;
+      //     isGameOver=true;
+      //     dispatch(gameOver(isWin))
+      //   }
+      //   const gameData={
+      //     phrase:processPhrase,
+      //     currentTry:currentTry,
+      //     triedWords:triedWords,
+      //     isGameOver:isGameOver,
+      //     isWin:isWin
+      //   }
+      //  if (gameId) updateGame(gameId, gameData)
         setPhraseToWords(processPhrase.split(" "));
+        
       } catch (error) {
         console.error("Error fetching phrase:", error);
       }
     };
 
     fetchPhrase();
-  }, [triedWords, dispatch]);
+  }, [triedWords]);
 
+   
 
 
   return (
@@ -71,7 +67,7 @@ const ShowPhrase = () => {
           {word.split("").map((char, charIndex) => (
             <span
               key={charIndex}
-              className={char==="_" ? "letter-box" : "visible-char"}
+              className={`phrase-letter ${char==="_" ? "letter-box" : isLetter(char) ? "visible-letter":"visible-char"}`}
             >
               {char}
             </span>

@@ -12,6 +12,7 @@ import {
 import { useEffect } from "react";
 import DeleteIcon from '../../assets/DeleteIcon';
 import AcceptIcon from "../../assets/AcceptIcon";
+import { toast } from "sonner";
 
 const Keyboard = ({userId}) => {
   const dispatch = useDispatch();
@@ -20,6 +21,7 @@ const Keyboard = ({userId}) => {
   const lettersMiddle = "ASDFGHJKLÑ".split("");
   const lettersDown = "ZXCVBNM".split("");
   const { phrase, wordToTry, isGameOver } = useSelector((reducer) => reducer.gameReducer);
+  
   const [result, verifyWord, isVerifying] = useCheckWord();
   // Función para manejar el clic en una tecla del teclado
   const handleClick = (content) => {
@@ -30,7 +32,7 @@ const Keyboard = ({userId}) => {
     }
     if (content === "SEND") {
       if (wordToTry.length < 5) {
-        alert("La palabra debe tener 5 letras");
+        toast.error("La palabra debe tener 5 letras")
         return;
       }
       verifyWord(wordToTry, userId);
@@ -49,7 +51,7 @@ const Keyboard = ({userId}) => {
        
         dispatch(nextTry());
       } else {
-        alert('No es válida');
+        toast.error('Palabra no válida');
       }
       
       dispatch(clearWord());
@@ -62,14 +64,14 @@ const Keyboard = ({userId}) => {
       {/* Mapea las letras del teclado y renderiza cada tecla */}
       <div className="keys">
         {lettersUp.map((letter) => (
-          <div key={letter} onClick={() => !isGameOver && handleClick(letter)} className={`key ${phrase.includes(letter) ? "in-phrase":""}`}>
+          <div key={letter} onClick={() => !isGameOver && handleClick(letter)} className={`key ${phrase && phrase.includes(letter) ? "in-phrase":""}`}>
             {letter}
           </div>
         ))}
       </div>
       <div className="keys">
         {lettersMiddle.map((letter) => (
-          <div key={letter} onClick={() => !isGameOver && handleClick(letter)}  className={`key ${phrase.includes(letter) ? "in-phrase":""}`}>
+          <div key={letter} onClick={() => !isGameOver && handleClick(letter)}  className={`key ${phrase && phrase.includes(letter) ? "in-phrase":""}`}>
             {letter}
           </div>
         ))}
@@ -79,7 +81,7 @@ const Keyboard = ({userId}) => {
           <DeleteIcon />
         </div>
         {lettersDown.map((letter) => (
-          <div key={letter} onClick={() => !isGameOver && handleClick(letter)} className={`key ${phrase.includes(letter) ? "in-phrase":""}`}>
+          <div key={letter} onClick={() => !isGameOver && handleClick(letter)} className={`key ${phrase && phrase.includes(letter) ? "in-phrase":""}`}>
             {letter}
           </div>
         ))}

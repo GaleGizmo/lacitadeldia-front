@@ -5,6 +5,7 @@ import { v4 as uuidv4 } from 'uuid';
   if (!uuid) {
     uuid = uuidv4();
     localStorage.setItem('userUUID', uuid);
+    
   }
   return uuid;
 };

@@ -6,9 +6,7 @@
   justify-content: center;
   flex-wrap: wrap;
 }
-
-.letter-box {
-  color: white;
+.phrase-letter{
   width: 20px;
   height: 25px;
   border: 1px solid #000;
@@ -18,13 +16,21 @@
   align-content: center;
   margin: 2px;
   text-align: center;
-  line-height: 22px;
+}
+.letter-box {
+  color: white;
+  
+ 
   background-color: #fff;
 }
+.visible-letter{
+  background-color: #51e651;
+}
 .visible-char {
+  border: none;
   width: fit-content;
   display: inline-block;
-  margin: 2px;
+
 }
 .word {
   display: flex;
