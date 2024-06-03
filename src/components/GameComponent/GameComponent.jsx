@@ -42,7 +42,7 @@ const GameComponent = () => {
       setIsInitialized(true);
     };
     initializeGame();
-  }, [dispatch, gameId, phraseNumber, userId]);
+  }, []);
 
 
   useEffect(() => {
@@ -66,6 +66,7 @@ const GameComponent = () => {
       if (endGameResult && game.isGameOver === "") {
         console.log("resultado", endGameResult);
         dispatch(gameOver(endGameResult));
+       updateGame(gameId, game);
       }
     }
   }, [game.phrase]);
@@ -77,6 +78,7 @@ const GameComponent = () => {
    } else if(game.isGameOver==="lose"){
    toast.error("Has perdido, lo siento");
    }
+   updateGame(gameId, game);
   }, [game.isGameOver]);
 
   if (game.loading) {

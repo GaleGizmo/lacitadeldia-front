@@ -11,7 +11,7 @@ const INITIAL_STATE = (() => {
         wordToTry: "",
         isGameOver: "",
 
-        currentTry: 0,
+        
       };
     } catch (e) {
       console.error("Error parsing activeGame from localStorage", e);

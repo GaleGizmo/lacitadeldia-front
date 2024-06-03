@@ -90,14 +90,15 @@ const ShowPhrase = ({ triedWords, displayPhraseLink }) => {
             <div className="details-container">
               <h2>Detalles de la Frase</h2>
               <p>
+                <strong>Película:</strong> {phraseDetails.movie}
+              </p>
+              <p>
                 <strong>Frase:</strong> {phraseDetails.quote}
               </p>
               <p>
                 <strong>Original:</strong> {phraseDetails.original}
               </p>
-              <p>
-                <strong>Película:</strong> {phraseDetails.movie}
-              </p>
+              
               <p>
                 <strong>Año:</strong> {phraseDetails.year}
               </p>
