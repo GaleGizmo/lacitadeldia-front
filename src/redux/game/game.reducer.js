@@ -9,7 +9,7 @@ const INITIAL_STATE = (() => {
         error: null,
         successMessage: null,
         wordToTry: "",
-        isGameOver: "",
+       
 
         
       };
