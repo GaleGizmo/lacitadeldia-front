@@ -20,8 +20,8 @@ export const APIGame = axios.create({
   headers: APIHeaders,
 });
 
-export const APIUser= axios.create({
-  baseURL: "http://localhost:8000/user",
+export const APIAddPhrase= axios.create({
+  baseURL: import.meta.env.VITE_APP_ADD_PHRASE,
   headers: APIHeaders,
 })
 
@@ -44,6 +44,14 @@ export const getPhraseOfTheDay = async () => {
     throw error;
   }
 };
+export const addPhrase = async (phraseData) =>{
+  try {
+    const response = await APIAddPhrase.post('/', {phraseData});
+    return response.data
+  } catch (err) {
+    console.error('Error al agregar la frase:', err);
+  }
+}
 export const updateGame = async (gameId, gameData) =>{
   try {
     const response = await APIGame.put(`/update/${gameId}`, {gameData});

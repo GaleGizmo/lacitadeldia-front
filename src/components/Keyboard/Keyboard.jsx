@@ -1,5 +1,4 @@
 /* eslint-disable react/prop-types */
-
 import "./keyboard.css";
 import { useDispatch, useSelector } from "react-redux";
 import useCheckWord from "../../customhooks/checkWord";
@@ -7,85 +6,117 @@ import {
   addLetter,
   deleteLastLetter,
   clearWord,
-  nextTry, 
-} from "../../redux/game/game.actions"; // Importa la acción para actualizar la letra escrita
-import { useEffect } from "react";
-import DeleteIcon from '../../assets/DeleteIcon';
+  nextTry,
+} from "../../redux/game/game.actions";
+import { useEffect, useCallback } from "react";
+import DeleteIcon from "../../assets/DeleteIcon";
 import AcceptIcon from "../../assets/AcceptIcon";
 import { toast } from "sonner";
+import KeyboardRow from "../KeyboardRow/KeyboardRow";
 
-const Keyboard = ({userId}) => {
+const Keyboard = ({ userId }) => {
   const dispatch = useDispatch();
-  // Array de letras del teclado
-  const lettersUp = "QWERTYUIOP".split(""); 
+  const lettersUp = "QWERTYUIOP".split("");
   const lettersMiddle = "ASDFGHJKLÑ".split("");
   const lettersDown = "ZXCVBNM".split("");
-  const { phrase, wordToTry, isGameOver } = useSelector((reducer) => reducer.gameReducer);
-  
+  const { phrase, wordToTry, isGameOver } = useSelector(
+    (reducer) => reducer.gameReducer
+  );
+
   const [result, verifyWord, isVerifying] = useCheckWord();
-  // Función para manejar el clic en una tecla del teclado
-  const handleClick = (content) => {
-    // Actualiza el estado de Redux con la letra correspondiente
+
+  //captura letras desde el teclado en pantalla
+  const handleClick = useCallback((content) => {
     if (content === "DELETE") {
       dispatch(deleteLastLetter());
       return;
     }
     if (content === "SEND") {
       if (wordToTry.length < 5) {
-        toast.error("La palabra debe tener 5 letras")
+        toast.error("La palabra debe tener 5 letras");
         return;
       }
       verifyWord(wordToTry, userId);
-     
       return;
     }
     if (wordToTry.length >= 5) {
-      
       return;
     }
     dispatch(addLetter(content));
-  };
+  }, [dispatch, wordToTry, userId, verifyWord]);
+
+//captura letras desde el teclado físico
+  useEffect(() => {
+    const handleKeyDown = (event) => {
+      const { key } = event;
+
+      if (isGameOver) return;
+
+      if (key === "Backspace") {
+        dispatch(deleteLastLetter());
+      } else if (key === "Enter") {
+        if (wordToTry.length < 5) {
+          toast.error("La palabra debe tener 5 letras");
+          return;
+        }
+        verifyWord(wordToTry, userId);
+      } else if (key.length === 1 && key.match(/[a-z]/i)) {
+        if (wordToTry.length >= 5) {
+          return;
+        }
+        dispatch(addLetter(key.toUpperCase()));
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [dispatch, wordToTry, userId, verifyWord, isGameOver]);
+
   useEffect(() => {
     if (result !== null && !isVerifying) {
       if (result) {
-       
         dispatch(nextTry());
       } else {
-        toast.error('Palabra no válida');
+        toast.error("Palabra no válida");
       }
-      
       dispatch(clearWord());
     }
   }, [result, isVerifying, dispatch]);
-  
 
   return (
     <div className="keyboard">
-      {/* Mapea las letras del teclado y renderiza cada tecla */}
+      <KeyboardRow
+        letters={lettersUp}
+        handleClick={handleClick}
+        isGameOver={isGameOver}
+        phrase={phrase}
+      />
+      <KeyboardRow
+        letters={lettersMiddle}
+        handleClick={handleClick}
+        isGameOver={isGameOver}
+        phrase={phrase}
+      />
       <div className="keys">
-        {lettersUp.map((letter) => (
-          <div key={letter} onClick={() => !isGameOver && handleClick(letter)} className={`key ${phrase && phrase.includes(letter) ? "in-phrase":""}`}>
-            {letter}
-          </div>
-        ))}
-      </div>
-      <div className="keys">
-        {lettersMiddle.map((letter) => (
-          <div key={letter} onClick={() => !isGameOver && handleClick(letter)}  className={`key ${phrase && phrase.includes(letter) ? "in-phrase":""}`}>
-            {letter}
-          </div>
-        ))}
-      </div>
-      <div className="keys">
-        <div className="action" onClick={() => !isGameOver && handleClick("DELETE")}>
+        <div
+          className="action"
+          onClick={() => !isGameOver && handleClick("DELETE")}
+        >
           <DeleteIcon />
         </div>
-        {lettersDown.map((letter) => (
-          <div key={letter} onClick={() => !isGameOver && handleClick(letter)} className={`key ${phrase && phrase.includes(letter) ? "in-phrase":""}`}>
-            {letter}
-          </div>
-        ))}
-        <div className="action" onClick={() => !isGameOver && handleClick("SEND")}>
+        <KeyboardRow
+          letters={lettersDown}
+          handleClick={handleClick}
+          isGameOver={isGameOver}
+          phrase={phrase}
+        />
+        <div
+          className="action"
+          onClick={() => !isGameOver && handleClick("SEND")}
+        >
           <AcceptIcon />
         </div>
       </div>
