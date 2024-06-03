@@ -2,53 +2,35 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+
 import "./showPhrase.css";
 import { getPhraseOfTheDay, updateGame } from "../../shared/api";
-import { useDispatch } from 'react-redux';
+import { useDispatch } from "react-redux";
 import { gameOver, updatePhrase } from "../../redux/game/game.actions";
 import processPhraseToShow from "../../customhooks/hideLetters";
-import { checkEndGame } from "../../shared/checkEndGame";
+
 import isLetter from "../../customhooks/isLetter";
+import PhraseDetails from "../PhraseDetails/PhraseDetails";
 
-
-const ShowPhrase = ({triedWords}) => {
-  // let { triedWords, isGameOver, isWin, currentTry, maximumTries } = useSelector(
-  //   (state) => state.gameReducer
-  // );
+const ShowPhrase = ({ triedWords, displayPhraseLink }) => {
   const dispatch = useDispatch();
-  // const [showEndGameAlert, setShowEndGameAlert] = useState(false);
   const [phraseToWords, setPhraseToWords] = useState([]);
-  
+  const [phraseDetails, setPhraseDetails] = useState(null);
+  const [showModal, setShowModal] = useState(false);
+
   useEffect(() => {
     const fetchPhrase = async () => {
       try {
-        // const gameId=localStorage.getItem("gameId");
         const fetchedPhrase = await getPhraseOfTheDay();
-        console.log("palabras intentadas", triedWords);
-        const processPhrase = processPhraseToShow(fetchedPhrase.quote, triedWords);
-        dispatch(updatePhrase(processPhrase));
-      //   if (checkEndGame(processPhrase, maximumTries, currentTry )==="win"){
-      //     isWin=true;
-      //     isGameOver=true;
-      //     dispatch(gameOver(isWin))
-      //   }
-      //   if (checkEndGame(processPhrase, maximumTries, currentTry)==="lose"){
+        setPhraseDetails(fetchedPhrase);
 
-      //     isWin=false;
-      //     isGameOver=true;
-      //     dispatch(gameOver(isWin))
-      //   }
-      //   const gameData={
-      //     phrase:processPhrase,
-      //     currentTry:currentTry,
-      //     triedWords:triedWords,
-      //     isGameOver:isGameOver,
-      //     isWin:isWin
-      //   }
-      //  if (gameId) updateGame(gameId, gameData)
+        const processPhrase = processPhraseToShow(
+          fetchedPhrase.quote,
+          triedWords
+        );
+        dispatch(updatePhrase(processPhrase));
+
         setPhraseToWords(processPhrase.split(" "));
-        
       } catch (error) {
         console.error("Error fetching phrase:", error);
       }
@@ -57,24 +39,82 @@ const ShowPhrase = ({triedWords}) => {
     fetchPhrase();
   }, [triedWords]);
 
-   
+  const handleOpenModal = () => {
+    setShowModal(true);
+  };
 
+  const handleCloseModal = () => {
+    setShowModal(false);
+  };
 
   return (
-    <div className="phrase-container">
-      {phraseToWords.map((word, wordIndex) => (
-        <span key={wordIndex} className="word">
-          {word.split("").map((char, charIndex) => (
-            <span
-              key={charIndex}
-              className={`phrase-letter ${char==="_" ? "letter-box" : isLetter(char) ? "visible-letter":"visible-char"}`}
-            >
-              {char}
-            </span>
-          ))}
-          <span className="space">&nbsp;</span>
-        </span>
-      ))}
+    <div className="showPhrase-container">
+      <div className="phrase-container">
+        {phraseToWords.map((word, wordIndex) => (
+          <span key={wordIndex} className="word">
+            {word.split("").map((char, charIndex) => (
+              <span
+                key={charIndex}
+                className={`phrase-letter ${
+                  char === "_"
+                    ? "letter-box"
+                    : isLetter(char)
+                    ? "visible-letter"
+                    : "visible-char"
+                }`}
+              >
+                {char}
+              </span>
+            ))}
+            <span className="space">&nbsp;</span>
+          </span>
+        ))}
+      </div>{" "}
+      {displayPhraseLink && (
+        <div className="phrase-link-container">
+          <button className="phrase-link" onClick={handleOpenModal}>
+            Ver detalles de la frase
+          </button>
+        </div>
+      )}
+      <PhraseDetails show={showModal} onClose={handleCloseModal}>
+        {phraseDetails && (
+          <div className="phrase-details">
+            <div className="poster-container">
+              <img
+                src={phraseDetails.poster}
+                alt="Póster"
+                className="poster-image"
+              />
+            </div>
+            <div className="details-container">
+              <h2>Detalles de la Frase</h2>
+              <p>
+                <strong>Frase:</strong> {phraseDetails.quote}
+              </p>
+              <p>
+                <strong>Original:</strong> {phraseDetails.original}
+              </p>
+              <p>
+                <strong>Película:</strong> {phraseDetails.movie}
+              </p>
+              <p>
+                <strong>Año:</strong> {phraseDetails.year}
+              </p>
+              <p>
+                <strong>Actor:</strong> {phraseDetails.who_said_it.actor}
+              </p>
+              <p>
+                <strong>Personaje:</strong>{" "}
+                {phraseDetails.who_said_it.character}
+              </p>
+              <p>
+                <strong>Contexto:</strong> {phraseDetails.who_said_it.context}
+              </p>
+            </div>
+          </div>
+        )}
+      </PhraseDetails>
     </div>
   );
 };

@@ -21,7 +21,7 @@ function KeyboardRow({ letters, handleClick, isGameOver, phrase }) {
 KeyboardRow.propTypes = {
   letters: PropTypes.arrayOf(PropTypes.string).isRequired,
   handleClick: PropTypes.func.isRequired,
-  isGameOver: PropTypes.bool.isRequired,
+  isGameOver: PropTypes.string.isRequired,
   phrase: PropTypes.string,
 };
 

@@ -42,28 +42,33 @@ const GameComponent = () => {
       setIsInitialized(true);
     };
     initializeGame();
-  }, []);
+  }, [dispatch, gameId, phraseNumber, userId]);
 
 
   useEffect(() => {
-   
     if (!isInitialized) return;
- 
+
     const words = [];
     for (let i = 0; i < game.maximumTries; i++) {
       words.push(<TryWord key={i} index={i} />);
     }
     setWordsToTry(words);
-    const endGameResult = checkEndGame(game.phrase, game.maximumTries, game.currentTry);
-    if (endGameResult && game.isGameOver==="" ) {
-      console.log("resultado", endGameResult);
-      dispatch(gameOver(endGameResult));
-    }
-   
+
     if (gameId) {
       updateGame(gameId, game);
     }
-  }, [game.phrase, game.triedWords, game.isGameOver, game.currentTry]);
+  }, [game.triedWords, game.currentTry, isInitialized, dispatch, gameId]);
+
+  // Nuevo useEffect separado para checkEndGame
+  useEffect(() => {
+    if (game.phrase && game.triedWords.length > 0) {
+      const endGameResult = checkEndGame(game.phrase, game.maximumTries, game.currentTry);
+      if (endGameResult && game.isGameOver === "") {
+        console.log("resultado", endGameResult);
+        dispatch(gameOver(endGameResult));
+      }
+    }
+  }, [game.phrase]);
 
   useEffect(() => {
    if(game.isGameOver==="win"){
@@ -85,7 +90,7 @@ const GameComponent = () => {
   return (
     <div className="game">
       <div className="words">{wordsToTry} </div>
-      <ShowPhrase  triedWords={game.triedWords} />
+      <ShowPhrase  triedWords={game.triedWords} displayPhraseLink={game.isGameOver} />
       <Keyboard userId={userId} />
     </div>
   );

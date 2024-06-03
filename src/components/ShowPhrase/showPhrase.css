@@ -1,4 +1,9 @@
 /* ShowPhrase.css */
+.showPhrase-container{
+  display: flex;
+  flex-direction: column;
+  
+}
 .phrase-container {
 
   margin: 10px 0;
