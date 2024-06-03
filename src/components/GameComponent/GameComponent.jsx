@@ -57,7 +57,7 @@ const GameComponent = () => {
     if (gameId) {
       updateGame(gameId, game);
     }
-  }, [game.triedWords, game.currentTry, isInitialized, dispatch, gameId]);
+  }, [game.phrase, game.triedWords, game.currentTry]);
 
   // Nuevo useEffect separado para checkEndGame
   useEffect(() => {
