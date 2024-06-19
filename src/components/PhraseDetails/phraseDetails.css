@@ -61,10 +61,22 @@
     position: absolute;
     top: 5px;
     right: 5px;
-    background: white;
+    background: none;
     border: none;
     font-size: 1.5em;
     cursor: pointer;
     padding: 1px 5px;
   }
-  
+  .image-error {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    background-color: #f8d7da;
+    color: #721c24;
+    border-radius: 5px;
+    padding: 10px;
+    text-align: center;
+  }

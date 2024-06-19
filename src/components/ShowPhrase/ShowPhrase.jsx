@@ -4,25 +4,32 @@
 import React, { useEffect, useState } from "react";
 
 import "./showPhrase.css";
-import { getPhraseOfTheDay, updateGame } from "../../shared/api";
+import { getPhraseByNumber, getPhraseOfTheDay } from "../../shared/api";
 import { useDispatch } from "react-redux";
-import { gameOver, updatePhrase } from "../../redux/game/game.actions";
+import {  updatePhrase } from "../../redux/game/game.actions";
 import processPhraseToShow from "../../customhooks/hideLetters";
 
 import isLetter from "../../customhooks/isLetter";
 import PhraseDetails from "../PhraseDetails/PhraseDetails";
+
+const MAX_RETRY_ATTEMPTS = 5; // Número máximo de intentos de recarga
 
 const ShowPhrase = ({ triedWords, displayPhraseLink }) => {
   const dispatch = useDispatch();
   const [phraseToWords, setPhraseToWords] = useState([]);
   const [phraseDetails, setPhraseDetails] = useState(null);
   const [showModal, setShowModal] = useState(false);
+  const [imageError, setImageError] = useState(false); // Estado para manejar el error de la imagen
+  const [imageSrc, setImageSrc] = useState(''); // Estado para manejar la fuente de la imagen
+  const [retryCount, setRetryCount] = useState(0); // Estado para el número de intentos de recarga
 
   useEffect(() => {
     const fetchPhrase = async () => {
       try {
-        const fetchedPhrase = await getPhraseOfTheDay();
+        const phraseNumber=localStorage.getItem("phraseNumber");
+        const fetchedPhrase = await getPhraseByNumber(phraseNumber);
         setPhraseDetails(fetchedPhrase);
+        setImageSrc(fetchedPhrase.poster); // Establecer la fuente de la imagen
 
         const processPhrase = processPhraseToShow(
           fetchedPhrase.quote,
@@ -39,12 +46,28 @@ const ShowPhrase = ({ triedWords, displayPhraseLink }) => {
     fetchPhrase();
   }, [triedWords]);
 
+  useEffect(() => {
+    if (imageError && retryCount < MAX_RETRY_ATTEMPTS) {
+      const retryTimeout = setTimeout(() => {
+        setImageError(false);
+        setImageSrc(`${phraseDetails.poster}?retry=${new Date().getTime()}`); // Añadir un parámetro único para evitar el caché
+        setRetryCount(retryCount + 1);
+      }, 1000); // Esperar 1 segundo antes de intentar recargar la imagen
+
+      return () => clearTimeout(retryTimeout); // Limpiar el timeout si el componente se desmonta
+    }
+  }, [imageError, retryCount, phraseDetails]);
+
   const handleOpenModal = () => {
     setShowModal(true);
   };
 
   const handleCloseModal = () => {
     setShowModal(false);
+  };
+
+  const handleImageError = () => {
+    setImageError(true);
   };
 
   return (
@@ -81,11 +104,18 @@ const ShowPhrase = ({ triedWords, displayPhraseLink }) => {
         {phraseDetails && (
           <div className="phrase-details">
             <div className="poster-container">
-              <img
-                src={phraseDetails.poster}
-                alt="Póster"
-                className="poster-image"
-              />
+              {imageError ? (
+                <div className="image-error">
+                  Imagen no disponible
+                </div>
+              ) : (
+                <img
+                  src={imageSrc}
+                  alt="Póster"
+                  className="poster-image"
+                  onError={handleImageError}
+                />
+              )}
             </div>
             <div className="details-container">
               <h2>Detalles de la Frase</h2>
@@ -98,7 +128,6 @@ const ShowPhrase = ({ triedWords, displayPhraseLink }) => {
               <p>
                 <strong>Original:</strong> {phraseDetails.original}
               </p>
-              
               <p>
                 <strong>Año:</strong> {phraseDetails.year}
               </p>
@@ -106,8 +135,7 @@ const ShowPhrase = ({ triedWords, displayPhraseLink }) => {
                 <strong>Actor:</strong> {phraseDetails.who_said_it.actor}
               </p>
               <p>
-                <strong>Personaje:</strong>{" "}
-                {phraseDetails.who_said_it.character}
+                <strong>Personaje:</strong> {phraseDetails.who_said_it.character}
               </p>
               <p>
                 <strong>Contexto:</strong> {phraseDetails.who_said_it.context}

@@ -13,35 +13,47 @@ import ShowPhrase from "../ShowPhrase/ShowPhrase";
 import "./game.css";
 import getOrCreateUUId from "../../customhooks/uuid";
 import { toast } from "sonner";
-import { getPhraseOfTheDay, updateGame } from "../../shared/api";
+import { getPhraseByNumber,  updateGame } from "../../shared/api";
 import { checkEndGame } from "../../shared/checkEndGame";
+import { PropTypes } from 'prop-types';
+
 
 const GameComponent = () => {
+  
+  let oldPhraseNumber = localStorage.getItem("oldPhraseToPlay");
+  console.log("frase antigua", oldPhraseNumber);
+  
+  if (!oldPhraseNumber){oldPhraseNumber=0}
   const dispatch = useDispatch();
   const userId = getOrCreateUUId(); // Obtener el UUID del usuario
   const [wordsToTry, setWordsToTry] = useState([]);
   const gameId = localStorage.getItem("gameId");
-  const phraseNumber = localStorage.getItem("phraseNumber");
+  const phraseNumber = oldPhraseNumber || localStorage.getItem("phraseNumber");
   const [isInitialized, setIsInitialized] = useState(false);
   let game = useSelector((state) => state.gameReducer);
 
   useEffect(() => {
     const initializeGame = async () => {
-      const phrase = await getPhraseOfTheDay();
+      let  phrase=""
+      
+    phrase = await getPhraseByNumber(oldPhraseNumber)
+        console.log(phrase);
+      
       if (phraseNumber != phrase.number) {
         console.log("phrase number en local y en back no coinciden");
         localStorage.setItem("phraseNumber", phrase.number);
         localStorage.removeItem("gameId");
         localStorage.removeItem("activeGame");
-        dispatch(startGame(userId));
+        dispatch(startGame(userId, oldPhraseNumber));
       } else if (gameId) {
         dispatch(getExistingGame(gameId));
       } else {
-        dispatch(startGame(userId));
+        dispatch(startGame(userId, oldPhraseNumber));
       }
       setIsInitialized(true);
     };
     initializeGame();
+    localStorage.removeItem("oldPhraseToPlay");
   }, []);
 
 
@@ -97,5 +109,7 @@ const GameComponent = () => {
     </div>
   );
 };
-
+GameComponent.propTypes = {
+  oldPhraseNumber: PropTypes.number,
+};
 export default GameComponent;

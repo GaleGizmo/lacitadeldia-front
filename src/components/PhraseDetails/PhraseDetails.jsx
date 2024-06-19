@@ -1,6 +1,7 @@
 
 import PropTypes from "prop-types";
 import "./phraseDetails.css";
+import CloseIcon from "../../assets/CloseIcon";
 
 const PhraseDetails = ({ show, onClose, children }) => {
     if (!show) {
@@ -10,7 +11,7 @@ const PhraseDetails = ({ show, onClose, children }) => {
     return (
       <div className="modal-backdrop">
         <div className="modal-content">
-          <button className="close-button" onClick={onClose}>X</button>
+          <button className="close-button" onClick={onClose}><CloseIcon/> </button>
           {children}
         </div>
       </div>

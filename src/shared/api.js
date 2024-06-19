@@ -19,6 +19,10 @@ export const APIGame = axios.create({
   baseURL: "http://localhost:8000/game",
   headers: APIHeaders,
 });
+export const APIPhrases = axios.create({
+  baseURL: "http://localhost:8000/phrases",
+  headers: APIHeaders,
+})
 
 export const APIAddPhrase= axios.create({
   baseURL: import.meta.env.VITE_APP_ADD_PHRASE,
@@ -61,3 +65,25 @@ export const updateGame = async (gameId, gameData) =>{
     console.error('Error al actualizar el juego:', err);
   }
 }
+
+export const getUserPastPhrases=async (userId)=>{
+  try {
+    const response = await APIPhrases.get(`/getoldphrases/${userId}`);
+  
+    return response.data
+  } catch (err) {
+    console.error('Error al obtener los juegos pasados:', err);
+  }
+}
+
+export const getPhraseByNumber = async (phraseNumber) => {
+  try {
+    
+    const response = await APIPhrases.get(`/getphrasebynumber/${phraseNumber}`);
+
+    return response.data;
+  } catch (error) {
+    console.error('Error al obtener la frase por número:', error);
+    throw error;
+  }
+};

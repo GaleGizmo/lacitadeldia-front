@@ -1,10 +1,10 @@
 import { APIGame, APIGetPhrase } from "../../shared/api.js";
 
-const startGame = (userUUID) => async (dispatch) => {
+const startGame = (userUUID, oldPhraseToPlay) => async (dispatch) => {
   dispatch({ type: "START_GAME_REQUEST" });
 
   try {
-    const response = await APIGame.post("/start", { userUUID });
+    const response = await APIGame.post("/start", { userUUID, oldPhraseToPlay });
     console.log(response.data);
     localStorage.setItem("gameId", response.data._id);
     localStorage.setItem("phraseNumber", response.data.phraseNumber);

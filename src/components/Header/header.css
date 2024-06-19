@@ -1,0 +1,14 @@
+.header{
+    height: 50px;
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+}
+.calendar-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    color: inherit;
+    width: 50px;
+  }

@@ -1,0 +1,42 @@
+.oldgames{
+    width: 80%;
+    min-height: 500px;
+    border: 1px solid black;
+    border-radius: 8px;
+    padding: 10px ;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    justify-content:flex-start;
+   
+    
+    
+}
+.phrase-box {
+    width: 100px;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px;
+    font-size: 1.5em;
+    color: white;
+    text-align: center;
+    
+  }
+  
+  .phrase-box.win {
+    background-color: green;
+  }
+  
+  .phrase-box.lose {
+    background-color: red;
+  }
+  
+  .phrase-box.np {
+    background-color: gray;
+  }
+  
+  .phrase-box.uf {
+    background-color: rgb(249, 115, 47);
+  }
