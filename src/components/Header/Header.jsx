@@ -12,13 +12,13 @@ const Header = () => {
           <Calendar />{" "}
       
       </Link>
-      <Link to="/game" onClick={() => window.location.href = "/game"} className="header-link">
+      <Link to="/game" onClick={() => window.location.href = "/"} className="header-link">
         <Home/>
       </Link>
       <Link to="/info" className="header-link">
         <Info/>
       </Link>
-cebra
+
     </div>
   );
 };
