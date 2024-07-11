@@ -1,10 +1,10 @@
-import { APIGame, APIGetPhrase } from "../../shared/api.js";
+import { APIBase, APIGetPhrase } from "../../shared/api.js";
 
 const startGame = (userUUID, oldPhraseToPlay) => async (dispatch) => {
   dispatch({ type: "START_GAME_REQUEST" });
 
   try {
-    const response = await APIGame.post("/start", { userUUID, oldPhraseToPlay });
+    const response = await APIBase.post("/game/start", { userUUID, oldPhraseToPlay });
     console.log(response.data);
     localStorage.setItem("gameId", response.data._id);
     localStorage.setItem("phraseNumber", response.data.phraseNumber);
@@ -23,7 +23,7 @@ const getExistingGame = (gameId) => async (dispatch) => {
     const currentPhrase = await APIGetPhrase.get("/");
     
     if (phraseNumber == currentPhrase.data.number) {
-      const response = await APIGame.get(`/active/${gameId}`);
+      const response = await APIBase.get(`/game/active/${gameId}`);
       console.log(response.data);
       localStorage.setItem('activeGame', JSON.stringify(response.data));
       dispatch({ type: "GET_ACTIVE_GAME_SUCCESS", payload: response.data });

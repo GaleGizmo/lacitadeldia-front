@@ -12,17 +12,14 @@ export const APIHeaders = {
 
 
 export const APIGetPhrase = axios.create({
+  baseURL: import.meta.env.VITE_APP_DAILY_URL,
+  headers: APIHeaders,
+});
+export const APIBase = axios.create({
   baseURL: import.meta.env.VITE_APP_BASE_URL,
   headers: APIHeaders,
 });
-export const APIGame = axios.create({
-  baseURL: "http://localhost:8000/game",
-  headers: APIHeaders,
-});
-export const APIPhrases = axios.create({
-  baseURL: "http://localhost:8000/phrases",
-  headers: APIHeaders,
-})
+
 
 export const APIAddPhrase= axios.create({
   baseURL: import.meta.env.VITE_APP_ADD_PHRASE,
@@ -31,7 +28,7 @@ export const APIAddPhrase= axios.create({
 
 export const checkWord = async (word, userId) => {
   try {
-    const response = await APIGame.post('/checkWord', { word, userId });
+    const response = await APIBase.post('/game/checkWord', { word, userId });
     return response.data;
   } catch (error) {
     console.error('Error al verificar la palabra:', error);
@@ -58,7 +55,7 @@ export const addPhrase = async (phraseData) =>{
 }
 export const updateGame = async (gameId, gameData) =>{
   try {
-    const response = await APIGame.put(`/update/${gameId}`, {gameData});
+    const response = await APIBase.put(`/game/update/${gameId}`, {gameData});
     localStorage.setItem('activeGame', JSON.stringify(response.data));
     return response.data
   } catch (err) {
@@ -68,7 +65,7 @@ export const updateGame = async (gameId, gameData) =>{
 
 export const getUserPastPhrases=async (userId)=>{
   try {
-    const response = await APIPhrases.get(`/getoldphrases/${userId}`);
+    const response = await APIBase.get(`/phrases/getoldphrases/${userId}`);
   
     return response.data
   } catch (err) {
@@ -79,7 +76,7 @@ export const getUserPastPhrases=async (userId)=>{
 export const getPhraseByNumber = async (phraseNumber) => {
   try {
     
-    const response = await APIPhrases.get(`/getphrasebynumber/${phraseNumber}`);
+    const response = await APIBase.get(`/phrases/getphrasebynumber/${phraseNumber}`);
 
     return response.data;
   } catch (error) {

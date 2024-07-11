@@ -16,6 +16,7 @@ import {  toast } from "sonner";
 import { getPhraseByNumber, updateGame } from "../../shared/api";
 import { checkEndGame } from "../../shared/checkEndGame";
 import { PropTypes } from "prop-types";
+import ShareButton from "../ShareButton/ShareButton";
 
 const GameComponent = () => {
   let oldPhraseNumber = localStorage.getItem("oldPhraseToPlay");
@@ -120,7 +121,13 @@ const GameComponent = () => {
       />
       
       <Keyboard userId={userId} />
-   
+      {game.isGameOver && (
+        <ShareButton 
+          gameResult={game.isGameOver}
+          phraseNumber={game.phraseNumber}
+          attempts={game.currentTry}
+        />
+      )}
     </div>
   );
 };
