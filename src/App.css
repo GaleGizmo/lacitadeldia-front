@@ -1,23 +1,20 @@
 #root {
   max-width: 1280px;
   width: 100%;
-  height: 100vh;
+  min-height: 100%;
   text-align: center;
   margin: 0 auto;
-  
-  
 }
-.home{
+.home {
   margin: 0 auto;
   display: flex;
   flex-direction: column;
- position: relative;
+  position: relative;
   /* justify-content: center; */
   align-items: center;
   width: 80%;
   height: 100%;
 }
-
 
 /* .toaster-container {
   position: fixed !important;
@@ -55,18 +52,19 @@
   animation: inherit;
 }
 .loader::after {
-  inset:auto 0 calc(100% + 2px);
+  inset: auto 0 calc(100% + 2px);
   animation-duration: 0.5s;
   animation-direction: reverse;
   transform-origin: 50% calc(200% - 2px);
 }
-@keyframes l2{
-  100% {transform:rotate(1turn)}
+@keyframes l2 {
+  100% {
+    transform: rotate(1turn);
+  }
 }
 @media (width<420px) {
-  .home{
+  .home {
     height: 100%;
-    width:95%
+    width: 95%;
   }
-  
 }
