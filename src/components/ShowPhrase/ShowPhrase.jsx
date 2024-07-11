@@ -96,7 +96,7 @@ const ShowPhrase = ({ triedWords, displayPhraseLink }) => {
       {displayPhraseLink && (
         <div className="phrase-link-container">
           <button className="phrase-link" onClick={handleOpenModal}>
-            Ver detalles de la frase
+            Ver detalles de la cita
           </button>
         </div>
       )}
@@ -118,7 +118,7 @@ const ShowPhrase = ({ triedWords, displayPhraseLink }) => {
             <div className="details-container">
               <p>
                 <span className="field-title">Película:</span>{" "}
-                <span className="field-content">{phraseDetails.movie}</span>
+                <span className="field-content">{phraseDetails.movie} ({phraseDetails.year})</span>
               </p>
               <p>
                 <span className="field-title">Frase:</span>{" "}
@@ -128,10 +128,7 @@ const ShowPhrase = ({ triedWords, displayPhraseLink }) => {
                 <span className="field-title">Original:</span>{" "}
                 <span className="field-content">{phraseDetails.original}</span>
               </p>}
-              <p>
-                <span className="field-title">Año:</span>{" "}
-                <span className="field-content">{phraseDetails.year}</span>
-              </p>
+              
               <p>
                 <span className="field-title">Actor:</span>{" "}
                 <span className="field-content"> {phraseDetails.who_said_it.actor}</span>
@@ -141,7 +138,7 @@ const ShowPhrase = ({ triedWords, displayPhraseLink }) => {
                 <span className="field-content"> {phraseDetails.who_said_it.character} </span>
               </p>
               <p>
-                <span className="field-title">Contexto:</span>{" "}
+                
                 <span className="field-content"> {phraseDetails.who_said_it.context}</span>
               </p>
             </div>

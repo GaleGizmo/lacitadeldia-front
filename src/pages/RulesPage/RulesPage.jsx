@@ -17,7 +17,7 @@ const RulesPage = () => {
       <section>
         <h2>Cómo Jugar</h2>
         <ol>
-          <li>Cada día a las 9AM se presenta una nueva cita de una película con sus letras ocultas.</li>
+          <li>Cada día a las 7AM se presenta una nueva cita de una película con sus letras ocultas.</li>
           <li>Tienes un máximo de intentos para adivinar la cita completa. El número de intentos dependerá de la dificultad de la cita.</li>
           <li>En cada intento, debes introducir una palabra de cinco letras.</li>
           <li>Puedes usar el teclado físico o el teclado en pantalla para enviar tu intento.</li>
@@ -46,7 +46,7 @@ const RulesPage = () => {
       <section>
         <h2>Frases Antiguas</h2>
         <p>Puedes acceder a citas de días anteriores desde el calendario en la parte superior de la pantalla.</p>
-        <p>Si hay citas anteriores que no has jugado, puedes intentar adivinarlas; eso sí, una vez que empieces se aplica la misma regla de las 9AM que para la cita del día.</p>
+        <p>Si hay citas anteriores que no has jugado, puedes intentar adivinarlas; eso sí, una vez que empieces se aplica la misma regla de las 7AM que para la cita del día.</p>
         <p>Para volver a la cita del día, usa el icono de la casa en la parte superior.</p>
       </section>
 

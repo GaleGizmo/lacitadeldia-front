@@ -103,7 +103,7 @@
   @media (max-width: 767px) {
     .phrase-details{
       flex-direction: column;
-      max-height: 97vh;
+      max-height: 95vh;
       overflow: auto;
     }
     .poster-container{
