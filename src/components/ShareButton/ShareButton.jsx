@@ -22,7 +22,7 @@ const ShareButton = ({ gameResult, phraseNumber, attempts }) => {
 
   return (
     <button onClick={shareResult} className="share-button">
-      Compartir en WhatsApp
+      WApp
     </button>
   );
 };
