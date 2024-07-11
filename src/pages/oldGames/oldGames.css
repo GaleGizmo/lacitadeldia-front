@@ -25,6 +25,10 @@
   text-align: center;
   
 }
+.phrase-box:hover{
+  cursor: pointer;
+  filter: brightness(120%);
+}
 .oldgames::after {
   content: "";
   flex-grow: 9999;

@@ -18,7 +18,7 @@ const Header = () => {
       <Link to="/info" className="header-link">
         <Info/>
       </Link>
-
+cebra
     </div>
   );
 };
