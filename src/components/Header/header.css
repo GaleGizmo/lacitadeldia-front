@@ -2,13 +2,28 @@
     height: 50px;
     width: 100%;
     display: flex;
-    justify-content: space-around;
+    justify-content: center;
+    gap: 28px;
+    margin-bottom: 20px;
 }
-.calendar-link {
+.header-link {
+    padding-left: 9px;
     display: flex;
     align-items: center;
     justify-content: center;
     text-decoration: none;
     color: inherit;
     width: 50px;
+  }
+  @media (max-width: 767px) {
+    .header{
+        margin-top: 5px;
+        margin-bottom: 0;
+        height: 40px;
+    }
+    .header-link{
+        width: 35px;
+        padding-left: 7px;
+       
+    }
   }

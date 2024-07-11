@@ -44,3 +44,22 @@
 .space {
   width: 10px;
 }
+.phrase-link{
+  background: linear-gradient(to bottom, #ffeb0c, #d6cd25);
+    border: none;
+    
+    transition: background 0.5s ease;
+}
+
+.phrase-link:hover{
+  background: linear-gradient(to bottom, #d6cd25, #ffeb0c);
+}
+@media (max-width: 767px) {
+  .phrase-link{
+    padding: .3em .6em
+  }
+  .phrase-letter{
+    height: 22px;
+    line-height: 1.2;
+  }
+}

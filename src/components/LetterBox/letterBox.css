@@ -16,3 +16,10 @@
 .in-phrase{
     background-color: #51e651;
 }
+@media (max-width: 767px) {
+    .letter{
+        width: 25px;
+        height: 25px;
+        padding: 1px;
+    }
+}

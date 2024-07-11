@@ -7,10 +7,19 @@ import { BrowserRouter } from "react-router-dom";
 import { Toaster } from "sonner";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
+  
   <Provider store={store}>
+  
     <BrowserRouter>
-      <Toaster position="top-center" duration={2000} />
+      
       <App />
+      <Toaster
+        position="top-center"
+        toastOptions={{
+         
+        }}
+        duration={2000}
+      />
     </BrowserRouter>
   </Provider>
 );

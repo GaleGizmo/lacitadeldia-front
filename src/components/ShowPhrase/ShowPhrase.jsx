@@ -4,9 +4,9 @@
 import React, { useEffect, useState } from "react";
 
 import "./showPhrase.css";
-import { getPhraseByNumber, getPhraseOfTheDay } from "../../shared/api";
+import { getPhraseByNumber } from "../../shared/api";
 import { useDispatch } from "react-redux";
-import {  updatePhrase } from "../../redux/game/game.actions";
+import { updatePhrase } from "../../redux/game/game.actions";
 import processPhraseToShow from "../../customhooks/hideLetters";
 
 import isLetter from "../../customhooks/isLetter";
@@ -20,13 +20,13 @@ const ShowPhrase = ({ triedWords, displayPhraseLink }) => {
   const [phraseDetails, setPhraseDetails] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [imageError, setImageError] = useState(false); // Estado para manejar el error de la imagen
-  const [imageSrc, setImageSrc] = useState(''); // Estado para manejar la fuente de la imagen
+  const [imageSrc, setImageSrc] = useState(""); // Estado para manejar la fuente de la imagen
   const [retryCount, setRetryCount] = useState(0); // Estado para el número de intentos de recarga
 
   useEffect(() => {
     const fetchPhrase = async () => {
       try {
-        const phraseNumber=localStorage.getItem("phraseNumber");
+        const phraseNumber = localStorage.getItem("phraseNumber");
         const fetchedPhrase = await getPhraseByNumber(phraseNumber);
         setPhraseDetails(fetchedPhrase);
         setImageSrc(fetchedPhrase.poster); // Establecer la fuente de la imagen
@@ -105,9 +105,7 @@ const ShowPhrase = ({ triedWords, displayPhraseLink }) => {
           <div className="phrase-details">
             <div className="poster-container">
               {imageError ? (
-                <div className="image-error">
-                  Imagen no disponible
-                </div>
+                <div className="image-error">Imagen no disponible</div>
               ) : (
                 <img
                   src={imageSrc}
@@ -118,27 +116,33 @@ const ShowPhrase = ({ triedWords, displayPhraseLink }) => {
               )}
             </div>
             <div className="details-container">
-              <h2>Detalles de la Frase</h2>
               <p>
-                <strong>Película:</strong> {phraseDetails.movie}
+                <span className="field-title">Película:</span>{" "}
+                <span className="field-content">{phraseDetails.movie}</span>
               </p>
               <p>
-                <strong>Frase:</strong> {phraseDetails.quote}
+                <span className="field-title">Frase:</span>{" "}
+                <span className="field-content"> {phraseDetails.quote}</span>
+              </p>
+              {phraseDetails.original && <p>
+                <span className="field-title">Original:</span>{" "}
+                <span className="field-content">{phraseDetails.original}</span>
+              </p>}
+              <p>
+                <span className="field-title">Año:</span>{" "}
+                <span className="field-content">{phraseDetails.year}</span>
               </p>
               <p>
-                <strong>Original:</strong> {phraseDetails.original}
+                <span className="field-title">Actor:</span>{" "}
+                <span className="field-content"> {phraseDetails.who_said_it.actor}</span>
               </p>
               <p>
-                <strong>Año:</strong> {phraseDetails.year}
+                <span className="field-title">Personaje:</span>{" "}
+                <span className="field-content"> {phraseDetails.who_said_it.character} </span>
               </p>
               <p>
-                <strong>Actor:</strong> {phraseDetails.who_said_it.actor}
-              </p>
-              <p>
-                <strong>Personaje:</strong> {phraseDetails.who_said_it.character}
-              </p>
-              <p>
-                <strong>Contexto:</strong> {phraseDetails.who_said_it.context}
+                <span className="field-title">Contexto:</span>{" "}
+                <span className="field-content"> {phraseDetails.who_said_it.context}</span>
               </p>
             </div>
           </div>

@@ -4,19 +4,32 @@
   height: 100vh;
   text-align: center;
   margin: 0 auto;
+  
+  
 }
 .home{
   margin: 0 auto;
   display: flex;
   flex-direction: column;
- 
+ position: relative;
   /* justify-content: center; */
   align-items: center;
   width: 80%;
   height: 100%;
 }
+
+
+/* .toaster-container {
+  position: fixed !important;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 9999; 
+}*/
+
 /* HTML: <div class="loader"></div> */
 .loader {
+  margin-top: 30%;
   width: 40px;
   aspect-ratio: 1;
   border-radius: 50%;

@@ -57,7 +57,13 @@ const gameOver = (gameResult) => ({
   type: "GAME_OVER",
   payload: gameResult,
 });
-
+ const setNotificationShown = (shown, phraseNumber) => {
+  localStorage.setItem(`notificationShown_${phraseNumber}`, JSON.stringify(shown));
+  return {
+    type: "SET_NOTIFICATION_SHOWN",
+    payload: { shown, phraseNumber }
+  };
+};
 export {
   startGame,
   addLetter,
@@ -68,4 +74,5 @@ export {
   nextTry,
   getExistingGame,
   gameOver,
+  setNotificationShown
 };

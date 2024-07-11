@@ -2,9 +2,9 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
-
   gameOver,
   getExistingGame,
+  setNotificationShown,
   startGame,
 } from "../../redux/game/game.actions";
 import TryWord from "../TryWord/TryWord";
@@ -12,19 +12,20 @@ import Keyboard from "../Keyboard/Keyboard";
 import ShowPhrase from "../ShowPhrase/ShowPhrase";
 import "./game.css";
 import getOrCreateUUId from "../../customhooks/uuid";
-import { toast } from "sonner";
-import { getPhraseByNumber,  updateGame } from "../../shared/api";
+import {  toast } from "sonner";
+import { getPhraseByNumber, updateGame } from "../../shared/api";
 import { checkEndGame } from "../../shared/checkEndGame";
-import { PropTypes } from 'prop-types';
-
+import { PropTypes } from "prop-types";
 
 const GameComponent = () => {
-  
   let oldPhraseNumber = localStorage.getItem("oldPhraseToPlay");
   console.log("frase antigua", oldPhraseNumber);
-  
-  if (!oldPhraseNumber){oldPhraseNumber=0}
+
+  if (!oldPhraseNumber) {
+    oldPhraseNumber = 0;
+  }
   const dispatch = useDispatch();
+  
   const userId = getOrCreateUUId(); // Obtener el UUID del usuario
   const [wordsToTry, setWordsToTry] = useState([]);
   const gameId = localStorage.getItem("gameId");
@@ -34,11 +35,11 @@ const GameComponent = () => {
 
   useEffect(() => {
     const initializeGame = async () => {
-      let  phrase=""
-      
-    phrase = await getPhraseByNumber(oldPhraseNumber)
-        console.log(phrase);
-      
+      let phrase = "";
+
+      phrase = await getPhraseByNumber(oldPhraseNumber);
+      console.log(phrase);
+
       if (phraseNumber != phrase.number) {
         console.log("phrase number en local y en back no coinciden");
         localStorage.setItem("phraseNumber", phrase.number);
@@ -50,12 +51,13 @@ const GameComponent = () => {
       } else {
         dispatch(startGame(userId, oldPhraseNumber));
       }
+      const storedNotificationShown = localStorage.getItem(`notificationShown_${phrase.number}`);
+      dispatch(setNotificationShown(storedNotificationShown === 'true', phrase.number));
       setIsInitialized(true);
     };
     initializeGame();
     localStorage.removeItem("oldPhraseToPlay");
   }, []);
-
 
   useEffect(() => {
     if (!isInitialized) return;
@@ -73,24 +75,30 @@ const GameComponent = () => {
 
   // Nuevo useEffect separado para checkEndGame
   useEffect(() => {
-    if (game.phrase && game.triedWords.length > 0) {
-      const endGameResult = checkEndGame(game.phrase, game.maximumTries, game.currentTry);
+    if (game.phrase && game.triedWords.length > 0 ) {
+      const endGameResult = checkEndGame(
+        game.phrase,
+        game.maximumTries,
+        game.currentTry
+      );
       if (endGameResult && game.isGameOver === "") {
         console.log("resultado", endGameResult);
         dispatch(gameOver(endGameResult));
-       updateGame(gameId, game);
+        updateGame(gameId, game);
       }
     }
   }, [game.phrase]);
 
   useEffect(() => {
-   if(game.isGameOver==="win"){
-    toast.success("¡Bien hecho!", {style:{background: "#51e651"}});
-
-   } else if(game.isGameOver==="lose"){
-   toast.error("Has perdido, lo siento");
-   }
-   updateGame(gameId, game);
+    if (game.isGameOver && !game.notificationShown[game.phraseNumber]) {
+      if (game.isGameOver === "win") {
+        toast.success("¡Bien hecho!", { style: { background: "#51e651" } });
+      } else if (game.isGameOver === "lose") {
+        toast.error("Has perdido, lo siento");
+      }
+      dispatch(setNotificationShown(true, game.phraseNumber));
+      updateGame(gameId, game);
+    }
   }, [game.isGameOver]);
 
   if (game.loading) {
@@ -103,9 +111,16 @@ const GameComponent = () => {
 
   return (
     <div className="game">
+
       <div className="words">{wordsToTry} </div>
-      <ShowPhrase  triedWords={game.triedWords} displayPhraseLink={game.isGameOver} />
+      
+      <ShowPhrase
+        triedWords={game.triedWords}
+        displayPhraseLink={game.isGameOver==="win"}
+      />
+      
       <Keyboard userId={userId} />
+   
     </div>
   );
 };

@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 
 const OldGames = () => {
   const playerId = localStorage.getItem("userUUID");
-  const [phrasesToShow, setPhrasesToShow] = useState({});
+  const [phrasesToShow, setPhrasesToShow] = useState(null);
   const navigate = useNavigate();
   const handleNavigate = (phraseToPlay) => {
     localStorage.setItem("oldPhraseToPlay", phraseToPlay);
@@ -22,18 +22,34 @@ const OldGames = () => {
       fetchPhrases(playerId);
     }
   }, [playerId]);
+
+  if (phrasesToShow===null) {
+    return <div className="loader"></div>;
+  }
   return (
-    <div className="oldgames">
-      {Object.entries(phrasesToShow).map(([number, status]) => (
-        <div
-          key={number}
-          className={`phrase-box ${status}`}
-          onClick={()=>handleNavigate(number)}
-        >
-          {number}
-        </div>
-      ))}
-    </div>
+    <>
+      <div className="oldgames">
+        {Object.entries(phrasesToShow).map(([number, status]) => (
+          <div
+            key={number}
+            className={`phrase-box ${status}`}
+            onClick={() => handleNavigate(number)}
+          >
+            {number}
+          </div>
+        ))}
+      </div>
+      <footer className="color-codes">
+        <div className="phrase-box win footer-box"></div>
+        <small>ACERTADA</small>
+        <div className="phrase-box lose footer-box"></div>
+        <small>NO ACERTADA</small>
+        <div className="phrase-box np footer-box"></div>
+        <small>NO JUGADA</small>
+        <div className="phrase-box uf footer-box"></div>
+        <small>JUGANDO</small>
+      </footer>
+    </>
   );
 };
 
