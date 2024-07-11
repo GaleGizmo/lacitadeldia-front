@@ -1,5 +1,6 @@
 /* eslint-disable react/prop-types */
 import "./ShareButton.css"
+import WhatsappIcon from "../../assets/Whatsapp";
 
 
 const ShareButton = ({ gameResult, phraseNumber, attempts }) => {
@@ -21,9 +22,9 @@ const ShareButton = ({ gameResult, phraseNumber, attempts }) => {
   };
 
   return (
-    <button onClick={shareResult} className="share-button">
-      WApp
-    </button>
+    <div onClick={shareResult} className="share-button">
+      <WhatsappIcon/>
+    </div>
   );
 };
 
