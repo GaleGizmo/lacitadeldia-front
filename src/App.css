@@ -64,7 +64,7 @@
 }
 @media (width<420px) {
   .home {
-    height: 95dvh;
+    height: 100dvh;
     width: 95%;
   }
 }
