@@ -7,7 +7,7 @@ const ShareButton = ({ gameResult, phraseNumber, attempts }) => {
   const shareResult = () => {
     const emoji = gameResult === 'win' ? '🎉' : '😔';
     const attemptsText = gameResult === 'win' ? `en ${attempts} intentos` : 'pero sin suerte';
-    const message = `Jugué la frase #${phraseNumber} ${attemptsText} ${emoji}\n¡Juega tú también en [URL de tu juego]!`;
+    const message = `Jugué la frase #${phraseNumber} ${attemptsText} ${emoji}\n¡Juega tú también en https://guessthequote.vercel.app/!`;
     
       // Detectar si es un dispositivo móvil
       const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
