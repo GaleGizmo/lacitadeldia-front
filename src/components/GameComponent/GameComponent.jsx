@@ -85,10 +85,16 @@ const GameComponent = () => {
       if (endGameResult && game.isGameOver === "") {
         console.log("resultado", endGameResult);
         dispatch(gameOver(endGameResult));
-        updateGame(gameId, game);
+       
       }
     }
   }, [game.phrase]);
+//ACTUALIZA EL BACKEND CUANDO HAGA FALTA
+  useEffect(() => {
+    if (game.isGameOver && gameId) {
+      updateGame(gameId, game);
+    }
+  }, [game.isGameOver, gameId, game.phrase, game.triedWords, game.currentTry]);
 
   useEffect(() => {
     if (game.isGameOver && !game.notificationShown[game.phraseNumber]) {
@@ -98,7 +104,7 @@ const GameComponent = () => {
         toast.error("Has perdido, lo siento");
       }
       dispatch(setNotificationShown(true, game.phraseNumber));
-      updateGame(gameId, game);
+      
     }
   }, [game.isGameOver]);
 

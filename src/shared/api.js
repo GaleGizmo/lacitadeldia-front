@@ -55,7 +55,9 @@ export const addPhrase = async (phraseData) =>{
 }
 export const updateGame = async (gameId, gameData) =>{
   try {
+    console.log( "mandado al back", gameData)
     const response = await APIBase.put(`/game/update/${gameId}`, {gameData});
+    console.log("devuelto del back", response.data)
     localStorage.setItem('activeGame', JSON.stringify(response.data));
     return response.data
   } catch (err) {
