@@ -128,15 +128,15 @@ const ShowPhrase = ({ triedWords, displayPhraseLink }) => {
                 <span className="field-title">Original:</span>{" "}
                 <span className="field-content">{phraseDetails.original}</span>
               </p>}
-              
-              <p>
-                <span className="field-title">Actor:</span>{" "}
-                <span className="field-content"> {phraseDetails.who_said_it.actor}</span>
-              </p>
               <p>
                 <span className="field-title">Personaje:</span>{" "}
                 <span className="field-content"> {phraseDetails.who_said_it.character} </span>
               </p>
+              <p>
+                <span className="field-title">Interprete:</span>{" "}
+                <span className="field-content"> {phraseDetails.who_said_it.actor}</span>
+              </p>
+             
               <p>
                 
                 <span className="field-content"> {phraseDetails.who_said_it.context}</span>

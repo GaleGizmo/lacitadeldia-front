@@ -27,7 +27,7 @@ const RulesPage = () => {
             
             <li><span className="absent">Gris</span>: La letra no está en la cita.</li>
           </ul>
-          <li>Si empiezas a jugar una cita y no terminas antes de las 9AM del día siguiente, se considerará cita NO DESCUBIERTA. </li>
+          <li>Si empiezas a jugar una cita y no terminas antes de las 7AM del día siguiente, se considerará cita NO DESCUBIERTA. </li>
           <li>Si descubres la cita, al final podrás acceder a la información detallada de la misma: película, personaje, contexto, etc.</li>
         </ol>
       </section>
@@ -49,7 +49,10 @@ const RulesPage = () => {
         <p>Si hay citas anteriores que no has jugado, puedes intentar adivinarlas; eso sí, una vez que empieces se aplica la misma regla de las 7AM que para la cita del día.</p>
         <p>Para volver a la cita del día, usa el icono de la casa en la parte superior.</p>
       </section>
-
+      <section>
+        <h2>Contacto</h2>
+        <p>Puedes contactar conmigo y ver otras webs que he creado en www.miguelabelleira.es</p>
+      </section>
       <footer>
         <p>¡Diviértete jugando y mejora tus habilidades de deducción cada día!</p>
       </footer> </div>

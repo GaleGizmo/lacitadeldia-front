@@ -20,7 +20,7 @@
   @media  (max-width: 767px){
     .share-button{
       width: 24px;
-      top: 7px;
+      top: 9px;
       right: calc(50% - 140px);
     }
   }

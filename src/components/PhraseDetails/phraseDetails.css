@@ -103,7 +103,7 @@
   @media (max-width: 767px) {
     .phrase-details{
       flex-direction: column;
-     
+      height: 92dvh;
       overflow: auto;
     }
     .poster-container{
@@ -115,6 +115,6 @@
       padding-right: 10px;
     }
     .modal-backdrop{
-      height: 95vh;
+      height: 100vh;
     }
   }
