@@ -79,7 +79,7 @@ button:focus-visible {
   a:hover {
     color: #b3c4ff; 
   }
-  button {
+  button, .details-container>p {
     background-color: #333333; 
   }
   button:hover {
@@ -88,7 +88,11 @@ button:focus-visible {
   .letter, .phrase-letter, .key{
     border-color:#9ab0ff ;
   }
-  svg>path{
+  .header-link svg>path, .keys svg>path{
     fill: #8c9eff;
   }
+  .field-title{
+    color: #b3c4ff;
+  }
+  
 }
