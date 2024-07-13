@@ -60,7 +60,7 @@ const Keyboard = ({ userId }) => {
           return;
         }
         verifyWord(wordToTry, userId);
-      } else if (key.length === 1 && key.match(/[a-z]/i)) {
+      } else if (key.length === 1 && key.match(/[a-zñ]/i)) {
         if (wordToTry.length >= 5) {
           return;
         }

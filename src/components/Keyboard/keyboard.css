@@ -29,7 +29,7 @@
 .action{
    display: flex;
    justify-content: center;
-   align-items: top;
+   
    margin: 0 3px
    }
 .action:hover{
