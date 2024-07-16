@@ -71,7 +71,7 @@
     border-radius: 5px;
     display: flex;
     flex-direction: row;
-   
+   max-height: 92dvh;
     max-width: 800px;
     position: relative;
   }
@@ -103,16 +103,17 @@
   @media (max-width: 767px) {
     .phrase-details{
       flex-direction: column;
-      height: 92dvh;
+      height: fit-content;
       overflow: auto;
     }
     .poster-container{
       min-width: unset;
-      max-width: 200px;
+      max-width: 170px;
       margin: 5px auto;
     }
     .details-container{
       padding-right: 10px;
+      font-size: 12px;
     }
     .modal-backdrop{
       height: 100vh;
