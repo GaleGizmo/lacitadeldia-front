@@ -103,7 +103,7 @@
   @media (max-width: 767px) {
     .phrase-details{
       flex-direction: column;
-      height: fit-content;
+      
       overflow: auto;
     }
     .poster-container{
