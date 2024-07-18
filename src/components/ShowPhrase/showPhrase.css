@@ -1,17 +1,15 @@
 /* ShowPhrase.css */
-.showPhrase-container{
+.showPhrase-container {
   display: flex;
   flex-direction: column;
-  
 }
 .phrase-container {
-
   margin: 10px 5px;
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
 }
-.phrase-letter{
+.phrase-letter {
   width: 20px;
   height: 25px;
   border: 1px solid #000;
@@ -24,18 +22,16 @@
 }
 .letter-box {
   color: white;
-  
- 
+
   background-color: #fff;
 }
-.visible-letter{
+.visible-letter {
   background-color: #51e651;
 }
 .visible-char {
   border: none;
   width: fit-content;
   display: inline-block;
-
 }
 .word {
   display: flex;
@@ -44,21 +40,40 @@
 .space {
   width: 10px;
 }
-.phrase-link{
-  background: linear-gradient(to bottom, #ffeb0c, #d6cd25);
-    border: none;
-    
-    transition: background 0.5s ease;
+.phrase-link {
+  background-image: 
+    linear-gradient(to bottom, #ffeb0c, #d6cd25),
+    linear-gradient(to bottom, #d6cd25, #ffeb0c);
+  background-size: 100% 200%;
+  background-position: 0 0, 0 100%;
+  background-repeat: no-repeat;
+  transition: background-position 0.5s ease;
+  border: none;
 }
 
-.phrase-link:hover{
-  background: linear-gradient(to bottom, #d6cd25, #ffeb0c);
+.phrase-link:hover {
+  background-position: 0 100%, 0 0;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in {
+  animation: fadeIn 0.5s ease-out forwards;
 }
 @media (max-width: 767px) {
-  .phrase-link{
-    padding: .3em .6em
+  .phrase-link {
+    padding: 0.3em 0.6em;
   }
-  .phrase-letter{
+  .phrase-letter {
     height: 22px;
     line-height: 1.3;
   }

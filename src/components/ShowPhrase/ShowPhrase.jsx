@@ -22,6 +22,7 @@ const ShowPhrase = ({ triedWords, displayPhraseLink }) => {
   const [imageError, setImageError] = useState(false); // Estado para manejar el error de la imagen
   const [imageSrc, setImageSrc] = useState(""); // Estado para manejar la fuente de la imagen
   const [retryCount, setRetryCount] = useState(0); // Estado para el número de intentos de recarga
+  const [visibleFields, setVisibleFields] = useState(0);
 
   useEffect(() => {
     const fetchPhrase = async () => {
@@ -58,12 +59,22 @@ const ShowPhrase = ({ triedWords, displayPhraseLink }) => {
     }
   }, [imageError, retryCount, phraseDetails]);
 
+  useEffect(() => {
+    if (showModal && visibleFields < 6) {  // 6 es el número total de campos
+      const timer = setTimeout(() => {
+        setVisibleFields(prev => prev + 1);
+      }, 500);  // Muestra un nuevo campo cada 500ms
+      return () => clearTimeout(timer);
+    }
+  }, [showModal, visibleFields]);
+
   const handleOpenModal = () => {
     setShowModal(true);
   };
 
   const handleCloseModal = () => {
     setShowModal(false);
+    setVisibleFields(0);
   };
 
   const handleImageError = () => {
@@ -103,44 +114,66 @@ const ShowPhrase = ({ triedWords, displayPhraseLink }) => {
       <PhraseDetails show={showModal} onClose={handleCloseModal}>
         {phraseDetails && (
           <div className="phrase-details">
-            <div className="poster-container">
-              {imageError ? (
-                <div className="image-error">Imagen no disponible</div>
-              ) : (
-                <img
-                  src={imageSrc}
-                  alt="Póster"
-                  className="poster-image"
-                  onError={handleImageError}
-                />
-              )}
-            </div>
+           
+              <div className="poster-container">
+                {imageError ? (
+                  <div className="image-error">Imagen no disponible</div>
+                ) : (
+                  <img
+                    src={imageSrc}
+                    alt="Póster"
+                    className="poster-image"
+                    onError={handleImageError}
+                  />
+                )}
+              </div>
+         
             <div className="details-container">
-              <p>
-                <span className="field-title">Película:</span>{" "}
-                <span className="field-content">{phraseDetails.movie} ({phraseDetails.year})</span>
-              </p>
-              <p>
-                <span className="field-title">Frase:</span>{" "}
-                <span className="field-content"> {phraseDetails.quote}</span>
-              </p>
-              {phraseDetails.original && <p>
-                <span className="field-title">Original:</span>{" "}
-                <span className="field-content">{phraseDetails.original}</span>
-              </p>}
-              <p>
-                <span className="field-title">Personaje:</span>{" "}
-                <span className="field-content"> {phraseDetails.who_said_it.character} </span>
-              </p>
-              <p>
-                <span className="field-title">Interprete:</span>{" "}
-                <span className="field-content"> {phraseDetails.who_said_it.actor}</span>
-              </p>
-             
-              <p>
-                
-                <span className="field-content"> {phraseDetails.who_said_it.context}</span>
-              </p>
+              {visibleFields>0 && (
+                <p className="fade-in">
+                  <span className="field-title">Película:</span>{" "}
+                  <span className="field-content">
+                    {phraseDetails.movie} ({phraseDetails.year})
+                  </span>
+                </p>
+              )}
+              {visibleFields>1 && (
+                <p className="fade-in">
+                  <span className="field-title">Frase:</span>{" "}
+                  <span className="field-content">{phraseDetails.quote}</span>
+                </p>
+              )}
+              {visibleFields>2 && phraseDetails.original && (
+                <p className="fade-in">
+                  <span className="field-title">Original:</span>{" "}
+                  <span className="field-content">
+                    {phraseDetails.original}
+                  </span>
+                </p>
+              )}
+              {visibleFields>3 && (
+                <p className="fade-in">
+                  <span className="field-title">Personaje:</span>{" "}
+                  <span className="field-content">
+                    {phraseDetails.who_said_it.character}
+                  </span>
+                </p>
+              )}
+              {visibleFields>4 && (
+                <p className="fade-in">
+                  <span className="field-title">Interprete:</span>{" "}
+                  <span className="field-content">
+                    {phraseDetails.who_said_it.actor}
+                  </span>
+                </p>
+              )}
+              {visibleFields>5 && (
+                <p className="fade-in">
+                  <span className="field-content">
+                    {phraseDetails.who_said_it.context}
+                  </span>
+                </p>
+              )}
             </div>
           </div>
         )}
