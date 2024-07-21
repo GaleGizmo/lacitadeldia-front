@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import "./oldGames.css";
 import { getUserPastPhrases } from "../../shared/api";
 import { useNavigate } from "react-router-dom";
+import UserStats from "../../components/UserStats/UserStats";
 
 const OldGames = () => {
   const playerId = localStorage.getItem("userUUID");
@@ -23,7 +24,7 @@ const OldGames = () => {
     }
   }, [playerId]);
 
-  if (phrasesToShow===null) {
+  if (phrasesToShow === null) {
     return <div className="loader"></div>;
   }
   return (
@@ -38,12 +39,14 @@ const OldGames = () => {
             {number}
           </div>
         ))}
+       
       </div>
+      <UserStats />
       <footer className="color-codes">
         <div className="phrase-box win footer-box"></div>
-        <small>ACERTADA</small>
+        <small>GANADA</small>
         <div className="phrase-box lose footer-box"></div>
-        <small>NO ACERTADA</small>
+        <small>PERDIDA</small>
         <div className="phrase-box np footer-box"></div>
         <small>NO JUGADA</small>
         <div className="phrase-box uf footer-box"></div>

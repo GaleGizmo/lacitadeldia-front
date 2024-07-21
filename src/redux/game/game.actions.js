@@ -5,7 +5,7 @@ const startGame = (userUUID, oldPhraseToPlay) => async (dispatch) => {
 
   try {
     const response = await APIBase.post("/game/start", { userUUID, oldPhraseToPlay });
-    console.log(response.data);
+   
     localStorage.setItem("gameId", response.data._id);
     localStorage.setItem("phraseNumber", response.data.phraseNumber);
     localStorage.setItem('activeGame', JSON.stringify(response.data));

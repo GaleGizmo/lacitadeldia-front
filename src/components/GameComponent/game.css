@@ -12,6 +12,6 @@
 @media (width<420px){
     .game{
         margin-top: 5px;
-        margin-bottom: 25px;
+        margin-bottom: 0;
     }
 }

@@ -1,8 +1,8 @@
 const AcceptIcon = () => {
   return (
     <svg
-      width="32px"
-      height="32px"
+      width="40px"
+      height="40px"
       viewBox="0 0 28 28"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"

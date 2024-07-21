@@ -1,5 +1,6 @@
 const INITIAL_STATE = {
-  user: JSON.parse(localStorage.getItem("user")),
+  user: localStorage.getItem("userUUID"),
+  userStats:null,
   loading: false,
   error: null,
 };
@@ -26,6 +27,16 @@ export const userReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         user: null,
+      };
+    case "SETUSERSTATS":
+      return {
+        ...state,
+        userStats: action.payload,
+      };
+    case "SETUSERSTATSFAIL":
+      return {
+        ...state,
+        error: action.payload,
       };
     default:
       return state;

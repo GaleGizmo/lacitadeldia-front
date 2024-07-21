@@ -86,3 +86,13 @@ export const getPhraseByNumber = async (phraseNumber) => {
     throw error;
   }
 };
+export const getUserStats =  async (userId) => {
+  try {
+    const response = await APIBase.post(`/game/getuserstats`,{userId});
+   
+    return response.data;
+   
+  } catch (err) {
+    console.error("Error al obtener las stats");
+  }
+};
