@@ -109,7 +109,7 @@ const AddPhraseForm = () => {
           </div>
           <div className="form-field">
             <label>Context:</label>
-            <input type="text" name="context" value={formData.context} onChange={handleChange} required />
+            <textarea name="context" value={formData.context} onChange={handleChange} required />
             {errors.context && <span>{errors.context}</span>}
           </div>
           <div className="form-field">
