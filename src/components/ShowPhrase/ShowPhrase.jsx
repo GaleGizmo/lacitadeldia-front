@@ -139,11 +139,19 @@ const ShowPhrase = ({ triedWords, displayPhraseLink }) => {
               )}
               {visibleFields>1 && (
                 <p className="fade-in">
+                  <span className="field-title">Director:</span>{" "}
+                  <span className="field-content">
+                    {phraseDetails.director}
+                  </span>
+                </p>
+              )}
+              {visibleFields>2 && (
+                <p className="fade-in">
                   <span className="field-title">Frase:</span>{" "}
                   <span className="field-content">{phraseDetails.quote}</span>
                 </p>
               )}
-              {visibleFields>2 && phraseDetails.original && (
+              {visibleFields>3 && phraseDetails.original && (
                 <p className="fade-in">
                   <span className="field-title">Original:</span>{" "}
                   <span className="field-content">
@@ -151,22 +159,15 @@ const ShowPhrase = ({ triedWords, displayPhraseLink }) => {
                   </span>
                 </p>
               )}
-              {visibleFields>3 && (
+              {visibleFields>4 && (
                 <p className="fade-in">
                   <span className="field-title">Personaje:</span>{" "}
                   <span className="field-content">
-                    {phraseDetails.who_said_it.character}
+                    {phraseDetails.who_said_it.character} ({phraseDetails.who_said_it.actor})
                   </span>
                 </p>
               )}
-              {visibleFields>4 && (
-                <p className="fade-in">
-                  <span className="field-title">Interprete:</span>{" "}
-                  <span className="field-content">
-                    {phraseDetails.who_said_it.actor}
-                  </span>
-                </p>
-              )}
+             
               {visibleFields>5 && (
                 <p className="fade-in">
                   <span className="field-content">
