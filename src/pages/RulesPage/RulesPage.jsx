@@ -52,7 +52,9 @@ const RulesPage = () => {
       </section>
       <section>
         <h2>Contacto</h2>
-        <p>Puedes contactar conmigo y ver otras webs que he creado en www.miguelabelleira.es</p>
+        <p>Puedes contactar conmigo y ver otras webs que he creado <a href="https://www.miguelabelleira.es" target="_blank" rel="noopener noreferrer">
+    AQUÍ
+  </a></p>
       </section>
       <footer>
         <p>¡Diviértete jugando y mejora tus habilidades de deducción cada día!</p>
