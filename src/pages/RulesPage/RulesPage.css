@@ -70,7 +70,10 @@ li {
   color: gray;
   font-weight: bold;
 }
-
+.perdida{
+  color: red;
+  font-weight: bold;
+}
 footer {
   text-align: center;
   font-style: italic;

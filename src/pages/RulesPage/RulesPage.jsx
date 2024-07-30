@@ -29,7 +29,7 @@ const RulesPage = () => {
           </ul>
          
           <li>Si descubres la cita completa (todas las letras deben ser visibles), aparecerá un botón que te dara acceso a la información detallada de la misma.</li>
-          <li>Todas las partidas que se empiecen un día y no estén terminadas a las 7AM del día siguiente, se considerarán <span className='lose'>PARTIDAS PERDIDAS</span>. </li>
+          <li>Todas las partidas que se empiecen un día y no estén terminadas a las 7AM del día siguiente, se considerarán <span className='perdida'>PARTIDAS PERDIDAS</span>. </li>
         </ol>
       </section>
 
@@ -47,7 +47,7 @@ const RulesPage = () => {
       <section>
         <h2>Frases Antiguas</h2>
         <p>Puedes acceder a citas de días anteriores desde el calendario en la parte superior de la pantalla.</p>
-        <p>Si hay citas de días anteriores que no has jugado, puedes intentar adivinarlas; ¡PERO RECUERDA!, en estas partidas se aplicará la misma regla que para la cita del día: es decir, si empiezas a jugar y no descubres la cita antes de las 7AM del día siguiente se considerará partida  <span className='lose'>PERDIDA</span>.</p>
+        <p>Si hay citas de días anteriores que no has jugado, puedes intentar adivinarlas; ¡PERO RECUERDA!, en estas partidas se aplicará la misma regla que para la cita del día: es decir, si empiezas a jugar y no descubres la cita antes de las 7AM del día siguiente se considerará partida  <span className='perdida'>PERDIDA</span>.</p>
         <p>Para volver a la cita del día, usa el icono de la casa en la parte superior.</p>
       </section>
       <section>
