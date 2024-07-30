@@ -78,7 +78,7 @@ export const getUserPastPhrases=async (userId)=>{
 export const getPhraseByNumber = async (phraseNumber) => {
   try {
     
-    const response = await APIBase.get(`/phrases/getphrasebynumber/${phraseNumber}`);
+    const response = await APIGetPhrase.get(`/getphrasebynumber/${phraseNumber}`);
 
     return response.data;
   } catch (error) {

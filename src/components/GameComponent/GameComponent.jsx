@@ -20,7 +20,7 @@ import ShareButton from "../ShareButton/ShareButton";
 
 const GameComponent = () => {
   let oldPhraseNumber = localStorage.getItem("oldPhraseToPlay");
-  console.log("frase antigua", oldPhraseNumber);
+  
 
   if (!oldPhraseNumber) {
     oldPhraseNumber = 0;
@@ -42,7 +42,7 @@ const GameComponent = () => {
       console.log(phrase);
 
       if (phraseNumber != phrase.number) {
-        console.log("phrase number en local y en back no coinciden");
+        
         localStorage.setItem("phraseNumber", phrase.number);
         localStorage.removeItem("gameId");
         localStorage.removeItem("activeGame");
@@ -74,7 +74,7 @@ const GameComponent = () => {
     }
   }, [game.phrase, game.triedWords, game.currentTry]);
 
-  // Nuevo useEffect separado para checkEndGame
+  // useEffect para checkEndGame
   useEffect(() => {
     if (game.phrase && game.triedWords.length > 0 ) {
       const endGameResult = checkEndGame(

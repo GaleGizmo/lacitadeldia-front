@@ -12,7 +12,7 @@ import processPhraseToShow from "../../customhooks/hideLetters";
 import isLetter from "../../customhooks/isLetter";
 import PhraseDetails from "../PhraseDetails/PhraseDetails";
 
-const MAX_RETRY_ATTEMPTS = 5; // Número máximo de intentos de recarga
+const MAX_RETRY_ATTEMPTS = 3; // Número máximo de intentos de recarga
 
 const ShowPhrase = ({ triedWords, displayPhraseLink }) => {
   const dispatch = useDispatch();

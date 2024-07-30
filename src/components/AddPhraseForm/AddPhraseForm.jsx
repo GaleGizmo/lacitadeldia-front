@@ -8,6 +8,7 @@ const AddPhraseForm = () => {
         quote: '',
         movie: '',
         year: '',
+        director: '',
         original: '',
         actor: '',
         character: '',
@@ -25,6 +26,7 @@ const AddPhraseForm = () => {
         if (!formData.quote) errors.quote = 'Quote is required';
         if (!formData.movie) errors.movie = 'Movie is required';
         if (!formData.year) errors.year = 'Year is required';
+        if (!formData.director) errors.director = 'Director is required';
         if (!formData.actor) errors.actor = 'Actor is required';
         if (!formData.character) errors.character = 'Character is required';
         if (!formData.context) errors.context = 'Context is required';
@@ -62,6 +64,7 @@ const AddPhraseForm = () => {
             quote: '',
             movie: '',
             year: '',
+            director: '',
             original: '',
             actor: '',
             character: '',
@@ -92,6 +95,11 @@ const AddPhraseForm = () => {
             <label>Year:</label>
             <input type="number" name="year" value={formData.year} onChange={handleChange} required />
             {errors.year && <span>{errors.year}</span>}
+          </div>
+          <div className="form-field">
+            <label>Director:</label>
+            <input type="text" name="director" value={formData.director} onChange={handleChange} required />
+            {errors.director && <span>{errors.director}</span>}
           </div>
           <div className="form-field">
             <label>Original:</label>
