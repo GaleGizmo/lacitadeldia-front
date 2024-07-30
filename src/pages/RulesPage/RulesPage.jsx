@@ -27,8 +27,9 @@ const RulesPage = () => {
             
             <li><span className="absent">Gris</span>: La letra no está en la cita.</li>
           </ul>
-          <li>Si empiezas a jugar una cita y no terminas antes de las 7AM del día siguiente, se considerará cita NO DESCUBIERTA. </li>
-          <li>Si descubres la cita, al final podrás acceder a la información detallada de la misma: película, personaje, contexto, etc.</li>
+         
+          <li>Si descubres la cita completa (todas las letras deben ser visibles), aparecerá un botón que te dara acceso a la información detallada de la misma.</li>
+          <li>Todas las partidas que se empiecen un día y no estén terminadas a las 7AM del día siguiente, se considerarán <span className='lose'>PARTIDAS PERDIDAS</span>. </li>
         </ol>
       </section>
 
@@ -36,7 +37,7 @@ const RulesPage = () => {
         <h2>Consejos</h2>
         <ul>
           <li>Intenta usar palabras con letras lo más comunes posible.</li>
-          <li>Presta atención a las letras que ya has usado.</li>
+          <li>Presta atención a las letras que ya has usado e intenta no repetirlas.</li>
           
         </ul>
       </section>
@@ -46,7 +47,7 @@ const RulesPage = () => {
       <section>
         <h2>Frases Antiguas</h2>
         <p>Puedes acceder a citas de días anteriores desde el calendario en la parte superior de la pantalla.</p>
-        <p>Si hay citas anteriores que no has jugado, puedes intentar adivinarlas; eso sí, una vez que empieces se aplica la misma regla de las 7AM que para la cita del día.</p>
+        <p>Si hay citas de días anteriores que no has jugado, puedes intentar adivinarlas; ¡PERO RECUERDA!, en estas partidas se aplicará la misma regla que para la cita del día: es decir, si empiezas a jugar y no descubres la cita antes de las 7AM del día siguiente se considerará partida  <span className='lose'>PERDIDA</span>.</p>
         <p>Para volver a la cita del día, usa el icono de la casa en la parte superior.</p>
       </section>
       <section>
