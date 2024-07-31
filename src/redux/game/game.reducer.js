@@ -9,6 +9,7 @@ const INITIAL_STATE = (() => {
         loading: null,
         error: null,
         successMessage: null,
+        lettersFound:[],
         wordToTry: "",
         notificationShown: {
           [phraseNumber]:
@@ -33,6 +34,7 @@ function getDefaultState() {
     maximumTries: 0,
     phraseNumber: 0,
     successMessage: null,
+    lettersFound:[],
     wordToTry: "",
     triedWords: [],
     isGameOver: "",
@@ -106,6 +108,13 @@ export const gameReducer = (state = INITIAL_STATE, action) => {
         ...state,
         triedWords: newTriedWords,
         currentTry: state.currentTry + 1,
+      };
+    }
+    case "UPDATE_LETTERS_FOUND":{
+      const newLettersFound = [...state.lettersFound, action.payload]
+      return {
+        ...state,
+        lettersFound: newLettersFound,
       };
     }
     case "GAME_OVER":

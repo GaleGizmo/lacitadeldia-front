@@ -43,7 +43,10 @@ const setMaximumTries = (maxTries) => ({
   type: "SET_MAXIMUM_TRIES",
   payload: maxTries,
 });
-
+const updateLettersFound = (letterFound) => ({
+  type: "UPDATE_LETTERS_FOUND",
+  payload: letterFound,
+})
 const addLetter = (letter) => ({ type: "ADD_LETTER", payload: letter });
 
 const deleteLastLetter = () => ({
@@ -74,5 +77,6 @@ export {
   nextTry,
   getExistingGame,
   gameOver,
-  setNotificationShown
+  setNotificationShown,
+  updateLettersFound
 };

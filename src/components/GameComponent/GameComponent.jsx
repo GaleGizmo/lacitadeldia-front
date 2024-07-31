@@ -68,11 +68,11 @@ const GameComponent = () => {
       words.push(<TryWord key={i} index={i} />);
     }
     setWordsToTry(words);
-
+    
     if (gameId) {
       updateGame(gameId, game);
     }
-  }, [game.phrase, game.triedWords, game.currentTry]);
+  }, [ game.triedWords, game.currentTry]);
 
   // useEffect para checkEndGame
   useEffect(() => {
@@ -89,7 +89,7 @@ const GameComponent = () => {
       }
     }
   }, [game.phrase]);
-//ACTUALIZA EL BACKEND CUANDO HAGA FALTA
+//ACTUALIZA EL BACKEND CUANDO EL JUEGO ACABA
   useEffect(() => {
     if (game.isGameOver && gameId) {
       updateGame(gameId, game);
