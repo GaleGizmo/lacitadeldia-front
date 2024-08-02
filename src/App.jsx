@@ -7,11 +7,16 @@ import OldGames from "./pages/oldGames/OldGames";
 import RulesPage from "./pages/RulesPage/RulesPage";
 
 
+
 function App() {
+ 
+
+
   return (
     <div className="home">
-      <Header />
       
+      <Header />
+   
       <Routes>
         <Route path="/" element={<GameComponent />} />
         <Route path="/oldgames" element={<OldGames />} />

@@ -6,7 +6,8 @@ import {
   addLetter,
   deleteLastLetter,
   clearWord,
-  nextTry,
+  
+  addWordToTried,
 } from "../../redux/game/game.actions";
 import { useEffect, useCallback } from "react";
 import DeleteIcon from "../../assets/DeleteIcon";
@@ -75,14 +76,19 @@ const Keyboard = ({ userId }) => {
     };
   }, [dispatch, wordToTry, userId, verifyWord, isGameOver]);
 
+  //verifica si la palabra es válida y la añade a triedWords
+  //luego limpia la palabra actual
+  //si no es válida muestra un mensaje de error
+ 
   useEffect(() => {
     if (result !== null && !isVerifying) {
       if (result) {
-        dispatch(nextTry());
+        dispatch(addWordToTried());
       } else {
         toast.error("Palabra no válida");
+        dispatch(clearWord());
       }
-      dispatch(clearWord());
+      
     }
   }, [result, isVerifying, dispatch]);
 

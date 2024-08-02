@@ -9,7 +9,7 @@ const INITIAL_STATE = (() => {
         loading: null,
         error: null,
         successMessage: null,
-        lettersFound:[],
+        
         wordToTry: "",
         notificationShown: {
           [phraseNumber]:
@@ -50,6 +50,8 @@ export const gameReducer = (state = INITIAL_STATE, action) => {
         ...state,
         loading: false,
         error: null,
+        phrase: action.payload.phrase,
+        lettersFound: action.payload.lettersFound,
         maximumTries: action.payload.maximumTries,
         triedWords: action.payload.triedWords,
         phraseNumber: action.payload.phraseNumber,
@@ -58,24 +60,26 @@ export const gameReducer = (state = INITIAL_STATE, action) => {
       };
     case "START_GAME_FAILURE":
       return { ...state, loading: false, error: action.payload };
-    case "GET_ACTIVE_GAME_REQUEST":
+    case "UPDATE_GAME_DATA_REQUEST":
       return {
         ...state,
         loading: true,
         error: null,
       };
-    case "GET_ACTIVE_GAME_SUCCESS":
+    case "UPDATE_GAME_DATA_SUCCESS":
+      
       return {
         ...state,
         loading: false,
+        wordToTry: "",
         phrase: action.payload.phrase,
-        triedWords: action.payload.triedWords,
+        lettersFound: action.payload.lettersFound,
         phraseNumber: action.payload.phraseNumber,
         currentTry: action.payload.currentTry,
         maximumTries: action.payload.maximumTries,
         isGameOver: action.payload.isGameOver,
       };
-    case "GET_ACTIVE_GAME_FAILURE":
+    case "UPDATE_GAME_DATA_FAILURE":
       return {
         ...state,
         loading: false,
@@ -102,20 +106,23 @@ export const gameReducer = (state = INITIAL_STATE, action) => {
       return { ...state, wordToTry: "" };
     case "CLEAR_PHRASE":
       return { ...state, phrase: null };
-    case "NEXT_TRY": {
+    case "ADD_WORD_TO_TRIEDWORDS": {
       const newTriedWords = [...state.triedWords, state.wordToTry];
       return {
         ...state,
         triedWords: newTriedWords,
-        currentTry: state.currentTry + 1,
+        
       };
     }
     case "UPDATE_LETTERS_FOUND":{
-      const newLettersFound = [...state.lettersFound, action.payload]
+      
       return {
         ...state,
-        lettersFound: newLettersFound,
+        lettersFound: action.payload,
       };
+    }
+    case "UPDATE_LETTERS_FOUND_ERROR":{
+      return { ...state, loading: false, error: action.payload };
     }
     case "GAME_OVER":
       return { ...state, isGameOver: action.payload };

@@ -11,7 +11,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
   <Provider store={store}>
   
     <BrowserRouter>
-      
+  
       <App />
       <Toaster
         position="top-center"
@@ -21,5 +21,8 @@ ReactDOM.createRoot(document.getElementById("root")).render(
         duration={2000}
       />
     </BrowserRouter>
+   
+
   </Provider>
+  
 );
