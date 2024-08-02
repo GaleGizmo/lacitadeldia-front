@@ -96,3 +96,15 @@ export const getUserStats =  async (userId) => {
     console.error("Error al obtener las stats");
   }
 };
+
+export const notifyMe = async (userId, email) => {
+  try {
+    console.log(userId, email)
+    const response = await APIBase.post(`/user/notifyme`, {userId, email});
+    console.log(response.data)
+    return response.data;
+
+  } catch (err) {
+    console.error("Error al notificar");
+  }
+};
