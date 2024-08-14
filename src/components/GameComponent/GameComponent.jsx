@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  setNotificationShown,
+  
   startGame,
   updateGameData,
 } from "../../redux/game/game.actions";
@@ -32,16 +32,9 @@ const GameComponent = () => {
   let game = useSelector((state) => state.gameReducer);
 
   useEffect(() => {
-   
     const initializeGame = () => {
       dispatch(startGame(userId, phraseNumber));
 
-      const storedNotificationShown = localStorage.getItem(
-        `notificationShown_${phraseNumber}`
-      );
-      dispatch(
-        setNotificationShown(storedNotificationShown === "true", phraseNumber)
-      );
       setIsInitialized(true);
     };
     initializeGame();
@@ -57,32 +50,30 @@ const GameComponent = () => {
     }
     setWordsToTry(words);
 
-    
-    if (gameId && game.wordToTry && game.currentTry<game.maximumTries) {
+    if (gameId && game.wordToTry && game.currentTry < game.maximumTries) {
       const gameData = {
         triedWord: game.wordToTry,
-        phraseNumber: game.phraseNumber,
-        lettersFound: game.lettersFound,
-        currentTry: game.currentTry,
-        maximumTries: game.maximumTries,
-        isGameOver: game.isGameOver,
       };
 
       dispatch(updateGameData(gameId, gameData));
     }
   }, [game.triedWords]);
 
-  
   useEffect(() => {
-    if (game.isGameOver && !game.notificationShown[game.phraseNumber]) {
-      if (game.isGameOver === "win") {
+    if (game.gameResult && !game.gameResultNotification) {
+      if (game.gameResult === "win") {
         toast.success("¡Bien hecho!", { style: { background: "#51e651" } });
-      } else if (game.isGameOver === "lose") {
+      } else if (game.gameResult === "lose") {
         toast.error("Has perdido, lo siento");
       }
-      dispatch(setNotificationShown(true, game.phraseNumber));
+      const gameData = {
+        gameResultNotification: true,
+      };
+
+      dispatch(updateGameData(gameId, gameData));
     }
-  }, [game.isGameOver]);
+   
+  }, [game.gameResult]);
 
   if (game.loading) {
     return <div className="loader"></div>;
@@ -96,15 +87,12 @@ const GameComponent = () => {
     <div className="game">
       <div className="words">{wordsToTry} </div>
 
-      <ShowPhrase
-        
-        displayPhraseLink={game.isGameOver === "win"}
-      />
+      <ShowPhrase displayPhraseLink={game.gameResult === "win"} />
 
       <Keyboard userId={userId} />
-      {game.isGameOver && (
+      {game.gameResult && (
         <ShareButton
-          gameResult={game.isGameOver}
+          gameResult={game.gameResult}
           phraseNumber={game.phraseNumber}
           attempts={game.currentTry}
         />

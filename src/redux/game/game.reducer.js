@@ -3,7 +3,7 @@ const INITIAL_STATE = (() => {
   if (savedGame) {
     try {
       const parsedGame = JSON.parse(savedGame);
-      const phraseNumber = parsedGame.phraseNumber;
+      
       return {
         ...parsedGame,
         loading: null,
@@ -11,11 +11,7 @@ const INITIAL_STATE = (() => {
         successMessage: null,
         
         wordToTry: "",
-        notificationShown: {
-          [phraseNumber]:
-            localStorage.getItem(`notificationShown_${phraseNumber}`) ===
-            "true",
-        },
+      
       };
     } catch (e) {
       console.error("Error parsing activeGame from localStorage", e);
@@ -37,9 +33,10 @@ function getDefaultState() {
     lettersFound:[],
     wordToTry: "",
     triedWords: [],
-    isGameOver: "",
+    gameResult: "",
+    gameResultNotification: null,
     currentTry: 0,
-    notificationShown: {},
+    
   };
 }
 
@@ -56,7 +53,8 @@ export const gameReducer = (state = INITIAL_STATE, action) => {
         triedWords: action.payload.triedWords,
         phraseNumber: action.payload.phraseNumber,
         currentTry: action.payload.currentTry,
-        isGameOver: action.payload.isGameOver,
+        gameResult: action.payload.gameResult,
+        gameResultNotification: action.payload.gameResultNotification,
       };
     case "START_GAME_FAILURE":
       return { ...state, loading: false, error: action.payload };
@@ -77,7 +75,9 @@ export const gameReducer = (state = INITIAL_STATE, action) => {
         phraseNumber: action.payload.phraseNumber,
         currentTry: action.payload.currentTry,
         maximumTries: action.payload.maximumTries,
-        isGameOver: action.payload.isGameOver,
+        gameResult: action.payload.gameResult,
+        gameResultNotification: action.payload.gameResultNotification,
+      
       };
     case "UPDATE_GAME_DATA_FAILURE":
       return {
@@ -125,7 +125,7 @@ export const gameReducer = (state = INITIAL_STATE, action) => {
       return { ...state, loading: false, error: action.payload };
     }
     case "GAME_OVER":
-      return { ...state, isGameOver: action.payload };
+      return { ...state, gameResult: action.payload };
     case "SET_NOTIFICATION_SHOWN":
         return {
           ...state,

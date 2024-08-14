@@ -1,14 +1,20 @@
-
 import { APIBase } from "../../shared/api.js";
 
 const startGame = (userUUID, phraseToPlay) => async (dispatch) => {
   dispatch({ type: "START_GAME_REQUEST" });
 
   try {
-    const response = await APIBase.post("/game/start", {
-      userUUID,
-      phraseToPlay,
-    });
+    let response = "";
+    const activeGame = localStorage.getItem("gameId");
+    if (activeGame) {
+      
+      response = await APIBase.get(`/game/active/${activeGame}`);
+    } else {
+      response = await APIBase.post("/game/start", {
+        userUUID,
+        phraseToPlay,
+      });
+    }
 
     localStorage.setItem("gameId", response.data._id);
     localStorage.setItem("phraseNumber", response.data.phraseNumber);
@@ -19,14 +25,12 @@ const startGame = (userUUID, phraseToPlay) => async (dispatch) => {
   }
 };
 
-
-
 const updateGameData = (gameId, gameData) => async (dispatch) => {
   dispatch({ type: "UPDATE_GAME_DATA_REQUEST" });
   try {
     console.log("enviados al back", gameData);
     const updatedData = await APIBase.put(`/game/update/${gameId}`, {
-      gameData
+      gameData,
     });
     console.log("recibidos del back", updatedData.data);
     localStorage.setItem("activeGame", JSON.stringify(updatedData.data));
@@ -76,9 +80,7 @@ export {
   updatePhrase,
   setMaximumTries,
   addWordToTried,
-  
   gameOver,
   setNotificationShown,
-
   updateGameData,
 };

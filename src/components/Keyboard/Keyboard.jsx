@@ -20,7 +20,7 @@ const Keyboard = ({ userId }) => {
   const lettersUp = "QWERTYUIOP".split("");
   const lettersMiddle = "ASDFGHJKLÑ".split("");
   const lettersDown = "ZXCVBNM".split("");
-  const { phrase, wordToTry, isGameOver } = useSelector(
+  const { phrase, wordToTry, gameResult } = useSelector(
     (reducer) => reducer.gameReducer
   );
 
@@ -51,7 +51,7 @@ const Keyboard = ({ userId }) => {
     const handleKeyDown = (event) => {
       const { key } = event;
 
-      if (isGameOver) return;
+      if (gameResult) return;
 
       if (key === "Backspace") {
         dispatch(deleteLastLetter());
@@ -74,7 +74,7 @@ const Keyboard = ({ userId }) => {
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, [dispatch, wordToTry, userId, verifyWord, isGameOver]);
+  }, [dispatch, wordToTry, userId, verifyWord, gameResult]);
 
   //verifica si la palabra es válida y la añade a triedWords
   //luego limpia la palabra actual
@@ -97,31 +97,31 @@ const Keyboard = ({ userId }) => {
       <KeyboardRow
         letters={lettersUp}
         handleClick={handleClick}
-        isGameOver={isGameOver}
+        gameResult={gameResult}
         phrase={phrase}
       />
       <KeyboardRow
         letters={lettersMiddle}
         handleClick={handleClick}
-        isGameOver={isGameOver}
+        gameResult={gameResult}
         phrase={phrase}
       />
       <div className="keys">
         <div
           className="action"
-          onClick={() => !isGameOver && handleClick("DELETE")}
+          onClick={() => !gameResult && handleClick("DELETE")}
         >
           <DeleteIcon />
         </div>
         <KeyboardRow
           letters={lettersDown}
           handleClick={handleClick}
-          isGameOver={isGameOver}
+          gameResult={gameResult}
           phrase={phrase}
         />
         <div
           className="action"
-          onClick={() => !isGameOver && handleClick("SEND")}
+          onClick={() => !gameResult && handleClick("SEND")}
         >
           <AcceptIcon />
         </div>
