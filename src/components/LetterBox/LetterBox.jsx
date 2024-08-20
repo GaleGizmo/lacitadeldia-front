@@ -16,6 +16,6 @@ LetterBox.propTypes = {
   isBoxActive: PropTypes.bool,
   letterClass: PropTypes.string,
   boxContent: PropTypes.string.isRequired,
-  isLetterInPhrase: PropTypes.bool.isRequired
+ 
 };
 export default LetterBox
