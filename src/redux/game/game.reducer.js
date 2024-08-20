@@ -9,7 +9,7 @@ const INITIAL_STATE = (() => {
         loading: null,
         error: null,
         successMessage: null,
-        
+       
         wordToTry: "",
       
       };
@@ -36,7 +36,7 @@ function getDefaultState() {
     gameResult: "",
     gameResultNotification: null,
     currentTry: 0,
-    
+    lettersFailed:[]
   };
 }
 
@@ -49,6 +49,7 @@ export const gameReducer = (state = INITIAL_STATE, action) => {
         error: null,
         phrase: action.payload.phrase,
         lettersFound: action.payload.lettersFound,
+        lettersFailed: action.payload.lettersFailed,
         maximumTries: action.payload.maximumTries,
         triedWords: action.payload.triedWords,
         phraseNumber: action.payload.phraseNumber,
@@ -72,6 +73,7 @@ export const gameReducer = (state = INITIAL_STATE, action) => {
         wordToTry: "",
         phrase: action.payload.phrase,
         lettersFound: action.payload.lettersFound,
+        lettersFailed: action.payload.lettersFailed,
         phraseNumber: action.payload.phraseNumber,
         currentTry: action.payload.currentTry,
         maximumTries: action.payload.maximumTries,

@@ -11,10 +11,14 @@
     padding: 3px;
 }
 .active{
-    border-color: blue;
+    border-color: #0c24ff;
+    border-width: 2px;
 }
 .in-phrase{
     background-color: #51e651;
+}
+.not-in-phrase{
+    background-color: #80808063;
 }
 @media (max-width: 767px) {
     .letter{

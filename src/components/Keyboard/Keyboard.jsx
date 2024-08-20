@@ -6,7 +6,6 @@ import {
   addLetter,
   deleteLastLetter,
   clearWord,
-  
   addWordToTried,
 } from "../../redux/game/game.actions";
 import { useEffect, useCallback } from "react";
@@ -17,36 +16,56 @@ import KeyboardRow from "../KeyboardRow/KeyboardRow";
 
 const Keyboard = ({ userId }) => {
   const dispatch = useDispatch();
+  
   const lettersUp = "QWERTYUIOP".split("");
+  // const [failedLetters, setFailedLetters] = useState("");
   const lettersMiddle = "ASDFGHJKLÑ".split("");
+  
   const lettersDown = "ZXCVBNM".split("");
-  const { phrase, wordToTry, gameResult } = useSelector(
+
+  const { lettersFound, lettersFailed, wordToTry, gameResult } = useSelector(
     (reducer) => reducer.gameReducer
   );
+  
+ //crea un array con las letras intentadas que no están en la frase
+  // useEffect(() => {
+  //   const failedLettersSet = new Set(
+  //     triedWords
+  //       .join('')
+  //       .split('')
+  //       .filter(letter => !lettersFound.includes(letter))
+  //   );
+    
+  //   setFailedLetters(Array.from(failedLettersSet).join(''));
+  // }, [triedWords, lettersFound]);
+
 
   const [result, verifyWord, isVerifying] = useCheckWord();
 
   //captura letras desde el teclado en pantalla
-  const handleClick = useCallback((content) => {
-    if (content === "DELETE") {
-      dispatch(deleteLastLetter());
-      return;
-    }
-    if (content === "SEND") {
-      if (wordToTry.length < 5) {
-        toast.error("La palabra debe tener 5 letras");
+  const handleClick = useCallback(
+    (content) => {
+      if (content === "DELETE") {
+        dispatch(deleteLastLetter());
         return;
       }
-      verifyWord(wordToTry, userId);
-      return;
-    }
-    if (wordToTry.length >= 5) {
-      return;
-    }
-    dispatch(addLetter(content));
-  }, [dispatch, wordToTry, userId, verifyWord]);
+      if (content === "SEND") {
+        if (wordToTry.length < 5) {
+          toast.error("La palabra debe tener 5 letras");
+          return;
+        }
+        verifyWord(wordToTry, userId);
+        return;
+      }
+      if (wordToTry.length >= 5) {
+        return;
+      }
+      dispatch(addLetter(content));
+    },
+    [dispatch, wordToTry, userId, verifyWord]
+  );
 
-//captura letras desde el teclado físico
+  //captura letras desde el teclado físico
   useEffect(() => {
     const handleKeyDown = (event) => {
       const { key } = event;
@@ -79,7 +98,7 @@ const Keyboard = ({ userId }) => {
   //verifica si la palabra es válida y la añade a triedWords
   //luego limpia la palabra actual
   //si no es válida muestra un mensaje de error
- 
+
   useEffect(() => {
     if (result !== null && !isVerifying) {
       if (result) {
@@ -88,7 +107,6 @@ const Keyboard = ({ userId }) => {
         toast.error("Palabra no válida");
         dispatch(clearWord());
       }
-      
     }
   }, [result, isVerifying, dispatch]);
 
@@ -98,13 +116,15 @@ const Keyboard = ({ userId }) => {
         letters={lettersUp}
         handleClick={handleClick}
         gameResult={gameResult}
-        phrase={phrase}
+        lettersFound={lettersFound}
+        lettersFailed={lettersFailed}
       />
       <KeyboardRow
         letters={lettersMiddle}
         handleClick={handleClick}
         gameResult={gameResult}
-        phrase={phrase}
+        lettersFound={lettersFound}
+        lettersFailed={lettersFailed}
       />
       <div className="keys">
         <div
@@ -117,7 +137,8 @@ const Keyboard = ({ userId }) => {
           letters={lettersDown}
           handleClick={handleClick}
           gameResult={gameResult}
-          phrase={phrase}
+          lettersFound={lettersFound}
+          lettersFailed={lettersFailed}
         />
         <div
           className="action"

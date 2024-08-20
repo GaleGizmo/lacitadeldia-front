@@ -2,18 +2,19 @@
 import PropTypes from "prop-types";
 import "./letterBox.css"
 
-function LetterBox({isBoxActive, boxContent, isLetterInPhrase}) {
-  const isActive = isBoxActive ? "active" : "";
-  const isInPhrase = isLetterInPhrase ? "in-phrase" : "";
+function LetterBox({isBoxActive, boxContent, letterClass}) {
+  const activeClass = isBoxActive ? "active" : "";
+  // const letterBoxClass = isLetterInPhrase ? "in-phrase" : "not-in-phrase";
   
   return (
-    <div className={`letter ${isActive} ${isInPhrase}`}>
+    <div className={`letter ${activeClass} ${letterClass}`}>
       {boxContent}
     </div>
   )
 }
 LetterBox.propTypes = {
-  isBoxActive: PropTypes.bool.isRequired,
+  isBoxActive: PropTypes.bool,
+  letterClass: PropTypes.string,
   boxContent: PropTypes.string.isRequired,
   isLetterInPhrase: PropTypes.bool.isRequired
 };
