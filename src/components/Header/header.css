@@ -44,6 +44,9 @@
         margin-bottom: 0;
         height: 40px;
     }
+    .header-links-container{
+        width: 170px;
+    }
     .header-link{
         width: 35px;
         padding-left: 5px;

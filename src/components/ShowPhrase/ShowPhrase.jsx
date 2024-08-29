@@ -22,35 +22,56 @@ const ShowPhrase = ({ displayPhraseLink }) => {
 
   // Obtener la frase y las nuevas letras desde el store
   const { phrase, newLetters } = useSelector((state) => state.gameReducer);
-
+  
   useEffect(() => {
-    if (phrase && newLetters) {
-      const newAnimatedLetters = {};
-
-      let currentGlobalIndex = 0;
-
-      phrase.split(' ').forEach((word, wordIndex) => {
-        word.split('').forEach((char, charIndex) => {
-          if (newLetters.includes(char) && char !== "_") {
-            newAnimatedLetters[currentGlobalIndex] = true;
-          }
-          currentGlobalIndex++;
+    const animateLetters = async () => {
+      if (phrase && newLetters) {
+        const newAnimatedLetters = {};
+  
+        let currentGlobalIndex = 0;
+  
+        // Ocultar inicialmente las letras nuevas
+        phrase.split(' ').forEach((word) => {
+          word.split('').forEach((char) => {
+            if (newLetters.includes(char) && char !== "_") {
+              newAnimatedLetters[currentGlobalIndex] = false;
+            }
+            currentGlobalIndex++;
+          });
+          currentGlobalIndex++; // Contar el espacio entre palabras
         });
-        // Incrementa para contar el espacio entre las palabras
-        currentGlobalIndex++;
-      });
-
-      setPhraseToWords(phrase.split(" "));
-      setAnimatedLetters(newAnimatedLetters);
-
-      // Reset animation after a delay
-      const timer = setTimeout(() => {
-        setAnimatedLetters({});
-      }, 500);
-
-      return () => clearTimeout(timer);
-    }
+  
+        // Actualizar `phraseToWords` para renderizado
+        setPhraseToWords(phrase.split(" "));
+  
+        // Revelar y animar letras secuencialmente
+        for (let i = 0; i < Object.keys(newAnimatedLetters).length; i++) {
+          const index = Object.keys(newAnimatedLetters)[i];
+          await new Promise((resolve) => setTimeout(resolve, 300)); // Tiempo constante entre animaciones
+  
+          setAnimatedLetters((prev) => ({
+            ...prev,
+            [index]: true,
+          }));
+        }
+  
+        // Resetear animaciones después de todas las letras
+        // const totalDelay = Object.keys(newAnimatedLetters).length * 200 + 500;
+        // const timer = setTimeout(() => {
+        //   setAnimatedLetters({});
+        // }, totalDelay);
+  
+        // return () => clearTimeout(timer);
+      }
+    };
+  
+    animateLetters();
   }, [phrase, newLetters]);
+  
+  
+
+  
+  
 
   useEffect(() => {
     const fetchPhrase = async () => {
@@ -114,19 +135,26 @@ const ShowPhrase = ({ displayPhraseLink }) => {
                 .slice(0, wordIndex)
                 .reduce((acc, w) => acc + w.length + 1, 0) + charIndex;
 
-              return (
-                <span
-                  key={`${wordIndex}-${charIndex}`}
-                  className={`phrase-letter ${
-                    char === "_"
-                      ? "letter-box"
-                      : isLetter(char)
-                      ? `visible-letter ${animatedLetters[globalIndex] ? "animate-reveal" : ""}`
-                      : "visible-char"
-                  }`}
-                >
-                  {char}
-                </span>
+                const displayChar =
+              animatedLetters[globalIndex] || !newLetters.includes(char)
+                ? char
+                : "_";
+
+            return (
+              <span
+                key={`${wordIndex}-${charIndex}`}
+                className={`phrase-letter ${
+                  displayChar === "_"
+                    ? "letter-box"
+                    : isLetter(displayChar)
+                    ? `visible-letter ${
+                        animatedLetters[globalIndex] ? "animate-reveal" : ""
+                      }`
+                    : "visible-char"
+                }`}
+              >
+                {displayChar}
+              </span>
               );
             })}
             <span className="space">&nbsp;</span>
