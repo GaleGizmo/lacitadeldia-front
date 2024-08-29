@@ -34,10 +34,36 @@ const RulesPage = () => {
       </section>
 
       <section>
+        <h2>Dificultad</h2>
+        <p>El número de intentos que tienes para adivinar la cita dependerá de la longitud de la misma así como de la cantidad de letras poco frecuentes que contenga.</p>
+        <p>Las citas más fáciles pueden llegar a tener tan solo<strong> 3 intentos</strong>, mientras que las más complicadas podrán tener un máximo de <strong>7 intentos</strong>.</p>
+      </section>
+     <section>
+      <h2>Sistema de Puntos y Pistas</h2>
+      <p>Por cada letra de la cita que encuentres se sumarán <span className="correct">0.5 </span>puntos a tu marcador.</p>
+      <p>Si descubres la cita completa se sumarán <span className="correct">15 </span>puntos adicionales a tu marcador.</p>
+      <p>Los puntos que ganes cada día se conservarán siempre y cuando juegues en el mismo dispositivo y navegador.</p>
+      <h3>Usar las pistas</h3>
+      <p>En cada partida dispondrás de <strong>cuatro </strong>pistas.</p>
+      <p>Cada pista solo se podrá usar una vez en la partida.</p>
+      <p>Para usar cada pista deberás hacer click en su nombre, con lo que aparecerá una breve descripción de la misma junto con el botón para utilizarla.</p>
+      <p>Las pistas que tienes son:</p>
+      <ul>
+        <li><strong>Letra</strong>: Se selecciona una letra al azar de la cita y se muestra en todas las posiciones de la cita en las que se encuentre. Coste: <span className='perdida'><strong>25 puntos</strong></span>.</li>
+        <li><strong>Comunes</strong>: Muestra el número de letras comunes entre la palabra de cinco letras que hayas escrito en el tablero (antes de enviarla) y la cita. Por ejemplo, si escribes la palabra CEBRA y la cita contiene las letras C, R y E, al usar la pista se te dirá que hay tres letras comunes.Coste: <span className='perdida'><strong>25 puntos</strong></span>.</li>
+        <li><strong>Actor</strong>: Muestra el nombre del actor que protagoniza la cita. Coste: <span className='perdida'><strong>15 puntos</strong></span>.</li>
+        <li><strong>Director</strong>: Muestra el nombre del director de la película a la que pertenece la cita. Coste: <span className='perdida'><strong>15 puntos</strong></span>.</li>
+      </ul>
+      
+     
+     </section>
+
+      <section>
         <h2>Consejos</h2>
         <ul>
           <li>Intenta usar palabras con letras lo más comunes posible.</li>
           <li>Presta atención a las letras que ya has usado e intenta no repetirlas.</li>
+          <li>No uses la pista <strong>Letra</strong> demasiado pronto, así será más probable que te desvele una letra infrecuente.</li>
           
         </ul>
       </section>

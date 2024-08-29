@@ -96,3 +96,14 @@ export const getUserStats =  async (userId) => {
     console.error("Error al obtener las stats");
   }
 };
+
+export const getUserPoints =  async (userId) => {
+  try {
+    const response = await APIBase.get(`/user/getpoints/${userId}`);
+
+    return response.data;
+
+  } catch (err) {
+    console.error("Error al obtener los puntos");
+  }
+};

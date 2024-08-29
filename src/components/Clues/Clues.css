@@ -1,0 +1,27 @@
+.clues-button{
+    padding: 1px 0 3px 0;
+    border: 1px solid gray;
+    width: 100%;
+}
+
+.clues-letras{
+    display: flex;
+    justify-content: space-between;
+   
+}
+.clue-letra{
+    margin: 0;
+    flex: 1;
+    font-size: 12px;
+    border: 1px solid gray;
+    border-radius: 8px;
+    transition: background-color 0.3s ease;
+}
+.clue-letra.selected {
+    background-color: #d1e7dd;
+    font-weight: bold;
+   
+  }
+.clue-letra:hover{
+    cursor: pointer;
+}

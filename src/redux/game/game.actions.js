@@ -7,7 +7,6 @@ const startGame = (userUUID, phraseToPlay) => async (dispatch) => {
     let response = "";
     const activeGame = localStorage.getItem("gameId");
     if (activeGame) {
-      
       response = await APIBase.get(`/game/active/${activeGame}`);
     } else {
       response = await APIBase.post("/game/start", {
@@ -44,6 +43,31 @@ const updatePhrase = (phraseUpdated) => ({
   payload: phraseUpdated,
 });
 
+const handleClues = (clue, wordToTry) => async (dispatch) => {
+  dispatch({ type: "HANDLE_CLUES_REQUEST" });
+  try {
+    const gameId = localStorage.getItem("gameId");
+    if (clue === "lettersRight" && wordToTry.length != 5) {
+      dispatch({
+        type: "HANDLE_CLUES_FAILURE",
+        payload: "La palabra debe tener 5 letras",
+      });
+      return;
+    }
+    const response = await APIBase.post(`/game/useclue/${gameId}`, {
+      clue,
+      wordToTry,
+    });
+    console.log("respuesta de pistas del back", response.data);
+    dispatch({
+      type: "HANDLE_CLUES_SUCCESS",
+      payload: { data: response.data, clue: clue },
+    });
+  } catch (err) {
+    dispatch({ type: "HANDLE_CLUES_FAILURE", payload: err.message });
+  }
+};
+
 const setMaximumTries = (maxTries) => ({
   type: "SET_MAXIMUM_TRIES",
   payload: maxTries,
@@ -58,29 +82,30 @@ const addWordToTried = () => ({ type: "ADD_WORD_TO_TRIEDWORDS" });
 
 const clearWord = () => ({ type: "CLEAR_WORD" });
 
+const clearError = () => ({
+  type: "CLEAR_ERROR",
+});
+
+const resetSuccessMessage = () => ({
+  type: "CLEAR_SUCCESS_MESSAGE",
+});
+
 const gameOver = (gameResult) => ({
   type: "GAME_OVER",
   payload: gameResult,
 });
-const setNotificationShown = (shown, phraseNumber) => {
-  localStorage.setItem(
-    `notificationShown_${phraseNumber}`,
-    JSON.stringify(shown)
-  );
-  return {
-    type: "SET_NOTIFICATION_SHOWN",
-    payload: { shown, phraseNumber },
-  };
-};
+
 export {
   startGame,
   addLetter,
   clearWord,
+  clearError,
   deleteLastLetter,
   updatePhrase,
   setMaximumTries,
   addWordToTried,
   gameOver,
-  setNotificationShown,
+  resetSuccessMessage,
   updateGameData,
+  handleClues,
 };

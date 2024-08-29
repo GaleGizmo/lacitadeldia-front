@@ -3,15 +3,14 @@ const INITIAL_STATE = (() => {
   if (savedGame) {
     try {
       const parsedGame = JSON.parse(savedGame);
-      
+
       return {
         ...parsedGame,
         loading: null,
         error: null,
         successMessage: null,
-       
+        newLetters: [],
         wordToTry: "",
-      
       };
     } catch (e) {
       console.error("Error parsing activeGame from localStorage", e);
@@ -30,13 +29,17 @@ function getDefaultState() {
     maximumTries: 0,
     phraseNumber: 0,
     successMessage: null,
-    lettersFound:[],
+    lettersFound: [],
+    newLetters: [],
     wordToTry: "",
     triedWords: [],
     gameResult: "",
     gameResultNotification: null,
     currentTry: 0,
-    lettersFailed:[]
+    lettersFailed: [],
+    clues: null,
+    movieDirector:null,
+    movieActor: null
   };
 }
 
@@ -56,6 +59,9 @@ export const gameReducer = (state = INITIAL_STATE, action) => {
         currentTry: action.payload.currentTry,
         gameResult: action.payload.gameResult,
         gameResultNotification: action.payload.gameResultNotification,
+        movieDirector: action.payload.movieDirector,
+        movieActor: action.payload.movieActor,
+        clues: action.payload.clues,
       };
     case "START_GAME_FAILURE":
       return { ...state, loading: false, error: action.payload };
@@ -66,11 +72,11 @@ export const gameReducer = (state = INITIAL_STATE, action) => {
         error: null,
       };
     case "UPDATE_GAME_DATA_SUCCESS":
-      
       return {
         ...state,
         loading: false,
         wordToTry: "",
+        newLetters: action.payload.newLetters,
         phrase: action.payload.phrase,
         lettersFound: action.payload.lettersFound,
         lettersFailed: action.payload.lettersFailed,
@@ -79,7 +85,9 @@ export const gameReducer = (state = INITIAL_STATE, action) => {
         maximumTries: action.payload.maximumTries,
         gameResult: action.payload.gameResult,
         gameResultNotification: action.payload.gameResultNotification,
-      
+        movieDirector: action.payload.movieDirector,
+        movieActor: action.payload.movieActor,
+        clues: action.payload.clues,
       };
     case "UPDATE_GAME_DATA_FAILURE":
       return {
@@ -113,30 +121,56 @@ export const gameReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         triedWords: newTriedWords,
-        
       };
     }
-    case "UPDATE_LETTERS_FOUND":{
-      
+    case "UPDATE_LETTERS_FOUND": {
       return {
         ...state,
         lettersFound: action.payload,
       };
     }
-    case "UPDATE_LETTERS_FOUND_ERROR":{
+    case "UPDATE_LETTERS_FOUND_ERROR": {
       return { ...state, loading: false, error: action.payload };
     }
     case "GAME_OVER":
       return { ...state, gameResult: action.payload };
     case "SET_NOTIFICATION_SHOWN":
-        return {
-          ...state,
-          notificationShown: {
-            ...state.notificationShown,
-            [action.payload.phraseNumber]: action.payload.shown
-          }
-        };
-
+      return {
+        ...state,
+        notificationShown: {
+          ...state.notificationShown,
+          [action.payload.phraseNumber]: action.payload.shown,
+        },
+      };
+    case "HANDLE_CLUES_REQUEST":
+      return { ...state, loading: true, error: null };
+    case "HANDLE_CLUES_SUCCESS":
+      return {
+        ...state,
+        loading: false,
+        successMessage: action.payload.data.message,
+        clues: {
+          ...state.clues,
+          [action.payload.clue]: {
+            ...state.clues[action.payload.clue],
+            status: false,
+          },
+        },
+        ...(action.payload.data.director && {
+          movieDirector: action.payload.data.director,
+        }),
+        ...(action.payload.data.actor && { movieActor: action.payload.data.actor }),
+        ...(action.payload.data.updatedLettersFound && { lettersFound: action.payload.data.updatedLettersFound }),
+        ...(action.payload.data.updatedPhrase) && { phrase: action.payload.data.updatedPhrase },
+        ...(action.payload.data.revealedLetter && { newLetters: action.payload.data.revealedLetter })
+      };
+    case "HANDLE_CLUES_FAILURE":
+      
+      return { ...state, loading: false, error: action.payload };
+    case "CLEAR_SUCCESS_MESSAGE":
+      return { ...state, successMessage: "" };
+      case "CLEAR_ERROR":
+        return { ...state, error: null };
     default:
       return state;
   }

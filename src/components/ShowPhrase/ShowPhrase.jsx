@@ -2,38 +2,59 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from "react";
-
 import "./showPhrase.css";
 import { getPhraseByNumber } from "../../shared/api";
-import { useDispatch, useSelector } from "react-redux";
-
-
+import { useSelector } from "react-redux";
 import isLetter from "../../customhooks/isLetter";
 import PhraseDetails from "../PhraseDetails/PhraseDetails";
 
-const MAX_RETRY_ATTEMPTS = 3; // Número máximo de intentos de recarga
+const MAX_RETRY_ATTEMPTS = 3;
 
-const ShowPhrase = ({  displayPhraseLink }) => {
-  const dispatch = useDispatch();
+const ShowPhrase = ({ displayPhraseLink }) => {
   const [phraseToWords, setPhraseToWords] = useState([]);
+  const [animatedLetters, setAnimatedLetters] = useState({});
   const [phraseDetails, setPhraseDetails] = useState(null);
   const [showModal, setShowModal] = useState(false);
-  const [imageError, setImageError] = useState(false); // Estado para manejar el error de la imagen
-  const [imageSrc, setImageSrc] = useState(""); // Estado para manejar la fuente de la imagen
-  const [retryCount, setRetryCount] = useState(0); // Estado para el número de intentos de recarga
+  const [imageError, setImageError] = useState(false);
+  const [imageSrc, setImageSrc] = useState("");
+  const [retryCount, setRetryCount] = useState(0);
   const [visibleFields, setVisibleFields] = useState(0);
-  const {phrase}=useSelector((state)=>state.gameReducer)
-  console.log(phrase)
+
+  // Obtener la frase y las nuevas letras desde el store
+  const { phrase, newLetters } = useSelector((state) => state.gameReducer);
 
   useEffect(() => {
-    if (phrase)
-    setPhraseToWords(phrase.split(" "));
-  }, [phrase]);
- 
+    if (phrase && newLetters) {
+      const newAnimatedLetters = {};
+
+      let currentGlobalIndex = 0;
+
+      phrase.split(' ').forEach((word, wordIndex) => {
+        word.split('').forEach((char, charIndex) => {
+          if (newLetters.includes(char) && char !== "_") {
+            newAnimatedLetters[currentGlobalIndex] = true;
+          }
+          currentGlobalIndex++;
+        });
+        // Incrementa para contar el espacio entre las palabras
+        currentGlobalIndex++;
+      });
+
+      setPhraseToWords(phrase.split(" "));
+      setAnimatedLetters(newAnimatedLetters);
+
+      // Reset animation after a delay
+      const timer = setTimeout(() => {
+        setAnimatedLetters({});
+      }, 500);
+
+      return () => clearTimeout(timer);
+    }
+  }, [phrase, newLetters]);
+
   useEffect(() => {
     const fetchPhrase = async () => {
       try {
-        // Establecer la fuente de la imagen y los detalles en phraseDetails si se ha acertado
         if (displayPhraseLink) {
           const phraseNumber = localStorage.getItem("phraseNumber");
           let fetchedPhrase = await getPhraseByNumber(phraseNumber);
@@ -53,20 +74,19 @@ const ShowPhrase = ({  displayPhraseLink }) => {
     if (imageError && retryCount < MAX_RETRY_ATTEMPTS) {
       const retryTimeout = setTimeout(() => {
         setImageError(false);
-        setImageSrc(`${phraseDetails.poster}?retry=${new Date().getTime()}`); // Añadir un parámetro único para evitar el caché
+        setImageSrc(`${phraseDetails.poster}?retry=${new Date().getTime()}`);
         setRetryCount(retryCount + 1);
-      }, 1000); // Esperar 1 segundo antes de intentar recargar la imagen
+      }, 1000);
 
-      return () => clearTimeout(retryTimeout); // Limpiar el timeout si el componente se desmonta
+      return () => clearTimeout(retryTimeout);
     }
   }, [imageError, retryCount, phraseDetails]);
 
   useEffect(() => {
     if (showModal && visibleFields < 6) {
-      // 6 es el número total de campos
       const timer = setTimeout(() => {
         setVisibleFields((prev) => prev + 1);
-      }, 500); // Muestra un nuevo campo cada 500ms
+      }, 500);
       return () => clearTimeout(timer);
     }
   }, [showModal, visibleFields]);
@@ -89,24 +109,30 @@ const ShowPhrase = ({  displayPhraseLink }) => {
       <div className="phrase-container">
         {phraseToWords.map((word, wordIndex) => (
           <span key={wordIndex} className="word">
-            {word.split("").map((char, charIndex) => (
-              <span
-                key={charIndex}
-                className={`phrase-letter ${
-                  char === "_"
-                    ? "letter-box"
-                    : isLetter(char)
-                    ? "visible-letter"
-                    : "visible-char"
-                }`}
-              >
-                {char}
-              </span>
-            ))}
+            {word.split("").map((char, charIndex) => {
+              const globalIndex = phraseToWords
+                .slice(0, wordIndex)
+                .reduce((acc, w) => acc + w.length + 1, 0) + charIndex;
+
+              return (
+                <span
+                  key={`${wordIndex}-${charIndex}`}
+                  className={`phrase-letter ${
+                    char === "_"
+                      ? "letter-box"
+                      : isLetter(char)
+                      ? `visible-letter ${animatedLetters[globalIndex] ? "animate-reveal" : ""}`
+                      : "visible-char"
+                  }`}
+                >
+                  {char}
+                </span>
+              );
+            })}
             <span className="space">&nbsp;</span>
           </span>
         ))}
-      </div>{" "}
+      </div>
       {displayPhraseLink && (
         <div className="phrase-link-container">
           <button className="phrase-link" onClick={handleOpenModal}>

@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   
+  clearError,
   startGame,
   updateGameData,
 } from "../../redux/game/game.actions";
@@ -40,7 +41,12 @@ const GameComponent = () => {
     initializeGame();
     localStorage.removeItem("oldPhraseToPlay");
   }, []);
-
+  useEffect(() => {
+    if (game.error) {
+     toast.error(game.error);
+     dispatch(clearError());
+    }
+  }, [game.error]);
   useEffect(() => {
     if (!isInitialized) return;
 
@@ -79,9 +85,7 @@ const GameComponent = () => {
     return <div className="loader"></div>;
   }
 
-  if (game.error) {
-    return <div>Error: {game.error}</div>;
-  }
+ 
 
   return (
     <div className="game">

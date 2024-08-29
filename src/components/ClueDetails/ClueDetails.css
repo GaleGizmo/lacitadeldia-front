@@ -1,0 +1,11 @@
+.clue-details{
+    font-size: small;
+    height: 100px;
+}
+.clue-details button{
+    margin: 0;
+    padding: 2px 13px 3px 13px;
+}
+.clue-details p {
+    margin: 0;
+}

@@ -1,0 +1,8 @@
+.showPoints {
+    width: fit-content;
+    height: 30px;
+    margin: 0 auto;
+}
+.showPoints p {
+    margin: 0;
+}
