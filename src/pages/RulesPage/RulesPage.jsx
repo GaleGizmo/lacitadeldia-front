@@ -11,7 +11,7 @@ const RulesPage = () => {
       
       <div className='rules-content'><section>
         <h2>Objetivo</h2>
-        <p>¡Hola cinéfilo! El objetivo de este juego es descubrir la cita de una película en el menor número de intentos posible.</p>
+        <p>¡Hola cinéfilo! El objetivo de este juego es descubrir la cita de una película.</p>
       </section>
 
       <section>
@@ -46,13 +46,33 @@ const RulesPage = () => {
       <h3>Usar las pistas</h3>
       <p>En cada partida dispondrás de <strong>cuatro </strong>pistas.</p>
       <p>Cada pista solo se podrá usar una vez en la partida.</p>
-      <p>Para usar cada pista deberás hacer click en su nombre, con lo que aparecerá una breve descripción de la misma junto con el botón para utilizarla.</p>
+      <p>Para usar cada pista deberás hacer click en su icono, con lo que aparecerá una breve descripción de la misma junto con el botón para utilizarla.</p>
       <p>Las pistas que tienes son:</p>
       <ul>
-        <li><strong>Letra</strong>: Se selecciona una letra al azar de la cita y se muestra en todas las posiciones de la cita en las que se encuentre. Coste: <span className='perdida'><strong>25 puntos</strong></span>.</li>
-        <li><strong>Comunes</strong>: Muestra el número de letras comunes entre la palabra de cinco letras que hayas escrito en el tablero (antes de enviarla) y la cita. Por ejemplo, si escribes la palabra CEBRA y la cita contiene las letras C, R y E, al usar la pista se te dirá que hay tres letras comunes.Coste: <span className='perdida'><strong>25 puntos</strong></span>.</li>
-        <li><strong>Actor</strong>: Muestra el nombre del actor que protagoniza la cita. Coste: <span className='perdida'><strong>15 puntos</strong></span>.</li>
-        <li><strong>Director</strong>: Muestra el nombre del director de la película a la que pertenece la cita. Coste: <span className='perdida'><strong>15 puntos</strong></span>.</li>
+        <li><img
+            src="../../src/assets/letra.png"
+            alt="Letra"
+           
+            
+          />{" "}  Se selecciona una letra al azar de la cita y se muestra en todas las posiciones de la cita en las que se encuentre. Coste: <span className='perdida'><strong>25 puntos</strong></span>.</li>
+        <li><img
+            src="../../src/assets/compara_letras.png"
+            alt="Letra"
+           
+            
+          />{" "}  Muestra el número de letras comunes (de las no reveladas) entre una palabra de cinco letras y la cita. Por ejemplo, si escribes la palabra CEBRA y la cita contiene las letras C, R y E, pero la E ya está revelada, al usar la pista se te dirá que hay dos letras comunes.Coste: <span className='perdida'><strong>25 puntos</strong></span>.</li>
+        <li><img
+            src="../../src/assets/actor.png"
+            alt="Letra"
+           
+            
+          />{" "}  Muestra el nombre del actor que protagoniza la cita. Coste: <span className='perdida'><strong>15 puntos</strong></span>.</li>
+        <li><img
+            src="../../src/assets/director.png"
+            alt="Letra"
+           
+            
+          />{" "}  Muestra el nombre del director de la película a la que pertenece la cita. Coste: <span className='perdida'><strong>15 puntos</strong></span>.</li>
       </ul>
       
      
@@ -61,9 +81,9 @@ const RulesPage = () => {
       <section>
         <h2>Consejos</h2>
         <ul>
-          <li>Intenta usar palabras con letras lo más comunes posible.</li>
+          <li>Al princpio, intenta usar palabras con las letras más comunes.</li>
           <li>Presta atención a las letras que ya has usado e intenta no repetirlas.</li>
-          <li>No uses la pista <strong>Letra</strong> demasiado pronto, así será más probable que te desvele una letra infrecuente.</li>
+          <li>No uses la pista de revelar letra al inicio, así será más probable que te desvele una letra infrecuente.</li>
           
         </ul>
       </section>

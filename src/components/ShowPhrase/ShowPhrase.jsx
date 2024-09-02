@@ -55,13 +55,6 @@ const ShowPhrase = ({ displayPhraseLink }) => {
           }));
         }
   
-        // Resetear animaciones después de todas las letras
-        // const totalDelay = Object.keys(newAnimatedLetters).length * 200 + 500;
-        // const timer = setTimeout(() => {
-        //   setAnimatedLetters({});
-        // }, totalDelay);
-  
-        // return () => clearTimeout(timer);
       }
     };
   
@@ -72,7 +65,7 @@ const ShowPhrase = ({ displayPhraseLink }) => {
 
   
   
-
+ //Carga los detalles de la frase cuando se ha acertado
   useEffect(() => {
     const fetchPhrase = async () => {
       try {
@@ -90,7 +83,7 @@ const ShowPhrase = ({ displayPhraseLink }) => {
 
     fetchPhrase();
   }, [displayPhraseLink]);
-
+//Carga el póster incluyendo tres intentos si hay error con la url de la imagen
   useEffect(() => {
     if (imageError && retryCount < MAX_RETRY_ATTEMPTS) {
       const retryTimeout = setTimeout(() => {
@@ -103,6 +96,7 @@ const ShowPhrase = ({ displayPhraseLink }) => {
     }
   }, [imageError, retryCount, phraseDetails]);
 
+  //Muestra los campos de la info de la frase de modo secuencial
   useEffect(() => {
     if (showModal && visibleFields < 6) {
       const timer = setTimeout(() => {
@@ -161,6 +155,7 @@ const ShowPhrase = ({ displayPhraseLink }) => {
           </span>
         ))}
       </div>
+      {/* Mostrar el botón "Ver detalles de la cita" solo si displayPhraseLink es verdadero */}
       {displayPhraseLink && (
         <div className="phrase-link-container">
           <button className="phrase-link" onClick={handleOpenModal}>
@@ -168,6 +163,7 @@ const ShowPhrase = ({ displayPhraseLink }) => {
           </button>
         </div>
       )}
+      {/* Mostrar los detalles de la frase en un modal */}
       <PhraseDetails show={showModal} onClose={handleCloseModal}>
         {phraseDetails && (
           <div className="phrase-details">

@@ -3,9 +3,42 @@
     height: 100px;
 }
 .clue-details button{
-    margin: 0;
+    margin: 3px ;
+    border: 1px solid gray;
     padding: 2px 13px 3px 13px;
+    background-image: 
+    linear-gradient(to bottom, #ffeb0c, #d6cd25),
+    linear-gradient(to bottom, #d6cd25, #ffeb0c);
 }
-.clue-details p {
+.clue-description {
     margin: 0;
+}
+.clue-details>input{
+    border-radius: 8px;
+    width: 50px;
+    padding: 3px;
+    color: #e53b08;
+    font-weight: 600;
+}
+.consumed-message {
+    color: #ff6b6b; 
+    font-weight: bold; 
+    font-size: 14px; 
+    margin-top: 10px; 
+    padding: 5px; 
+    background-color: #fff3f3; 
+    border: 1px solid #ff6b6b; 
+    border-radius: 5px; 
+    text-align: center; 
+  }
+@media (max-width: 767px) {
+    .clue-details {
+        font-size: 10px;
+        height: 60px;
+    }
+    .consumed-message{
+        font-size: 10px;
+        padding: 3px;
+        margin-top: 5px;
+    }
 }

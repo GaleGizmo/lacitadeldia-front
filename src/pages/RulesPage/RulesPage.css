@@ -79,6 +79,10 @@ footer {
   font-style: italic;
   margin-top: 40px;
 }
+li>img{
+  width: 30px;
+  vertical-align: middle;
+}
 @media (max-width: 767px) {
     h1{
         font-size: 2em;

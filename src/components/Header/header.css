@@ -25,7 +25,7 @@
         position: absolute;
         width: 170px;
         height: 280px; 
-        top: 2px;
+        top: 5px;
         left: calc(50% - 360px); /* 50% para el centro del padre, -110px (-50% del ancho de hijoA, -50px) */
       
 }
@@ -45,11 +45,17 @@
         height: 40px;
     }
     .header-links-container{
-        width: 170px;
+        width: 158px;
     }
     .header-link{
         width: 35px;
         padding-left: 5px;
        
+    }
+    .clues-container{
+        top: 12px;
+        left: calc(50% - 174px);
+        width: 90px;
+        height: 200px;
     }
   }

@@ -1,11 +1,9 @@
 import ClueDetails from "../ClueDetails/ClueDetails";
-import ShowPoints from "../ShowPoints/ShowPoints";
 import "./Clues.css";
 import { useState } from "react";
 
 const Clues = () => {
-  const [showClue, setShowClue] = useState(false);
-  const [showDetails, setShowDetails] = useState(false);
+  // const [showDetails, setShowDetails] = useState(false);
   const [clueName, setClueName] = useState("");
   const [selectedClue, setSelectedClue] = useState("");
 
@@ -23,23 +21,15 @@ const Clues = () => {
         return "";
     }
   };
-  const handleShowClue = () => {
-    setShowClue(!showClue);
-    if (showDetails) {
-      setShowDetails(false);
-      setClueName("");
-      setSelectedClue("");
-    }
-  };
 
   const displayClueDetails = (e) => {
-    const clickedClue = e.target.textContent;
+    const clickedClue = e.target.alt; // Usar 'alt' para identificar la imagen clicada
     if (clueName === clickedClue) {
-      setShowDetails(false);
+      // setShowDetails(false);
       setClueName("");
       setSelectedClue("");
     } else {
-      setShowDetails(true);
+      // setShowDetails(true);
       setClueName(clickedClue);
       setSelectedClue(clickedClue);
     }
@@ -47,52 +37,56 @@ const Clues = () => {
 
   return (
     <div className="clues">
-      <button className="clues-button" onClick={handleShowClue}>
-        ¡Dame una pista!
-      </button>
-      {showClue && (
-        <div className="clues-display">
-          <div className="clues-letras">
-            <p
-              onClick={displayClueDetails}
-              className={`clue-letra ${
-                selectedClue === "Letra" ? "selected" : ""
-              }`}
-            >
-              Letra
-            </p>
-            <p
-              onClick={displayClueDetails}
-              className={`clue-letra ${
-                selectedClue === "Comunes" ? "selected" : ""
-              }`}
-            >
-              Comunes
-            </p>{" "}
-          </div>
-          <div className="clues-letras">
-            <p
-              onClick={displayClueDetails}
-              className={`clue-letra ${
-                selectedClue === "Actor" ? "selected" : ""
-              }`}
-            >
-              Actor
-            </p>
-            <p
-              onClick={displayClueDetails}
-              className={`clue-letra ${
-                selectedClue === "Director" ? "selected" : ""
-              }`}
-            >
-              Director
-            </p>
-          </div>
-          <ClueDetails typeOfClue={codifyClueForBackend(clueName)} />
-          <ShowPoints />
+      <div className="clues-button">¡AYUDA!</div>
+      <div className="clues-display">
+        <div className="clues-letras">
+          <div  className={`clue-letra ${
+              selectedClue === "Letra" ? "selected" : ""
+            }`}><img
+            src="../../src/assets/letra.png"
+            alt="Letra"
+            onClick={displayClueDetails}
+           
+            width={30}
+            height={30}
+          /> </div>
+          <div  className={`clue-letra ${
+              selectedClue === "Comunes" ? "selected" : ""
+            }`}><img
+            src="../../src/assets/compara_letras.png"
+            alt="Comunes"
+            onClick={displayClueDetails}
+           
+            width={30}
+            height={30}
+          /> </div>
+           <div  className={`clue-letra ${
+              selectedClue === "Actor" ? "selected" : ""
+            }`}><img
+            src="../../src/assets/actor.png"
+            alt="Actor"
+            onClick={displayClueDetails}
+           
+            width={30}
+            height={30}
+          /> </div>
+          <div className={`clue-letra ${
+              selectedClue === "Director" ? "selected" : ""
+            }`}><img
+            src="../../src/assets/director.png"
+            alt="Director"
+            onClick={displayClueDetails}
+          
+            width={30}
+            height={30}
+          /> </div>
         </div>
-      )}
+        
+        <ClueDetails typeOfClue={codifyClueForBackend(clueName)} />
+       
+      </div>
     </div>
   );
 };
+
 export default Clues;

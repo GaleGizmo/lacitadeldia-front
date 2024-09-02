@@ -18,7 +18,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
         toastOptions={{
          
         }}
-        duration={2000}
+        duration={3000}
       />
     </BrowserRouter>
    

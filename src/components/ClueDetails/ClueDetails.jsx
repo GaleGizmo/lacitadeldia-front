@@ -12,8 +12,8 @@ import {
 const ClueDetails = ({ typeOfClue }) => {
   const dispatch = useDispatch();
   const [clueDescription, setClueDescription] = useState("");
-
-  const { clues, wordToTry, successMessage } = useSelector(
+  const [wordToTry, setWordToTry] = useState("");
+  const { clues, successMessage } = useSelector(
     (state) => state.gameReducer
   );
 
@@ -24,22 +24,22 @@ const ClueDetails = ({ typeOfClue }) => {
     switch (typeOfClue) {
       case "letter":
         setClueDescription(
-          "Se descubre una letra al azar, incluidas sus repeticiones"
+          "Revela una letra de la frase"
         );
 
         break;
       case "lettersRight":
         setClueDescription(
-          "Número de letras comunes entre la frase y la palabra a intentar"
+          "Letras comunes con la palabra (5 letras):"
         );
 
         break;
       case "actor":
-        setClueDescription("Muestra el actor que dijo la frase");
+        setClueDescription("Actor/actriz que dijo la frase");
 
         break;
       case "director":
-        setClueDescription("Muestra el director de la película");
+        setClueDescription("Quien dirigió la película");
 
         break;
       default:
@@ -55,10 +55,15 @@ const ClueDetails = ({ typeOfClue }) => {
   }, [successMessage, dispatch]);
   return (
     <div className="clue-details">
-      <p>{clueDescription}</p>
-      {clueDescription && clues[typeOfClue] && clues[typeOfClue].status && (
-        <button onClick={useClue}>Usar</button>
+      <p className="clue-description">{clueDescription}</p>
+      {(typeOfClue === "lettersRight" &&clues.lettersRight.status ) &&  (
+        <input type="text" placeholder="Palabra a probar" onChange={(e) => setWordToTry(e.target.value.toLocaleUpperCase())} />
       )}
+      {clueDescription && clues[typeOfClue] && clues[typeOfClue].status ? (
+      <button onClick={useClue}>Usar</button>
+    ) : clueDescription && (
+      <p className="consumed-message">Pista consumida</p> 
+    )}
     </div>
   );
 };
