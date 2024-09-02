@@ -19,6 +19,7 @@ const AddPhraseForm = () => {
     
       const [errors, setErrors] = useState({});
       const [submittedPhrase, setSubmittedPhrase] = useState(null);
+      const [letterCount, setLetterCount] = useState(0);
       const validate = () => {
         const errors = {};
     
@@ -42,6 +43,11 @@ const AddPhraseForm = () => {
           ...formData,
           [name]: type === 'checkbox' ? checked : value,
         });
+        if (name === "quote") {
+          // Actualizar el conteo de letras cuando se cambia el campo "quote"
+          const lettersOnly = value.replace(/[^a-zA-Z]/g, ''); // Elimina todo excepto letras
+          setLetterCount(lettersOnly.length); // Actualiza el conteo de letras
+        }
       };
     
       const handleSubmit = async (e) => {
@@ -72,6 +78,7 @@ const AddPhraseForm = () => {
             poster: '',
             used: false,
           });
+          setLetterCount(0);
         } catch (error) {
           console.error('Error adding phrase:', error);
           alert('Error adding phrase');
@@ -85,6 +92,7 @@ const AddPhraseForm = () => {
             <label>Quote:</label>
             <textarea name="quote" value={formData.quote} onChange={handleChange} required />
             {errors.quote && <span>{errors.quote}</span>}
+            <p>Número de letras: {letterCount}</p>
           </div>
           <div className="form-field">
             <label>Movie:</label>
