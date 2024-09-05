@@ -68,7 +68,7 @@ export const updateGame = async (gameId, gameData) =>{
 export const getUserPastPhrases=async (userId)=>{
   try {
     const response = await APIBase.get(`/phrases/getoldphrases/${userId}`);
-  
+    console.log("oldphrases devuelve:", response)
     return response.data
   } catch (err) {
     console.error('Error al obtener los juegos pasados:', err);

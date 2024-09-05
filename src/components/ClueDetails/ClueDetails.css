@@ -1,11 +1,13 @@
 .clue-details{
     font-size: small;
-    height: 100px;
+    height: fit-content;
+    position: relative;
+   
 }
 .clue-details button{
     margin: 3px ;
     border: 1px solid gray;
-    padding: 2px 13px 3px 13px;
+    padding: 2px 10px 3px 10px;
     background-image: 
     linear-gradient(to bottom, #ffeb0c, #d6cd25),
     linear-gradient(to bottom, #d6cd25, #ffeb0c);
@@ -15,30 +17,61 @@
 }
 .clue-details>input{
     border-radius: 8px;
-    width: 50px;
+    /* background-image: 
+    linear-gradient(to bottom, #c8c133 5%,#fef776 30%, #fef776 70%, #c8c133 95%); */
+    
+    width: 45px;
+    text-align: center;
     padding: 3px;
     color: #e53b08;
     font-weight: 600;
 }
 .consumed-message {
-    color: #ff6b6b; 
+    width: max-content;
+    color: #2c3e50; 
     font-weight: bold; 
-    font-size: 14px; 
-    margin-top: 10px; 
-    padding: 5px; 
-    background-color: #fff3f3; 
-    border: 1px solid #ff6b6b; 
+    font-size: 12px; 
+    margin: 10px auto; 
+    padding: 5px 10px; 
+    background-color: #d6cd25;
+    border: 1px solid #bdc3c7; 
     border-radius: 5px; 
     text-align: center; 
+  }
+  .clue-price{
+   display: flex;
+   justify-content: center;
+  padding: 1px;
+    margin: 0;
+    font-weight: 600;
+    color: #fff3f3;
+    background-color: #f56539;
+    position: absolute;
+    bottom: 3px;
+    right: 3px;
+    width: 21px;
+    height: 21px;
+    border: 1px solid gray;
+    border-radius: 50%;
+
   }
 @media (max-width: 767px) {
     .clue-details {
         font-size: 10px;
-        height: 60px;
+       
     }
     .consumed-message{
         font-size: 10px;
-        padding: 3px;
+        padding: 3px 5px;
         margin-top: 5px;
+    }
+    .clue-details>input{
+        padding: 1px;
+    }
+    .clue-price{
+        width: 14px;
+        height: 14px;
+        right: 2px;
+        bottom: 4px;
     }
 }

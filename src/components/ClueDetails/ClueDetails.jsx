@@ -7,15 +7,15 @@ import { toast } from "sonner";
 import {
   handleClues,
   resetSuccessMessage,
+  setInputFocus,
 } from "../../redux/game/game.actions";
 
 const ClueDetails = ({ typeOfClue }) => {
   const dispatch = useDispatch();
   const [clueDescription, setClueDescription] = useState("");
   const [wordToTry, setWordToTry] = useState("");
-  const { clues, successMessage } = useSelector(
-    (state) => state.gameReducer
-  );
+  const [consumedClueMessage, setConsumedClueMessage] = useState("Pista usada");
+  const { clues, successMessage } = useSelector((state) => state.gameReducer);
 
   const useClue = () => {
     dispatch(handleClues(typeOfClue, wordToTry));
@@ -23,29 +23,29 @@ const ClueDetails = ({ typeOfClue }) => {
   useEffect(() => {
     switch (typeOfClue) {
       case "letter":
-        setClueDescription(
-          "Revela una letra de la frase"
-        );
-
+        setClueDescription("Revela una letra de la frase");
+        if (clues.letter.value) setConsumedClueMessage(clues.letter.value) ;
         break;
       case "lettersRight":
-        setClueDescription(
-          "Letras comunes con la palabra (5 letras):"
-        );
-
+        setClueDescription("Letras comunes con la palabra:");
+        if (clues.lettersRight.value) setConsumedClueMessage(
+              `${clues.lettersRight.value.word} (${clues.lettersRight.value.commons})`
+            )
+          ;
         break;
       case "actor":
         setClueDescription("Actor/actriz que dijo la frase");
-
+        if (clues.actor.value) setConsumedClueMessage(clues.actor.value);
         break;
       case "director":
         setClueDescription("Quien dirigió la película");
-
+       if (clues.director.value) setConsumedClueMessage(clues.director.value)
+          ;
         break;
       default:
         setClueDescription("");
     }
-  }, [typeOfClue]);
+  }, [typeOfClue, clues]);
 
   useEffect(() => {
     if (successMessage) {
@@ -56,14 +56,27 @@ const ClueDetails = ({ typeOfClue }) => {
   return (
     <div className="clue-details">
       <p className="clue-description">{clueDescription}</p>
-      {(typeOfClue === "lettersRight" &&clues.lettersRight.status ) &&  (
-        <input type="text" placeholder="Palabra a probar" onChange={(e) => setWordToTry(e.target.value.toLocaleUpperCase())} />
+      {typeOfClue === "lettersRight" && clues.lettersRight.status && (
+        <input
+          type="text"
+          maxLength={"5"}
+          onChange={(e) => setWordToTry(e.target.value.toLocaleUpperCase())}
+          onFocus={() => dispatch(setInputFocus(true))}
+          onBlur={() => dispatch(setInputFocus(false))}
+        />
       )}
       {clueDescription && clues[typeOfClue] && clues[typeOfClue].status ? (
-      <button onClick={useClue}>Usar</button>
-    ) : clueDescription && (
-      <p className="consumed-message">Pista consumida</p> 
-    )}
+       <> <button onClick={useClue}>Usar</button>
+        <p className="clue-price">{clues[typeOfClue].price}</p></>
+      ) : (
+        clueDescription && (
+          <p className="consumed-message">{consumedClueMessage}</p>
+        )
+      )}
+
+      {/* {clueDescription && clues[typeOfClue] && clues[typeOfClue].status && (
+        <p className="clue-price">{clues[typeOfClue].price}</p>
+      )} */}
     </div>
   );
 };

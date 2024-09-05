@@ -17,6 +17,7 @@ const OldGames = () => {
   useEffect(() => {
     const fetchPhrases = async (playerId) => {
       const oldPhrases = await getUserPastPhrases(playerId);
+      console.log(oldPhrases);
       setPhrasesToShow(oldPhrases);
     };
     if (playerId) {
@@ -26,6 +27,9 @@ const OldGames = () => {
 
   if (phrasesToShow === null) {
     return <div className="loader"></div>;
+  }
+  if (phrasesToShow.message){
+    return <div className="consumed-message"><h3>{phrasesToShow.message}</h3></div>
   }
   return (
     <>

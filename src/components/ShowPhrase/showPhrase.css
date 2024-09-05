@@ -40,7 +40,8 @@
 .space {
   width: 10px;
 }
-.phrase-link {
+.phrase-link  {
+  border: 1px solid gray !important;
   background-image: 
     linear-gradient(to bottom, #ffeb0c, #d6cd25),
     linear-gradient(to bottom, #d6cd25, #ffeb0c);
@@ -67,7 +68,32 @@
 }
 
 .fade-in {
-  animation: fadeIn 0.5s ease-out forwards;
+  opacity: 0; /* Comienza invisible */
+  animation: fadeIn 0.5s ease-out forwards; /* forwards mantiene el estado final */
+}
+
+.delay-1 {
+  animation-delay: 0.5s; /* 1er elemento: 0.5 segundos de retraso */
+}
+
+.delay-2 {
+  animation-delay: 1s; /* 2º elemento: 1 segundo de retraso */
+}
+
+.delay-3 {
+  animation-delay: 1.5s; /* 3º elemento: 1.5 segundos de retraso */
+}
+
+.delay-4 {
+  animation-delay: 2s; /* 4º elemento: 2 segundos de retraso */
+}
+
+.delay-5 {
+  animation-delay: 2.5s; /* 5º elemento: 2.5 segundos de retraso */
+}
+
+.delay-6 {
+  animation-delay: 3s; /* 6º elemento: 3 segundos de retraso */
 }
 @keyframes revealLetter {
   from {

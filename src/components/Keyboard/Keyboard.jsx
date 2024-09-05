@@ -23,21 +23,11 @@ const Keyboard = ({ userId }) => {
   
   const lettersDown = "ZXCVBNM".split("");
 
-  const { lettersFound, lettersFailed, wordToTry, gameResult } = useSelector(
+  const { lettersFound, lettersFailed, wordToTry, gameResult, isInputFocused } = useSelector(
     (reducer) => reducer.gameReducer
   );
   
- //crea un array con las letras intentadas que no están en la frase
-  // useEffect(() => {
-  //   const failedLettersSet = new Set(
-  //     triedWords
-  //       .join('')
-  //       .split('')
-  //       .filter(letter => !lettersFound.includes(letter))
-  //   );
-    
-  //   setFailedLetters(Array.from(failedLettersSet).join(''));
-  // }, [triedWords, lettersFound]);
+
 
 
   const [result, verifyWord, isVerifying] = useCheckWord();
@@ -70,7 +60,7 @@ const Keyboard = ({ userId }) => {
     const handleKeyDown = (event) => {
       const { key } = event;
 
-      if (gameResult) return;
+      if (gameResult || isInputFocused) return;
 
       if (key === "Backspace") {
         dispatch(deleteLastLetter());
@@ -93,7 +83,7 @@ const Keyboard = ({ userId }) => {
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, [dispatch, wordToTry, userId, verifyWord, gameResult]);
+  }, [dispatch, wordToTry, userId, verifyWord, gameResult, isInputFocused]);
 
   //verifica si la palabra es válida y la añade a triedWords
   //luego limpia la palabra actual

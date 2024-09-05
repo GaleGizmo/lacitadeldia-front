@@ -12,25 +12,14 @@
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
-    width: 220px;
+    width: 190px;
     display: flex;
     justify-content: space-between;
     
 }
-.clues-container{
-    display: flex;
-    flex-direction: column;
-    
-        z-index: 100;
-        position: absolute;
-        width: 170px;
-        height: 280px; 
-        top: 5px;
-        left: calc(50% - 360px); /* 50% para el centro del padre, -110px (-50% del ancho de hijoA, -50px) */
-      
-}
+
 .header-link {
-    padding-left: 9px;
+    padding-left: 7px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -52,10 +41,5 @@
         padding-left: 5px;
        
     }
-    .clues-container{
-        top: 12px;
-        left: calc(50% - 174px);
-        width: 90px;
-        height: 200px;
-    }
+  
   }

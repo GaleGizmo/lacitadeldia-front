@@ -6,9 +6,7 @@ import { useSelector } from "react-redux";
 const ShowPoints = () => {
   const userId = localStorage.getItem("userUUID");
   const [userPoints, setUserPoints] = useState(0);
-  const {clues} = useSelector(
-    (state) => state.gameReducer
-  );
+  const { clues } = useSelector((state) => state.gameReducer);
   useEffect(() => {
     let isMounted = true; // Variable de bandera para rastrear si el componente está montado
 
@@ -33,7 +31,13 @@ const ShowPoints = () => {
     };
   }, [userId, clues]);
   return (
-    <div className="showPoints">{userPoints && <p>Puntos: {userPoints}</p>}</div>
+    <div>
+      
+        <p>
+          Puntos: {userPoints && (<span className="points">{userPoints}</span>)}
+        </p>
+      
+    </div>
   );
 };
 

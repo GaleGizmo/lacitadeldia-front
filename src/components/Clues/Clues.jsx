@@ -3,7 +3,7 @@ import "./Clues.css";
 import { useState } from "react";
 
 const Clues = () => {
-  // const [showDetails, setShowDetails] = useState(false);
+  
   const [clueName, setClueName] = useState("");
   const [selectedClue, setSelectedClue] = useState("");
 
@@ -25,11 +25,11 @@ const Clues = () => {
   const displayClueDetails = (e) => {
     const clickedClue = e.target.alt; // Usar 'alt' para identificar la imagen clicada
     if (clueName === clickedClue) {
-      // setShowDetails(false);
+      
       setClueName("");
       setSelectedClue("");
     } else {
-      // setShowDetails(true);
+      
       setClueName(clickedClue);
       setSelectedClue(clickedClue);
     }
@@ -37,10 +37,10 @@ const Clues = () => {
 
   return (
     <div className="clues">
-      <div className="clues-button">¡AYUDA!</div>
-      <div className="clues-display">
-        <div className="clues-letras">
-          <div  className={`clue-letra ${
+     
+      
+        <div className="clues-icons">
+          <div  className={`clue-icon ${
               selectedClue === "Letra" ? "selected" : ""
             }`}><img
             src="../../src/assets/letra.png"
@@ -50,7 +50,7 @@ const Clues = () => {
             width={30}
             height={30}
           /> </div>
-          <div  className={`clue-letra ${
+          <div  className={`clue-icon ${
               selectedClue === "Comunes" ? "selected" : ""
             }`}><img
             src="../../src/assets/compara_letras.png"
@@ -60,7 +60,7 @@ const Clues = () => {
             width={30}
             height={30}
           /> </div>
-           <div  className={`clue-letra ${
+           <div  className={`clue-icon ${
               selectedClue === "Actor" ? "selected" : ""
             }`}><img
             src="../../src/assets/actor.png"
@@ -70,7 +70,7 @@ const Clues = () => {
             width={30}
             height={30}
           /> </div>
-          <div className={`clue-letra ${
+          <div className={`clue-icon ${
               selectedClue === "Director" ? "selected" : ""
             }`}><img
             src="../../src/assets/director.png"
@@ -84,7 +84,7 @@ const Clues = () => {
         
         <ClueDetails typeOfClue={codifyClueForBackend(clueName)} />
        
-      </div>
+     
     </div>
   );
 };

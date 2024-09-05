@@ -2,7 +2,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  
   clearError,
   startGame,
   updateGameData,
@@ -16,6 +15,8 @@ import { toast } from "sonner";
 
 import { PropTypes } from "prop-types";
 import ShareButton from "../ShareButton/ShareButton";
+import Clues from "../Clues/Clues";
+import ShowPoints from "../ShowPoints/ShowPoints";
 
 const GameComponent = () => {
   let oldPhraseNumber = localStorage.getItem("oldPhraseToPlay");
@@ -24,7 +25,7 @@ const GameComponent = () => {
     oldPhraseNumber = 0;
   }
   const dispatch = useDispatch();
-
+  const [showPhraseDetails, setShowPhraseDetails] = useState(false);
   const userId = getOrCreateUUId(); // Obtener el UUID del usuario
   const [wordsToTry, setWordsToTry] = useState([]);
   const gameId = localStorage.getItem("gameId");
@@ -39,12 +40,13 @@ const GameComponent = () => {
       setIsInitialized(true);
     };
     initializeGame();
+    console.log("juego iniciado")
     localStorage.removeItem("oldPhraseToPlay");
   }, []);
   useEffect(() => {
     if (game.error) {
-     toast.error(game.error);
-     dispatch(clearError());
+      toast.error(game.error);
+      dispatch(clearError());
     }
   }, [game.error]);
   useEffect(() => {
@@ -69,6 +71,7 @@ const GameComponent = () => {
     if (game.gameResult && !game.gameResultNotification) {
       if (game.gameResult === "win") {
         toast.success("¡Bien hecho!", { style: { background: "#51e651" } });
+        setShowPhraseDetails(true);
       } else if (game.gameResult === "lose") {
         toast.error("Has perdido, lo siento");
       }
@@ -78,21 +81,38 @@ const GameComponent = () => {
 
       dispatch(updateGameData(gameId, gameData));
     }
-   
   }, [game.gameResult]);
 
   if (game.loading) {
     return <div className="loader"></div>;
   }
 
- 
-
   return (
     <div className="game">
+     {!game.gameResult && <div className="clues-container">
+        <Clues />{" "}
+      </div>}
       <div className="words">{wordsToTry} </div>
-
-      <ShowPhrase displayPhraseLink={game.gameResult === "win"} />
-
+      {!game.gameResult && <div className="showPoints">
+        <ShowPoints/>{" "}
+      </div>}
+      <div className="phrase-and-button-container">
+        <ShowPhrase
+          displayPhraseLink={game.gameResult === "win"}
+          showModal={showPhraseDetails}
+          onModalClose={() => setShowPhraseDetails(false)}
+        />
+        {game.gameResult === "win" && (
+          <div className="phrase-link-container">
+            <button
+              className="phrase-link"
+              onClick={() => setShowPhraseDetails(true)}
+            >
+              Ver detalles de la cita
+            </button>
+          </div>
+        )}{" "}
+      </div>
       <Keyboard userId={userId} />
       {game.gameResult && (
         <ShareButton

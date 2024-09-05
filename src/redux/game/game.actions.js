@@ -38,10 +38,7 @@ const updateGameData = (gameId, gameData) => async (dispatch) => {
     dispatch({ type: "UPDATE_GAME_DATA_FAILURE", payload: err.message });
   }
 };
-const updatePhrase = (phraseUpdated) => ({
-  type: "UPDATE_PHRASE",
-  payload: phraseUpdated,
-});
+
 
 const handleClues = (clue, wordToTry) => async (dispatch) => {
   dispatch({ type: "HANDLE_CLUES_REQUEST" });
@@ -59,19 +56,23 @@ const handleClues = (clue, wordToTry) => async (dispatch) => {
       wordToTry,
     });
     console.log("respuesta de pistas del back", response.data);
+    if (response.data.unusable) {
+      dispatch({
+        type: "HANDLE_CLUES_FAILURE",
+        payload: response.data.unusable,
+      });
+      return;
+    }
     dispatch({
       type: "HANDLE_CLUES_SUCCESS",
-      payload: { data: response.data, clue: clue },
+      payload: { data: response.data.clueResult, clues: response.data.updatedGameClues },
     });
   } catch (err) {
     dispatch({ type: "HANDLE_CLUES_FAILURE", payload: err.message });
   }
 };
 
-const setMaximumTries = (maxTries) => ({
-  type: "SET_MAXIMUM_TRIES",
-  payload: maxTries,
-});
+
 
 const addLetter = (letter) => ({ type: "ADD_LETTER", payload: letter });
 
@@ -89,11 +90,11 @@ const clearError = () => ({
 const resetSuccessMessage = () => ({
   type: "CLEAR_SUCCESS_MESSAGE",
 });
-
-const gameOver = (gameResult) => ({
-  type: "GAME_OVER",
-  payload: gameResult,
+const setInputFocus = (isFocused) => ({
+  type: "SET_INPUT_FOCUS",
+  payload: isFocused,
 });
+
 
 export {
   startGame,
@@ -101,11 +102,12 @@ export {
   clearWord,
   clearError,
   deleteLastLetter,
-  updatePhrase,
-  setMaximumTries,
+
+ 
   addWordToTried,
-  gameOver,
+
   resetSuccessMessage,
   updateGameData,
   handleClues,
+  setInputFocus,
 };
