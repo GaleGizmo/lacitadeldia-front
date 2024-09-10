@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import UserStats from "../../components/UserStats/UserStats";
 
 const OldGames = () => {
-  const playerId = localStorage.getItem("userUUID");
+  const playerId = localStorage.getItem("laCitaDelDiaUserId");
   const [phrasesToShow, setPhrasesToShow] = useState(null);
   const navigate = useNavigate();
   const handleNavigate = (phraseToPlay) => {
@@ -53,7 +53,7 @@ const OldGames = () => {
         <small>PERDIDA</small>
         <div className="phrase-box np footer-box"></div>
         <small>NO JUGADA</small>
-        <div className="phrase-box uf footer-box"></div>
+        <div className="phrase-box playing footer-box"></div>
         <small>JUGANDO</small>
       </footer>
     </>

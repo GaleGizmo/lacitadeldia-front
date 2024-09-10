@@ -27,7 +27,8 @@
     font-weight: 600;
 }
 .consumed-message {
-    width: max-content;
+    width: fit-content;
+    max-width: 100%;
     color: #2c3e50; 
     font-weight: bold; 
     font-size: 12px; 

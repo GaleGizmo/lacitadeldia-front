@@ -28,13 +28,14 @@ function getDefaultState() {
     error: null,
     phrase: null,
     maximumTries: 0,
+    userId: null,
     phraseNumber: 0,
     successMessage: null,
     lettersFound: [],
     newLetters: [],
     wordToTry: "",
     triedWords: [],
-    gameResult: "",
+    gameStatus: "playing",
     gameResultNotification: null,
     currentTry: 0,
     lettersFailed: [],
@@ -52,6 +53,8 @@ export const gameReducer = (state = INITIAL_STATE, action) => {
         ...state,
         loading: false,
         error: null,
+        userId: action.payload.userId,
+        newLetters:[],
         phrase: action.payload.phrase,
         lettersFound: action.payload.lettersFound,
         lettersFailed: action.payload.lettersFailed,
@@ -59,7 +62,7 @@ export const gameReducer = (state = INITIAL_STATE, action) => {
         triedWords: action.payload.triedWords,
         phraseNumber: action.payload.phraseNumber,
         currentTry: action.payload.currentTry,
-        gameResult: action.payload.gameResult,
+        gameStatus: action.payload.gameStatus,
         gameResultNotification: action.payload.gameResultNotification,
 
         clues: action.payload.clues,
@@ -84,7 +87,7 @@ export const gameReducer = (state = INITIAL_STATE, action) => {
         phraseNumber: action.payload.phraseNumber,
         currentTry: action.payload.currentTry,
         maximumTries: action.payload.maximumTries,
-        gameResult: action.payload.gameResult,
+        gameStatus: action.payload.gameStatus,
         gameResultNotification: action.payload.gameResultNotification,
 
         clues: action.payload.clues,
@@ -109,6 +112,7 @@ export const gameReducer = (state = INITIAL_STATE, action) => {
       return { ...state, phrase: null };
     case "ADD_WORD_TO_TRIEDWORDS": {
       const newTriedWords = [...state.triedWords, state.wordToTry];
+      console.log("newTriedWords", newTriedWords);
       return {
         ...state,
         triedWords: newTriedWords,

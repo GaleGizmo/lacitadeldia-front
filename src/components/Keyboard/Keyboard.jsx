@@ -23,7 +23,7 @@ const Keyboard = ({ userId }) => {
   
   const lettersDown = "ZXCVBNM".split("");
 
-  const { lettersFound, lettersFailed, wordToTry, gameResult, isInputFocused } = useSelector(
+  const { lettersFound, lettersFailed, wordToTry, gameStatus, isInputFocused } = useSelector(
     (reducer) => reducer.gameReducer
   );
   
@@ -60,7 +60,7 @@ const Keyboard = ({ userId }) => {
     const handleKeyDown = (event) => {
       const { key } = event;
 
-      if (gameResult || isInputFocused) return;
+      if (gameStatus!="playing" || isInputFocused) return;
 
       if (key === "Backspace") {
         dispatch(deleteLastLetter());
@@ -83,7 +83,7 @@ const Keyboard = ({ userId }) => {
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, [dispatch, wordToTry, userId, verifyWord, gameResult, isInputFocused]);
+  }, [dispatch, wordToTry, userId, verifyWord, gameStatus, isInputFocused]);
 
   //verifica si la palabra es válida y la añade a triedWords
   //luego limpia la palabra actual
@@ -105,34 +105,34 @@ const Keyboard = ({ userId }) => {
       <KeyboardRow
         letters={lettersUp}
         handleClick={handleClick}
-        gameResult={gameResult}
+        gameStatus={gameStatus}
         lettersFound={lettersFound}
         lettersFailed={lettersFailed}
       />
       <KeyboardRow
         letters={lettersMiddle}
         handleClick={handleClick}
-        gameResult={gameResult}
+        gameStatus={gameStatus}
         lettersFound={lettersFound}
         lettersFailed={lettersFailed}
       />
       <div className="keys">
         <div
           className="action"
-          onClick={() => !gameResult && handleClick("DELETE")}
+          onClick={() => gameStatus==="playing" && handleClick("DELETE")}
         >
           <DeleteIcon />
         </div>
         <KeyboardRow
           letters={lettersDown}
           handleClick={handleClick}
-          gameResult={gameResult}
+          gameStatus={gameStatus}
           lettersFound={lettersFound}
           lettersFailed={lettersFailed}
         />
         <div
           className="action"
-          onClick={() => !gameResult && handleClick("SEND")}
+          onClick={() => gameStatus==="playing" && handleClick("SEND")}
         >
           <AcceptIcon />
         </div>

@@ -3,13 +3,15 @@ import Calendar from "../../assets/Calendar";
 import "./header.css";
 import Home from "../../assets/Home";
 import Info from "../../assets/Info";
+import { useDispatch } from "react-redux";
+import { startGame } from "../../redux/game/game.actions";
 
 
 
 const Header = () => {
   
-
-  
+  const dispatch = useDispatch()
+  const userId = localStorage.getItem("laCitaDelDiaUserId");
 
   return (
     <div className="header">
@@ -22,7 +24,7 @@ const Header = () => {
           to="/game"
           onClick={() => {
             localStorage.removeItem("gameId");
-            window.location.href = "/";
+           dispatch(startGame(userId, 0))
           }}
           className="header-link"
         >

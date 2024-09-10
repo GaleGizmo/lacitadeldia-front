@@ -70,7 +70,7 @@ const RulesPage = () => {
           <p>
             Las citas más fáciles pueden llegar a tener tan solo
             <strong> 3 intentos</strong>, mientras que las más complicadas
-            podrán tener un máximo de <strong>7 intentos</strong>.
+            podrán tener un máximo de <strong>6 intentos</strong>.
           </p>
         </section>
         <section>
@@ -116,7 +116,7 @@ const RulesPage = () => {
               <strong> en todas las posiciones</strong> de la cita en las que se
               encuentre. Coste:{" "}
               <span className="perdida">
-                <strong>25 puntos</strong>
+                <strong>30 puntos</strong>
               </span>
               .
             </li>

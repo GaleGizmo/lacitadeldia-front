@@ -1,6 +1,6 @@
 import { APIBase } from "../../shared/api.js";
 
-const startGame = (userUUID, phraseToPlay) => async (dispatch) => {
+const startGame = (userId, phraseToPlay) => async (dispatch) => {
   dispatch({ type: "START_GAME_REQUEST" });
 
   try {
@@ -10,7 +10,7 @@ const startGame = (userUUID, phraseToPlay) => async (dispatch) => {
       response = await APIBase.get(`/game/active/${activeGame}`);
     } else {
       response = await APIBase.post("/game/start", {
-        userUUID,
+        userId,
         phraseToPlay,
       });
     }
@@ -27,7 +27,7 @@ const startGame = (userUUID, phraseToPlay) => async (dispatch) => {
 const updateGameData = (gameId, gameData) => async (dispatch) => {
   dispatch({ type: "UPDATE_GAME_DATA_REQUEST" });
   try {
-    console.log("enviados al back", gameData);
+    console.log("id del juego:", gameId, "enviados al back:", gameData);
     const updatedData = await APIBase.put(`/game/update/${gameId}`, {
       gameData,
     });
@@ -38,7 +38,6 @@ const updateGameData = (gameId, gameData) => async (dispatch) => {
     dispatch({ type: "UPDATE_GAME_DATA_FAILURE", payload: err.message });
   }
 };
-
 
 const handleClues = (clue, wordToTry) => async (dispatch) => {
   dispatch({ type: "HANDLE_CLUES_REQUEST" });
@@ -65,14 +64,15 @@ const handleClues = (clue, wordToTry) => async (dispatch) => {
     }
     dispatch({
       type: "HANDLE_CLUES_SUCCESS",
-      payload: { data: response.data.clueResult, clues: response.data.updatedGameClues },
+      payload: {
+        data: response.data.clueResult,
+        clues: response.data.updatedGameClues,
+      },
     });
   } catch (err) {
     dispatch({ type: "HANDLE_CLUES_FAILURE", payload: err.message });
   }
 };
-
-
 
 const addLetter = (letter) => ({ type: "ADD_LETTER", payload: letter });
 
@@ -95,17 +95,13 @@ const setInputFocus = (isFocused) => ({
   payload: isFocused,
 });
 
-
 export {
   startGame,
   addLetter,
   clearWord,
   clearError,
   deleteLastLetter,
-
- 
   addWordToTried,
-
   resetSuccessMessage,
   updateGameData,
   handleClues,

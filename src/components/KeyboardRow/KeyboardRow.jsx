@@ -5,7 +5,7 @@ import "./keyboardRow.css";
 function KeyboardRow({
   letters,
   handleClick,
-  gameResult,
+  gameStatus,
   lettersFound,
   lettersFailed,
 }) {
@@ -15,7 +15,7 @@ function KeyboardRow({
       {letters.map((letter) => (
         <div
           key={letter}
-          onClick={() => !gameResult && handleClick(letter)}
+          onClick={() => gameStatus==="playing" && handleClick(letter)}
           className={`key ${
             lettersFound && lettersFound.includes(letter) ? "in-phrase" : lettersFailed && lettersFailed.includes(letter) ? "not-in-phrase":""
           }`}
@@ -30,7 +30,7 @@ function KeyboardRow({
 KeyboardRow.propTypes = {
   letters: PropTypes.arrayOf(PropTypes.string).isRequired,
   handleClick: PropTypes.func.isRequired,
-  gameResult: PropTypes.string.isRequired,
+  gameStatus: PropTypes.string.isRequired,
   lettersFailed: PropTypes.arrayOf(PropTypes.string),
   lettersFound: PropTypes.arrayOf(PropTypes.string).isRequired,
 };

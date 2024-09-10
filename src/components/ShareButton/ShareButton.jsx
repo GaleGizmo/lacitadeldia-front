@@ -3,10 +3,10 @@ import "./ShareButton.css"
 import WhatsappIcon from "../../assets/Whatsapp";
 
 
-const ShareButton = ({ gameResult, phraseNumber, attempts }) => {
+const ShareButton = ({ gameStatus, phraseNumber, attempts }) => {
   const shareResult = () => {
-    const emoji = gameResult === 'win' ? '🎉' : '😔';
-    const attemptsText = gameResult === 'win' ? `en ${attempts} intentos` : 'pero sin suerte';
+    const emoji = gameStatus === 'win' ? '🎉' : '😔';
+    const attemptsText = gameStatus === 'win' ? `en ${attempts} intentos` : 'pero sin suerte';
     const message = `Jugué la frase #${phraseNumber} ${attemptsText} ${emoji}\n¡Juega tú también en https://guessthequote.vercel.app/!`;
     
       // Detectar si es un dispositivo móvil

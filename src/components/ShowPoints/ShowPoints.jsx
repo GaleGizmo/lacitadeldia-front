@@ -4,7 +4,7 @@ import { getUserPoints } from "../../shared/api";
 import { useSelector } from "react-redux";
 
 const ShowPoints = () => {
-  const userId = localStorage.getItem("userUUID");
+  const userId = localStorage.getItem("laCitaDelDiaUserId");
   const [userPoints, setUserPoints] = useState(0);
   const { clues } = useSelector((state) => state.gameReducer);
   useEffect(() => {

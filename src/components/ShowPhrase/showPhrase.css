@@ -29,6 +29,7 @@
   background-color: #51e651;
 }
 .visible-char {
+  font-weight: 600;
   border: none;
   width: fit-content;
   display: inline-block;

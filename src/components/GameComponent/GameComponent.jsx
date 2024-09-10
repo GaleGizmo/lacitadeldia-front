@@ -10,13 +10,12 @@ import TryWord from "../TryWord/TryWord";
 import Keyboard from "../Keyboard/Keyboard";
 import ShowPhrase from "../ShowPhrase/ShowPhrase";
 import "./game.css";
-import getOrCreateUUId from "../../customhooks/uuid";
 import { toast } from "sonner";
-
 import { PropTypes } from "prop-types";
 import ShareButton from "../ShareButton/ShareButton";
 import Clues from "../Clues/Clues";
 import ShowPoints from "../ShowPoints/ShowPoints";
+import { getPhraseOfTheDayNumber } from "../../shared/api";
 
 const GameComponent = () => {
   let oldPhraseNumber = localStorage.getItem("oldPhraseToPlay");
@@ -26,23 +25,35 @@ const GameComponent = () => {
   }
   const dispatch = useDispatch();
   const [showPhraseDetails, setShowPhraseDetails] = useState(false);
-  const userId = getOrCreateUUId(); // Obtener el UUID del usuario
+
   const [wordsToTry, setWordsToTry] = useState([]);
   const gameId = localStorage.getItem("gameId");
   const phraseNumber = oldPhraseNumber;
   const [isInitialized, setIsInitialized] = useState(false);
   let game = useSelector((state) => state.gameReducer);
+  const { userId } = useSelector((state) => state.userReducer);
 
   useEffect(() => {
-    const initializeGame = () => {
+    const initializeGame = async () => {
+      const phraseOfTheDayNumber = await getPhraseOfTheDayNumber();
+      if (phraseOfTheDayNumber != game.phraseNumber) {
+        console.log(
+          "frase del dia: ",
+          phraseOfTheDayNumber,
+          "frase en juego:",
+          game.phraseNumber
+        );
+        localStorage.removeItem("gameId");
+      }
       dispatch(startGame(userId, phraseNumber));
 
       setIsInitialized(true);
     };
     initializeGame();
-    console.log("juego iniciado")
+    console.log("juego iniciado");
     localStorage.removeItem("oldPhraseToPlay");
   }, []);
+
   useEffect(() => {
     if (game.error) {
       toast.error(game.error);
@@ -68,11 +79,11 @@ const GameComponent = () => {
   }, [game.triedWords]);
 
   useEffect(() => {
-    if (game.gameResult && !game.gameResultNotification) {
-      if (game.gameResult === "win") {
+    if (game.gameStatus != "playing" && !game.gameResultNotification) {
+      if (game.gameStatus === "win") {
         toast.success("¡Bien hecho!", { style: { background: "#51e651" } });
         setShowPhraseDetails(true);
-      } else if (game.gameResult === "lose") {
+      } else if (game.gameStatus === "lose") {
         toast.error("Has perdido, lo siento");
       }
       const gameData = {
@@ -81,7 +92,7 @@ const GameComponent = () => {
 
       dispatch(updateGameData(gameId, gameData));
     }
-  }, [game.gameResult]);
+  }, [game.gameStatus]);
 
   if (game.loading) {
     return <div className="loader"></div>;
@@ -89,20 +100,24 @@ const GameComponent = () => {
 
   return (
     <div className="game">
-     {!game.gameResult && <div className="clues-container">
-        <Clues />{" "}
-      </div>}
+      {game.gameStatus === "playing" && (
+        <div className="clues-container">
+          <Clues />{" "}
+        </div>
+      )}
       <div className="words">{wordsToTry} </div>
-      {!game.gameResult && <div className="showPoints">
-        <ShowPoints/>{" "}
-      </div>}
+     
+        <div className="showPoints">
+          <ShowPoints />{" "}
+        </div>
+      
       <div className="phrase-and-button-container">
         <ShowPhrase
-          displayPhraseLink={game.gameResult === "win"}
+          displayPhraseLink={game.gameStatus === "win"}
           showModal={showPhraseDetails}
           onModalClose={() => setShowPhraseDetails(false)}
         />
-        {game.gameResult === "win" && (
+        {game.gameStatus === "win" && (
           <div className="phrase-link-container">
             <button
               className="phrase-link"
@@ -114,9 +129,9 @@ const GameComponent = () => {
         )}{" "}
       </div>
       <Keyboard userId={userId} />
-      {game.gameResult && (
+      {game.gameStatus != "playing" && (
         <ShareButton
-          gameResult={game.gameResult}
+          gameStatus={game.gameStatus}
           phraseNumber={game.phraseNumber}
           attempts={game.currentTry}
         />
