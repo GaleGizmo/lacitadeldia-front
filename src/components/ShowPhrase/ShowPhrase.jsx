@@ -118,7 +118,7 @@ const ShowPhrase = ({ displayPhraseLink, showModal, onModalClose }) => {
                     displayChar === "_"
                       ? "letter-box"
                       : isLetter(displayChar)
-                      ? `visible-letter ${
+                      ? `in-phrase ${
                           animatedLetters[globalIndex] ? "animate-reveal" : ""
                         }`
                       : "visible-char"

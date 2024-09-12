@@ -11,7 +11,7 @@
   top: 0px;
   left: calc(
     50% - 360px
-  ); /* 50% para el centro del padre, -110px (-50% del ancho de hijoA, -50px) */
+  ); 
 }
 
 .clues-button {
@@ -21,9 +21,7 @@
   font-weight: 700;
   width: 100%;
   background-color: #1c274c32;
-  /* background-image: 
-    linear-gradient(to bottom, #ffeb0c, #d6cd25),
-    linear-gradient(to bottom, #d6cd25, #ffeb0c); */
+ 
 }
 
 .clues-icons {
@@ -34,9 +32,9 @@
   margin: 0;
   width: 36px;
   height: 36px;
-  display: flex; /* Asegura que la imagen se centre */
-  align-items: center; /* Centra verticalmente la imagen */
-  justify-content: center; /* Centra horizontalmente la imagen */
+  display: flex; 
+  align-items: center; 
+  justify-content: center; 
   border-radius: 4px;
 
   transition: filter, background-color 0.3s ease;
@@ -46,7 +44,7 @@
   height: 30px;
 }
 .clue-icon.selected {
-  background-color: #d6cd25;
+  background-color: var(--color-yellow-dark);
   filter: saturate(110%);
 }
 .clue-icon:hover {

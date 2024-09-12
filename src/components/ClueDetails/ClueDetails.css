@@ -9,8 +9,8 @@
     border: 1px solid gray;
     padding: 2px 10px 3px 10px;
     background-image: 
-    linear-gradient(to bottom, #ffeb0c, #d6cd25),
-    linear-gradient(to bottom, #d6cd25, #ffeb0c);
+    linear-gradient(to bottom, var(--color-yellow-light), var(--color-yellow-dark)),
+    linear-gradient(to bottom, var(--color-yellow-dark), var(--color-yellow-light));
 }
 .clue-description {
     margin: 0;
@@ -23,7 +23,7 @@
     width: 45px;
     text-align: center;
     padding: 3px;
-    color: #e53b08;
+    color: var(--color-orange-dark);
     font-weight: 600;
 }
 .consumed-message {
@@ -34,7 +34,7 @@
     font-size: 12px; 
     margin: 10px auto; 
     padding: 5px 10px; 
-    background-color: #d6cd25;
+    background-color: var(--color-yellow-dark);
     border: 1px solid #bdc3c7; 
     border-radius: 5px; 
     text-align: center; 

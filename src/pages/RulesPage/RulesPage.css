@@ -11,7 +11,7 @@
 }
 .rules-header {
   padding: 20px;
-  background-color: #fff;
+ 
   z-index: 10;
 }
 
@@ -65,7 +65,7 @@ li {
 }
 
 .correct {
-  color: green;
+  color: var(--right-letter-color);
   font-weight: bold;
 }
 
@@ -74,7 +74,7 @@ li {
   font-weight: bold;
 }
 .perdida{
-  color: red;
+  color: var(--color-orange-dark);
   font-weight: bold;
 }
 footer {

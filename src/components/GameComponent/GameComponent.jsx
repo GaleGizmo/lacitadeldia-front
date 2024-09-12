@@ -134,6 +134,7 @@ const GameComponent = () => {
           gameStatus={game.gameStatus}
           phraseNumber={game.phraseNumber}
           attempts={game.currentTry}
+          maxTries={game.maximumTries}
         />
       )}
     </div>

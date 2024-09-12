@@ -121,7 +121,7 @@ const Keyboard = ({ userId }) => {
           className="action"
           onClick={() => gameStatus==="playing" && handleClick("DELETE")}
         >
-          <DeleteIcon />
+          <DeleteIcon width="33" height="33" viewBox="2 3 20 18" />
         </div>
         <KeyboardRow
           letters={lettersDown}
@@ -134,7 +134,7 @@ const Keyboard = ({ userId }) => {
           className="action"
           onClick={() => gameStatus==="playing" && handleClick("SEND")}
         >
-          <AcceptIcon />
+          <AcceptIcon width="33" height="33" viewBox="2 3 20 18" />
         </div>
       </div>
     </div>
