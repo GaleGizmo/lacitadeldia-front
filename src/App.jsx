@@ -36,9 +36,9 @@ function App() {
     <div className="home">
       <Header />
       <Routes>
-        <Route path="/" element={<Maintenance />} />
-        {/* <Route path="/oldgames" element={<OldGames />} />
-        <Route path="/game" element={<GameComponent />} /> */}
+        <Route path="/" element={<GameComponent />} />
+        <Route path="/oldgames" element={<OldGames />} />
+        <Route path="/game" element={<GameComponent />} />
         <Route path="/youshouldntbehere" element={<AddPhraseForm />} />
         <Route path="/info" element={<RulesPage />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
