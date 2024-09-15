@@ -33,7 +33,7 @@ const RulesPage = () => {
             </li>
             <img
               className="try-word-gif"
-              src="../../src/assets/try_word.gif"
+              src="assets/try_word.gif"
               alt="tryword"
             />
             <li>
@@ -46,7 +46,7 @@ const RulesPage = () => {
             </li>
             <img
               className="phrase-gif"
-              src="../../src/assets/phrase_discover.gif"
+              src="assets/phrase_discover.gif"
               alt="Letra"
             />
 
@@ -100,7 +100,7 @@ const RulesPage = () => {
           </p>
           <img
             className="clues-png"
-            src="../../src/assets/clues.png"
+            src="assets/clues.png"
             alt="clues"
           />
           <p>Cada pista solo se podrá usar una vez en cada partida.</p>
@@ -111,7 +111,7 @@ const RulesPage = () => {
           <p>Las pistas de las que dispones son:</p>
           <ul>
             <li>
-              <img className="clue-icon" src="../../src/assets/letra.png" alt="Letra" /> Se selecciona
+              <img className="clue-icon" src="assets/letra.png" alt="Letra" /> Se selecciona
               una letra al azar de la cita y se muestra
               <strong> en todas las posiciones</strong> de la cita en las que se
               encuentre. Coste:{" "}
@@ -121,7 +121,7 @@ const RulesPage = () => {
               .
             </li>
             <li>
-              <img className="clue-icon" src="../../src/assets/compara_letras.png" alt="Letra" />{" "}
+              <img className="clue-icon" src="assets/compara_letras.png" alt="Compara Letras" />{" "}
               Muestra el número de <strong>letras comunes</strong> (de entre las
               no reveladas) entre una palabra de cinco letras y la cita. Por
               ejemplo, si escribes la palabra <strong>CEBRA</strong> y la cita
@@ -134,7 +134,7 @@ const RulesPage = () => {
               .
             </li>
             <li>
-              <img className="clue-icon" src="../../src/assets/actor.png" alt="Letra" /> Muestra el
+              <img className="clue-icon" src="assets/actor.png" alt="Actor" /> Muestra el
               nombre del<strong> actor</strong> que protagoniza la cita. Coste:{" "}
               <span className="perdida">
                 <strong>15 puntos</strong>
@@ -142,7 +142,7 @@ const RulesPage = () => {
               .
             </li>
             <li>
-              <img className="clue-icon" src="../../src/assets/director.png" alt="Letra" /> Muestra el
+              <img className="clue-icon" src="assets/director.png" alt="Director" /> Muestra el
               nombre del <strong>director</strong> de la película a la que
               pertenece la cita. Coste:{" "}
               <span className="perdida">

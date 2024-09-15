@@ -43,7 +43,7 @@ const Clues = () => {
           <div  className={`clue-icon ${
               selectedClue === "Letra" ? "selected" : ""
             }`}><img
-            src="../../src/assets/letra.png"
+            src="assets/letra.png"
             alt="Letra"
             onClick={displayClueDetails}
            
@@ -53,7 +53,7 @@ const Clues = () => {
           <div  className={`clue-icon ${
               selectedClue === "Comunes" ? "selected" : ""
             }`}><img
-            src="../../src/assets/compara_letras.png"
+            src="assets/compara_letras.png"
             alt="Comunes"
             onClick={displayClueDetails}
            
@@ -63,7 +63,7 @@ const Clues = () => {
            <div  className={`clue-icon ${
               selectedClue === "Actor" ? "selected" : ""
             }`}><img
-            src="../../src/assets/actor.png"
+            src="assets/actor.png"
             alt="Actor"
             onClick={displayClueDetails}
            
@@ -73,7 +73,7 @@ const Clues = () => {
           <div className={`clue-icon ${
               selectedClue === "Director" ? "selected" : ""
             }`}><img
-            src="../../src/assets/director.png"
+            src="assets/director.png"
             alt="Director"
             onClick={displayClueDetails}
           
