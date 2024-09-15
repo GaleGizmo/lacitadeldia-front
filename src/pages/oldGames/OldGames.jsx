@@ -17,7 +17,7 @@ const OldGames = () => {
   useEffect(() => {
     const fetchPhrases = async (playerId) => {
       const oldPhrases = await getUserPastPhrases(playerId);
-      console.log(oldPhrases);
+    
       setPhrasesToShow(oldPhrases);
     };
     if (playerId) {

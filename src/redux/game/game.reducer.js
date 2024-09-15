@@ -112,7 +112,7 @@ export const gameReducer = (state = INITIAL_STATE, action) => {
       return { ...state, phrase: null };
     case "ADD_WORD_TO_TRIEDWORDS": {
       const newTriedWords = [...state.triedWords, state.wordToTry];
-      console.log("newTriedWords", newTriedWords);
+    
       return {
         ...state,
         triedWords: newTriedWords,

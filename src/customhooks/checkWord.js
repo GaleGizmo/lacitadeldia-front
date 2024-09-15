@@ -9,7 +9,7 @@ function useCheckWord() {
     setIsVerifying(true);
     try {
       const response = await checkWord(word, userId);
-      console.log(response);
+    
       setResult(response.wordFound);
     } catch (error) {
       console.error('Error al verificar la palabra:', error);

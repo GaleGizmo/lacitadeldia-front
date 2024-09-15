@@ -14,7 +14,7 @@ const UserStats = () => {
     const loadUserStats = async () => {
         if (storedUserStats===null) {
             const statsFromServer = await getUserStats(userId);
-            console.log(statsFromServer);
+          
             setUserStats(statsFromServer);
             // Guardar las estadísticas en el reducer
             dispatch(setUserStatsAction(statsFromServer));

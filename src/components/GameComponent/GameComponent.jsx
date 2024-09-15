@@ -37,12 +37,7 @@ const GameComponent = () => {
     const initializeGame = async () => {
       const phraseOfTheDayNumber = await getPhraseOfTheDayNumber();
       if (phraseOfTheDayNumber != game.phraseNumber) {
-        console.log(
-          "frase del dia: ",
-          phraseOfTheDayNumber,
-          "frase en juego:",
-          game.phraseNumber
-        );
+      
         localStorage.removeItem("gameId");
       }
       dispatch(startGame(userId, phraseNumber));
@@ -50,7 +45,7 @@ const GameComponent = () => {
       setIsInitialized(true);
     };
     initializeGame();
-    console.log("juego iniciado");
+  
     localStorage.removeItem("oldPhraseToPlay");
   }, []);
 

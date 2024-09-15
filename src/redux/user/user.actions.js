@@ -4,7 +4,7 @@ const createUser = () => async (dispatch) => {
   dispatch({ type: "CREATE_USER_REQUEST" });
   try {
     const user = await createNewUser();
-    console.log(user);
+ 
     localStorage.setItem("laCitaDelDiaUserId", user._id);
     dispatch({ type: "CREATE_USER_SUCCESS", payload: user });
   } catch (error) {

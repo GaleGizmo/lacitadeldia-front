@@ -88,9 +88,9 @@ export const addPhrase = async (phraseData) => {
 };
 export const updateGame = async (gameId, gameData) => {
   try {
-    console.log("mandado al back", gameData);
+    
     const response = await APIBase.put(`/game/update/${gameId}`, { gameData });
-    console.log("devuelto del back", response.data);
+    
     localStorage.setItem("activeGame", JSON.stringify(response.data));
     return response.data;
   } catch (err) {
@@ -101,7 +101,7 @@ export const updateGame = async (gameId, gameData) => {
 export const getUserPastPhrases = async (userId) => {
   try {
     const response = await APIBase.get(`/phrases/getoldphrases/${userId}`);
-    console.log("oldphrases devuelve:", response);
+   
     return response.data;
   } catch (err) {
     console.error("Error al obtener los juegos pasados:", err);

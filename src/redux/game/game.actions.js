@@ -27,11 +27,11 @@ const startGame = (userId, phraseToPlay) => async (dispatch) => {
 const updateGameData = (gameId, gameData) => async (dispatch) => {
   dispatch({ type: "UPDATE_GAME_DATA_REQUEST" });
   try {
-    console.log("id del juego:", gameId, "enviados al back:", gameData);
+   
     const updatedData = await APIBase.put(`/game/update/${gameId}`, {
       gameData,
     });
-    console.log("recibidos del back", updatedData.data);
+    
     localStorage.setItem("activeGame", JSON.stringify(updatedData.data));
     dispatch({ type: "UPDATE_GAME_DATA_SUCCESS", payload: updatedData.data });
   } catch (err) {
@@ -54,7 +54,7 @@ const handleClues = (clue, wordToTry) => async (dispatch) => {
       clue,
       wordToTry,
     });
-    console.log("respuesta de pistas del back", response.data);
+   
     if (response.data.unusable) {
       dispatch({
         type: "HANDLE_CLUES_FAILURE",
