@@ -74,9 +74,7 @@ const ClueDetails = ({ typeOfClue }) => {
         )
       )}
 
-      {/* {clueDescription && clues[typeOfClue] && clues[typeOfClue].status && (
-        <p className="clue-price">{clues[typeOfClue].price}</p>
-      )} */}
+      
     </div>
   );
 };

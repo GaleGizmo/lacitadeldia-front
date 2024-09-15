@@ -136,6 +136,8 @@ export const gameReducer = (state = INITIAL_STATE, action) => {
         loading: false,
         successMessage: action.payload.data.message,
         clues: action.payload.clues,
+        newLetters: [],
+       
 
         ...(action.payload.data.updatedLettersFound && {
           lettersFound: action.payload.data.updatedLettersFound,
@@ -151,6 +153,8 @@ export const gameReducer = (state = INITIAL_STATE, action) => {
       return { ...state, loading: false, error: action.payload, newLetters: [] };
     case "CLEAR_SUCCESS_MESSAGE":
       return { ...state, successMessage: "" };
+    case "UPDATE_GAME_STATUS":
+      return { ...state, gameStatus: action.payload };
     case "SET_INPUT_FOCUS":
       return {
         ...state,

@@ -79,8 +79,8 @@ li {
 }
 footer {
   text-align: center;
-  font-style: italic;
-  margin-top: 40px;
+  
+  margin-top: 10px;
 }
 li>img{
   width: 30px;

@@ -69,6 +69,13 @@ const handleClues = (clue, wordToTry) => async (dispatch) => {
         clues: response.data.updatedGameClues,
       },
     });
+    //Si la pista de letra devuelve la última letra, espera y muestra los detalles de la cita
+    if (response.data.clueResult.lastLetterRemaining){
+      setTimeout(()=>dispatch({
+        type: "UPDATE_GAME_STATUS",
+        payload: "win"
+      }), 3000)
+    }
   } catch (err) {
     dispatch({ type: "HANDLE_CLUES_FAILURE", payload: err.message });
   }

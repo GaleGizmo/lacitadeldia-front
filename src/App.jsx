@@ -14,6 +14,7 @@ import {
 } from "./redux/user/user.actions";
 import { useEffect } from "react";
 import NewUserBanner from "./components/NewUserBanner/NewUSerBanner";
+import PrivacyPolicy from "./pages/Privacy/PrivacyPolicy";
 
 function App() {
   const dispatch = useDispatch();
@@ -39,6 +40,7 @@ function App() {
         <Route path="/game" element={<GameComponent />} />
         <Route path="/youshouldntbehere" element={<AddPhraseForm />} />
         <Route path="/info" element={<RulesPage />} />
+        <Route path="/privacidad" element={<PrivacyPolicy />} />
         <Route path="*" element={<h1>Not Found</h1>} />
       </Routes>{" "}
       {!dontShowInstructions && <NewUserBanner onClose={handleCloseBanner} />}

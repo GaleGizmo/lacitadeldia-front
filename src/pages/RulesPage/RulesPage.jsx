@@ -1,10 +1,11 @@
+import { Link } from "react-router-dom";
 import "./RulesPage.css";
 
 const RulesPage = () => {
   return (
     <div className="rules-container">
       <div className="rules-header">
-        <h1>Reglas del Juego</h1>
+        <h1>Información del Juego</h1>
       </div>
 
       <div className="rules-content">
@@ -91,7 +92,7 @@ const RulesPage = () => {
           </p>
           <p>
             Los puntos que ganes cada día se conservarán siempre y cuando
-            juegues en el mismo dispositivo y navegador.
+            juegues en el <strong>mismo dispositivo y navegador</strong>.
           </p>
           <h3>Usar las pistas</h3>
           <p>
@@ -102,10 +103,9 @@ const RulesPage = () => {
             src="../../src/assets/clues.png"
             alt="clues"
           />
-          <p>Cada pista solo se podrá usar una vez en la partida.</p>
+          <p>Cada pista solo se podrá usar una vez en cada partida.</p>
           <p>
-            Para usar cada pista deberás hacer click en su icono, tras lo que
-            aparecerá una breve descripción de la misma junto con el botón para
+            Para usar una pista deberás hacer click en su icono, con lo que se mostrará una breve descripción de la misma junto con el botón para
             utilizarla y su <strong>coste en puntos</strong>.
           </p>
           <p>Las pistas de las que dispones son:</p>
@@ -116,7 +116,7 @@ const RulesPage = () => {
               <strong> en todas las posiciones</strong> de la cita en las que se
               encuentre. Coste:{" "}
               <span className="perdida">
-                <strong>30 puntos</strong>
+                <strong>50 puntos</strong>
               </span>
               .
             </li>
@@ -186,7 +186,7 @@ const RulesPage = () => {
             superior.
           </p>
         </section>
-        <section>
+        {/* <section>
           <h2>Contacto</h2>
           <p>
             Puedes contactar conmigo y ver otras webs que he creado{" "}
@@ -198,13 +198,13 @@ const RulesPage = () => {
               AQUÍ
             </a>
           </p>
-        </section>
-        <footer>
-          <p>
-            ¡Diviértete jugando y mejora tus habilidades de deducción cada día!
-          </p>
-        </footer>{" "}
+        </section> */}
+       
       </div>
+      <footer>
+         <small>© 2024 Miguel Abelleira</small>
+       <small> <Link to="/privacidad">Política de Privacidad</Link></small> 
+        </footer>{" "}
     </div>
   );
 };
