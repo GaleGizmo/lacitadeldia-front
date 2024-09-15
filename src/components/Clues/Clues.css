@@ -49,6 +49,7 @@
 }
 .clue-icon:hover {
   cursor: pointer;
+  background-color: var(--color-yellow-dark);
 }
 @media (max-width: 767px) {
   .clues-container {

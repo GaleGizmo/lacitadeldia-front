@@ -15,6 +15,7 @@ import {
 import { useEffect } from "react";
 import NewUserBanner from "./components/NewUserBanner/NewUSerBanner";
 import PrivacyPolicy from "./pages/Privacy/PrivacyPolicy";
+import CookieConsent from "react-cookie-consent";
 
 function App() {
   const dispatch = useDispatch();
@@ -40,9 +41,22 @@ function App() {
         <Route path="/game" element={<GameComponent />} />
         <Route path="/youshouldntbehere" element={<AddPhraseForm />} />
         <Route path="/info" element={<RulesPage />} />
-        <Route path="/privacidad" element={<PrivacyPolicy />} />
+        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         <Route path="*" element={<h1>Not Found</h1>} />
       </Routes>{" "}
+      <CookieConsent
+        location="bottom"
+        buttonText="Aceptar"
+        cookieName="lacitadeldiaCookieConsent"
+        style={{ background: "#333", color: "#fff" }}
+        buttonStyle={{ background: "#007DBB", color: "#fff", fontSize: "14px" }}
+       
+      >
+        Utilizamos cookies estrictamente necesarias para el funcionamiento básico del sitio web. No usamos cookies de seguimiento ni recopilamos datos personales. Para más información, consulta nuestra{" "}
+        <a href="/privacy-policy"  target="_blank" rel="noopener noreferrer" style={{ color: "#fff", textDecoration: "underline" }}>
+          Política de Privacidad
+        </a>.
+      </CookieConsent>
       {!dontShowInstructions && <NewUserBanner onClose={handleCloseBanner} />}
     </div>
   );

@@ -186,24 +186,11 @@ const RulesPage = () => {
             superior.
           </p>
         </section>
-        {/* <section>
-          <h2>Contacto</h2>
-          <p>
-            Puedes contactar conmigo y ver otras webs que he creado{" "}
-            <a
-              href="https://www.miguelabelleira.es"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              AQUÍ
-            </a>
-          </p>
-        </section> */}
-       
+        
       </div>
       <footer>
          <small>© 2024 Miguel Abelleira</small>
-       <small> <Link to="/privacidad">Política de Privacidad</Link></small> 
+       <small> <Link to="/privacy-policy">Política de Privacidad</Link></small> 
         </footer>{" "}
     </div>
   );
