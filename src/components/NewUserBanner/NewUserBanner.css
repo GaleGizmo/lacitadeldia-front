@@ -1,0 +1,82 @@
+.newuser-container{
+    padding: 5px 10px;
+    background-color: azure;
+    border: 1px solid gray;
+    border-radius: 8px;
+    width: 300px;
+    height: fit-content;
+    margin: auto;
+}
+.newuser-container p{
+    font-weight: 600;
+}
+/* From Uiverse.io by nikk7007 */ 
+.newuser-container button {
+    --color: #1c274c7f;
+    box-sizing: content-box;
+    padding-inline: 0;
+    padding-block: 0;
+    width: 50px;
+    margin: 5px 10px;
+    padding: 0.5em 1em;
+    background-color: transparent;
+    border-radius: .3em;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    transition: .5s;
+    font-weight: 600;
+    font-size: 17px;
+    border: 1px solid;
+    font-family: inherit;
+    text-transform: uppercase;
+    color: var(--color);
+    z-index: 1;
+   }
+   
+   .newuser-container button::before, .newuser-container button::after {
+    content: '';
+    display: block;
+    width: 50px;
+    height: 50px;
+    transform: translate(-50%, -50%);
+    position: absolute;
+    border-radius: 50%;
+    z-index: -1;
+    background-color: var(--color);
+    transition: 1s ease;
+   }
+   
+   .newuser-container button::before {
+    top: -1em;
+    left: -1em;
+   }
+   
+   .newuser-container button::after {
+    left: calc(100% + 1em);
+    top: calc(100% + 1em);
+   }
+   
+   .newuser-container button:hover::before, .newuser-container button:hover::after {
+    height: 410px;
+    width: 410px;
+   }
+   
+   .newuser-container button:hover {
+    color: rgb(10, 25, 30);
+   }
+   
+   .newuser-container button:active {
+    filter: brightness(.8);
+   }
+   
+.dont-show-again{
+    color: #1c274c7f;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+.dont-show-again input{
+    margin-top: 4px;
+    padding: 0;
+}

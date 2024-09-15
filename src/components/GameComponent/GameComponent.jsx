@@ -2,64 +2,59 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  gameOver,
-  getExistingGame,
-  setNotificationShown,
+  clearError,
   startGame,
+  updateGameData,
 } from "../../redux/game/game.actions";
 import TryWord from "../TryWord/TryWord";
 import Keyboard from "../Keyboard/Keyboard";
 import ShowPhrase from "../ShowPhrase/ShowPhrase";
 import "./game.css";
-import getOrCreateUUId from "../../customhooks/uuid";
-import {  toast } from "sonner";
-import { getPhraseByNumber, updateGame } from "../../shared/api";
-import { checkEndGame } from "../../shared/checkEndGame";
+import { toast } from "sonner";
 import { PropTypes } from "prop-types";
 import ShareButton from "../ShareButton/ShareButton";
+import Clues from "../Clues/Clues";
+import ShowPoints from "../ShowPoints/ShowPoints";
+import { getPhraseOfTheDayNumber } from "../../shared/api";
 
 const GameComponent = () => {
   let oldPhraseNumber = localStorage.getItem("oldPhraseToPlay");
-  
 
   if (!oldPhraseNumber) {
     oldPhraseNumber = 0;
   }
   const dispatch = useDispatch();
-  
-  const userId = getOrCreateUUId(); // Obtener el UUID del usuario
+  const [showPhraseDetails, setShowPhraseDetails] = useState(false);
+
   const [wordsToTry, setWordsToTry] = useState([]);
   const gameId = localStorage.getItem("gameId");
-  const phraseNumber = oldPhraseNumber || localStorage.getItem("phraseNumber");
+  const phraseNumber = oldPhraseNumber;
   const [isInitialized, setIsInitialized] = useState(false);
   let game = useSelector((state) => state.gameReducer);
+  const { userId } = useSelector((state) => state.userReducer);
 
   useEffect(() => {
     const initializeGame = async () => {
-      let phrase = "";
-
-      phrase = await getPhraseByNumber(oldPhraseNumber);
-      console.log(phrase);
-
-      if (phraseNumber != phrase.number) {
-        
-        localStorage.setItem("phraseNumber", phrase.number);
+      const phraseOfTheDayNumber = await getPhraseOfTheDayNumber();
+      if (phraseOfTheDayNumber != game.phraseNumber) {
+      
         localStorage.removeItem("gameId");
-        localStorage.removeItem("activeGame");
-        dispatch(startGame(userId, oldPhraseNumber));
-      } else if (gameId) {
-        dispatch(getExistingGame(gameId));
-      } else {
-        dispatch(startGame(userId, oldPhraseNumber));
       }
-      const storedNotificationShown = localStorage.getItem(`notificationShown_${phrase.number}`);
-      dispatch(setNotificationShown(storedNotificationShown === 'true', phrase.number));
+      dispatch(startGame(userId, phraseNumber));
+
       setIsInitialized(true);
     };
     initializeGame();
+  
     localStorage.removeItem("oldPhraseToPlay");
   }, []);
 
+  useEffect(() => {
+    if (game.error) {
+      toast.error(game.error);
+      dispatch(clearError());
+    }
+  }, [game.error]);
   useEffect(() => {
     if (!isInitialized) return;
 
@@ -68,70 +63,73 @@ const GameComponent = () => {
       words.push(<TryWord key={i} index={i} />);
     }
     setWordsToTry(words);
-    
-    if (gameId) {
-      updateGame(gameId, game);
-    }
-  }, [ game.triedWords, game.currentTry]);
 
-  // useEffect para checkEndGame
-  useEffect(() => {
-    if (game.phrase && game.triedWords.length > 0 ) {
-      const endGameResult = checkEndGame(
-        game.phrase,
-        game.maximumTries,
-        game.currentTry
-      );
-      if (endGameResult && game.isGameOver === "") {
-        console.log("resultado", endGameResult);
-        dispatch(gameOver(endGameResult));
-       
-      }
+    if (gameId && game.wordToTry && game.currentTry < game.maximumTries) {
+      const gameData = {
+        triedWord: game.wordToTry,
+      };
+
+      dispatch(updateGameData(gameId, gameData));
     }
-  }, [game.phrase]);
-//ACTUALIZA EL BACKEND CUANDO EL JUEGO ACABA
-  useEffect(() => {
-    if (game.isGameOver && gameId) {
-      updateGame(gameId, game);
-    }
-  }, [game.isGameOver, gameId, game.phrase, game.triedWords, game.currentTry]);
+  }, [game.triedWords]);
 
   useEffect(() => {
-    if (game.isGameOver && !game.notificationShown[game.phraseNumber]) {
-      if (game.isGameOver === "win") {
+    if (game.gameStatus != "playing" && !game.gameResultNotification) {
+      if (game.gameStatus === "win") {
         toast.success("¡Bien hecho!", { style: { background: "#51e651" } });
-      } else if (game.isGameOver === "lose") {
+        setShowPhraseDetails(true);
+      } else if (game.gameStatus === "lose") {
         toast.error("Has perdido, lo siento");
       }
-      dispatch(setNotificationShown(true, game.phraseNumber));
-      
+      const gameData = {
+        gameResultNotification: true,
+      };
+
+      dispatch(updateGameData(gameId, gameData));
     }
-  }, [game.isGameOver]);
+  }, [game.gameStatus]);
 
   if (game.loading) {
     return <div className="loader"></div>;
   }
 
-  if (game.error) {
-    return <div>Error: {game.error}</div>;
-  }
-
   return (
     <div className="game">
-
+      {game.gameStatus === "playing" && (
+        <div className="clues-container">
+          <Clues />{" "}
+        </div>
+      )}
       <div className="words">{wordsToTry} </div>
+     
+        <div className="showPoints">
+          <ShowPoints />{" "}
+        </div>
       
-      <ShowPhrase
-        triedWords={game.triedWords}
-        displayPhraseLink={game.isGameOver==="win"}
-      />
-      
+      <div className="phrase-and-button-container">
+        <ShowPhrase
+          displayPhraseLink={game.gameStatus === "win"}
+          showModal={showPhraseDetails}
+          onModalClose={() => setShowPhraseDetails(false)}
+        />
+        {game.gameStatus === "win" && (
+          <div className="phrase-link-container">
+            <button
+              className="phrase-link"
+              onClick={() => setShowPhraseDetails(true)}
+            >
+              Ver detalles de la cita
+            </button>
+          </div>
+        )}{" "}
+      </div>
       <Keyboard userId={userId} />
-      {game.isGameOver && (
-        <ShareButton 
-          gameResult={game.isGameOver}
+      {game.gameStatus != "playing" && (
+        <ShareButton
+          gameStatus={game.gameStatus}
           phraseNumber={game.phraseNumber}
           attempts={game.currentTry}
+          maxTries={game.maximumTries}
         />
       )}
     </div>

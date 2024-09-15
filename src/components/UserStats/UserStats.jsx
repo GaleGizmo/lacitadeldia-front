@@ -6,7 +6,7 @@ import { setUserStatsAction } from "../../redux/user/user.actions";
 
 const UserStats = () => {
   const [userStats, setUserStats] = useState(null);
-  const userId = localStorage.getItem("userUUID");
+  const userId = localStorage.getItem("laCitaDelDiaUserId");
 
   const storedUserStats = useSelector(state => state.userReducer.userStats);
   const dispatch = useDispatch();
@@ -14,7 +14,7 @@ const UserStats = () => {
     const loadUserStats = async () => {
         if (storedUserStats===null) {
             const statsFromServer = await getUserStats(userId);
-            console.log(statsFromServer);
+          
             setUserStats(statsFromServer);
             // Guardar las estadísticas en el reducer
             dispatch(setUserStatsAction(statsFromServer));

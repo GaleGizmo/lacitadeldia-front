@@ -3,19 +3,15 @@ const INITIAL_STATE = (() => {
   if (savedGame) {
     try {
       const parsedGame = JSON.parse(savedGame);
-      const phraseNumber = parsedGame.phraseNumber;
+
       return {
         ...parsedGame,
         loading: null,
         error: null,
         successMessage: null,
-        lettersFound:[],
+        newLetters: [],
         wordToTry: "",
-        notificationShown: {
-          [phraseNumber]:
-            localStorage.getItem(`notificationShown_${phraseNumber}`) ===
-            "true",
-        },
+        isInputFocused: false,
       };
     } catch (e) {
       console.error("Error parsing activeGame from localStorage", e);
@@ -32,65 +28,77 @@ function getDefaultState() {
     error: null,
     phrase: null,
     maximumTries: 0,
+    userId: null,
     phraseNumber: 0,
     successMessage: null,
-    lettersFound:[],
+    lettersFound: [],
+    newLetters: [],
     wordToTry: "",
     triedWords: [],
-    isGameOver: "",
+    gameStatus: "playing",
+    gameResultNotification: null,
     currentTry: 0,
-    notificationShown: {},
+    lettersFailed: [],
+    clues: { actor: {}, director: {}, letters: {}, lettersRight: {} },
+    isInputFocused: false,
   };
 }
 
 export const gameReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
+    case "START_GAME_REQUEST":
+      return { ...state, loading: true, error: null };
     case "START_GAME_SUCCESS":
       return {
         ...state,
         loading: false,
         error: null,
+        userId: action.payload.userId,
+        newLetters:[],
+        phrase: action.payload.phrase,
+        lettersFound: action.payload.lettersFound,
+        lettersFailed: action.payload.lettersFailed,
         maximumTries: action.payload.maximumTries,
         triedWords: action.payload.triedWords,
         phraseNumber: action.payload.phraseNumber,
         currentTry: action.payload.currentTry,
-        isGameOver: action.payload.isGameOver,
+        gameStatus: action.payload.gameStatus,
+        gameResultNotification: action.payload.gameResultNotification,
+
+        clues: action.payload.clues,
       };
     case "START_GAME_FAILURE":
       return { ...state, loading: false, error: action.payload };
-    case "GET_ACTIVE_GAME_REQUEST":
+    case "UPDATE_GAME_DATA_REQUEST":
       return {
         ...state,
         loading: true,
         error: null,
       };
-    case "GET_ACTIVE_GAME_SUCCESS":
+    case "UPDATE_GAME_DATA_SUCCESS":
       return {
         ...state,
         loading: false,
+        wordToTry: "",
+        newLetters: action.payload.newLetters,
         phrase: action.payload.phrase,
-        triedWords: action.payload.triedWords,
+        lettersFound: action.payload.lettersFound,
+        lettersFailed: action.payload.lettersFailed,
         phraseNumber: action.payload.phraseNumber,
         currentTry: action.payload.currentTry,
         maximumTries: action.payload.maximumTries,
-        isGameOver: action.payload.isGameOver,
+        gameStatus: action.payload.gameStatus,
+        gameResultNotification: action.payload.gameResultNotification,
+
+        clues: action.payload.clues,
       };
-    case "GET_ACTIVE_GAME_FAILURE":
+    case "UPDATE_GAME_DATA_FAILURE":
       return {
         ...state,
         loading: false,
         error: action.payload,
       };
-    case "FETCH_PHRASE_REQUEST":
-      return { ...state, loading: true, error: null };
-    case "FETCH_PHRASE_SUCCESS":
-      return { ...state, loading: false, phrase: action.payload };
-    case "FETCH_PHRASE_FAILURE":
-      return { ...state, loading: false, error: action.payload };
-    case "UPDATE_PHRASE":
-      return { ...state, phrase: action.payload };
-    case "SET_MAXIMUM_TRIES":
-      return { ...state, maximumTries: action.payload };
+
     case "ADD_LETTER":
       return { ...state, wordToTry: state.wordToTry + action.payload };
     case "DELETE_LAST_LETTER":
@@ -102,32 +110,58 @@ export const gameReducer = (state = INITIAL_STATE, action) => {
       return { ...state, wordToTry: "" };
     case "CLEAR_PHRASE":
       return { ...state, phrase: null };
-    case "NEXT_TRY": {
+    case "ADD_WORD_TO_TRIEDWORDS": {
       const newTriedWords = [...state.triedWords, state.wordToTry];
+    
       return {
         ...state,
         triedWords: newTriedWords,
-        currentTry: state.currentTry + 1,
       };
     }
-    case "UPDATE_LETTERS_FOUND":{
-      const newLettersFound = [...state.lettersFound, action.payload]
+    case "UPDATE_LETTERS_FOUND": {
       return {
         ...state,
-        lettersFound: newLettersFound,
+        lettersFound: action.payload,
       };
     }
-    case "GAME_OVER":
-      return { ...state, isGameOver: action.payload };
-    case "SET_NOTIFICATION_SHOWN":
-        return {
-          ...state,
-          notificationShown: {
-            ...state.notificationShown,
-            [action.payload.phraseNumber]: action.payload.shown
-          }
-        };
+    case "UPDATE_LETTERS_FOUND_ERROR": {
+      return { ...state, loading: false, error: action.payload };
+    }
 
+    case "HANDLE_CLUES_REQUEST":
+      return { ...state, loading: true, error: null };
+    case "HANDLE_CLUES_SUCCESS":
+      return {
+        ...state,
+        loading: false,
+        successMessage: action.payload.data.message,
+        clues: action.payload.clues,
+        newLetters: [],
+       
+
+        ...(action.payload.data.updatedLettersFound && {
+          lettersFound: action.payload.data.updatedLettersFound,
+        }),
+        ...(action.payload.data.updatedPhrase && {
+          phrase: action.payload.data.updatedPhrase,
+        }),
+        ...(action.payload.data.revealedLetter && {
+          newLetters: action.payload.data.revealedLetter,
+        }),
+      };
+    case "HANDLE_CLUES_FAILURE":
+      return { ...state, loading: false, error: action.payload, newLetters: [] };
+    case "CLEAR_SUCCESS_MESSAGE":
+      return { ...state, successMessage: "" };
+    case "UPDATE_GAME_STATUS":
+      return { ...state, gameStatus: action.payload };
+    case "SET_INPUT_FOCUS":
+      return {
+        ...state,
+        isInputFocused: action.payload,
+      };
+    case "CLEAR_ERROR":
+      return { ...state, error: null };
     default:
       return state;
   }

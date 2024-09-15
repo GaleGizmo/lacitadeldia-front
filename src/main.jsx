@@ -11,15 +11,18 @@ ReactDOM.createRoot(document.getElementById("root")).render(
   <Provider store={store}>
   
     <BrowserRouter>
-      
+  
       <App />
       <Toaster
         position="top-center"
         toastOptions={{
          
         }}
-        duration={2000}
+        duration={3000}
       />
     </BrowserRouter>
+   
+
   </Provider>
+  
 );

@@ -1,82 +1,116 @@
-import { APIBase, APIGetPhrase } from "../../shared/api.js";
+import { APIBase } from "../../shared/api.js";
 
-const startGame = (userUUID, oldPhraseToPlay) => async (dispatch) => {
+const startGame = (userId, phraseToPlay) => async (dispatch) => {
   dispatch({ type: "START_GAME_REQUEST" });
 
   try {
-    const response = await APIBase.post("/game/start", { userUUID, oldPhraseToPlay });
-   
+    let response = "";
+    const activeGame = localStorage.getItem("gameId");
+    if (activeGame) {
+      response = await APIBase.get(`/game/active/${activeGame}`);
+    } else {
+      response = await APIBase.post("/game/start", {
+        userId,
+        phraseToPlay,
+      });
+    }
+
     localStorage.setItem("gameId", response.data._id);
     localStorage.setItem("phraseNumber", response.data.phraseNumber);
-    localStorage.setItem('activeGame', JSON.stringify(response.data));
+    localStorage.setItem("activeGame", JSON.stringify(response.data));
     dispatch({ type: "START_GAME_SUCCESS", payload: response.data });
   } catch (err) {
     dispatch({ type: "START_GAME_FAILURE", payload: err.message });
   }
 };
 
-const getExistingGame = (gameId) => async (dispatch) => {
-  dispatch({ type: "GET_ACTIVE_GAME_REQUEST" });
+const updateGameData = (gameId, gameData) => async (dispatch) => {
+  dispatch({ type: "UPDATE_GAME_DATA_REQUEST" });
   try {
-    const phraseNumber = localStorage.getItem("phraseNumber");
-    const userId = localStorage.getItem("userUUID");
-    const currentPhrase = await APIGetPhrase.get("/");
+   
+    const updatedData = await APIBase.put(`/game/update/${gameId}`, {
+      gameData,
+    });
     
-    if (phraseNumber == currentPhrase.data.number) {
-      const response = await APIBase.get(`/game/active/${gameId}`);
-      console.log(response.data);
-      localStorage.setItem('activeGame', JSON.stringify(response.data));
-      dispatch({ type: "GET_ACTIVE_GAME_SUCCESS", payload: response.data });
-    } else {
-      startGame(userId)(dispatch);
-    }
+    localStorage.setItem("activeGame", JSON.stringify(updatedData.data));
+    dispatch({ type: "UPDATE_GAME_DATA_SUCCESS", payload: updatedData.data });
   } catch (err) {
-    dispatch({ type: "GET_ACTIVE_GAME_FAILURE", payload: err.message });
+    dispatch({ type: "UPDATE_GAME_DATA_FAILURE", payload: err.message });
   }
 };
-const updatePhrase = (phraseUpdated) => ({
-  type: "UPDATE_PHRASE",
-  payload: phraseUpdated,
-});
 
-const setMaximumTries = (maxTries) => ({
-  type: "SET_MAXIMUM_TRIES",
-  payload: maxTries,
-});
-const updateLettersFound = (letterFound) => ({
-  type: "UPDATE_LETTERS_FOUND",
-  payload: letterFound,
-})
+const handleClues = (clue, wordToTry) => async (dispatch) => {
+  dispatch({ type: "HANDLE_CLUES_REQUEST" });
+  try {
+    const gameId = localStorage.getItem("gameId");
+    if (clue === "lettersRight" && wordToTry.length != 5) {
+      dispatch({
+        type: "HANDLE_CLUES_FAILURE",
+        payload: "La palabra debe tener 5 letras",
+      });
+      return;
+    }
+    const response = await APIBase.post(`/game/useclue/${gameId}`, {
+      clue,
+      wordToTry,
+    });
+   
+    if (response.data.unusable) {
+      dispatch({
+        type: "HANDLE_CLUES_FAILURE",
+        payload: response.data.unusable,
+      });
+      return;
+    }
+    dispatch({
+      type: "HANDLE_CLUES_SUCCESS",
+      payload: {
+        data: response.data.clueResult,
+        clues: response.data.updatedGameClues,
+      },
+    });
+    //Si la pista de letra devuelve la última letra, espera y muestra los detalles de la cita
+    if (response.data.clueResult.lastLetterRemaining){
+      setTimeout(()=>dispatch({
+        type: "UPDATE_GAME_STATUS",
+        payload: "win"
+      }), 3000)
+    }
+  } catch (err) {
+    dispatch({ type: "HANDLE_CLUES_FAILURE", payload: err.message });
+  }
+};
+
 const addLetter = (letter) => ({ type: "ADD_LETTER", payload: letter });
 
 const deleteLastLetter = () => ({
   type: "DELETE_LAST_LETTER",
 });
-const nextTry = () => ({ type: "NEXT_TRY" });
+const addWordToTried = () => ({ type: "ADD_WORD_TO_TRIEDWORDS" });
 
 const clearWord = () => ({ type: "CLEAR_WORD" });
 
-const gameOver = (gameResult) => ({
-  type: "GAME_OVER",
-  payload: gameResult,
+const clearError = () => ({
+  type: "CLEAR_ERROR",
 });
- const setNotificationShown = (shown, phraseNumber) => {
-  localStorage.setItem(`notificationShown_${phraseNumber}`, JSON.stringify(shown));
-  return {
-    type: "SET_NOTIFICATION_SHOWN",
-    payload: { shown, phraseNumber }
-  };
-};
+
+const resetSuccessMessage = () => ({
+  type: "CLEAR_SUCCESS_MESSAGE",
+});
+const setInputFocus = (isFocused) => ({
+  type: "SET_INPUT_FOCUS",
+  payload: isFocused,
+});
+
 export {
   startGame,
   addLetter,
   clearWord,
+  clearError,
   deleteLastLetter,
-  updatePhrase,
-  setMaximumTries,
-  nextTry,
-  getExistingGame,
-  gameOver,
-  setNotificationShown,
-  updateLettersFound
+  addWordToTried,
+  resetSuccessMessage,
+  updateGameData,
+  handleClues,
+  setInputFocus,
 };

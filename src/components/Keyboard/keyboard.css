@@ -1,6 +1,6 @@
 .keyboard {
   overflow: hidden;
-  width: 100%;
+  width: 98%;
   min-width: 270px;
   height: fit-content;
   max-width: 360px;
@@ -35,16 +35,23 @@
 .action {
   display: flex;
   justify-content: center;
-
+  width: 40px;
+  height: 40px;
  
 }
 .action:hover {
   cursor: pointer;
-  transform: scale(1.15);
+ 
 }
 .class1 {
   fill: #8c9eff;
 }
 .class2 {
   fill: #5f7cf9;
+}
+@media (max-width:757px) {
+  .action{
+    width: 33px;
+    height: 33px;
+  }
 }

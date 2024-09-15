@@ -13,11 +13,25 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  --dark-mode-text:#ffffffde; 
+  --dark-mode-bg: #121212;
+  --dark-mode-secondary_bg: #333333;
+  --dark-mode-link: #9ab0ff;
+  --dark-mode-link_hover: #b3c4ff; 
+  --dark-mode-border: #9ab0ff ;
+  --dark-mode-svg_fill:#8c9eff;
+  --dark-mode-movie_field:#b3c4ff;
+  --color-yellow-dark: #d6cd25;
+  --color-yellow-light: #ffeb0c;
+  --right-letter-color: #51e651;
+  --wrong-letter-color: #80808063;
+  --active-box-color:#157ad1;
+  --color-orange-dark:#e53b08;
 }
 
 a {
   font-weight: 500;
-  color: #646cff;
+  color: var(--active-box-color);
   text-decoration: inherit;
 }
 a:hover {
@@ -32,7 +46,7 @@ body {
   place-items: center;
   min-width: 320px;
   height: 100%;
-  overflow: auto;
+  overflow: hidden;
 }
 
 
@@ -49,7 +63,7 @@ button {
   transition: border-color 0.25s;
 }
 button:hover {
-  border-color: #646cff;
+  border-color: var(--active-box-color);
 }
 button:focus,
 button:focus-visible {
@@ -70,29 +84,30 @@ button:focus-visible {
 }
 @media (prefers-color-scheme: dark) {
   :root {
-    color: rgba(255, 255, 255, 0.87); 
-    background-color: #121212; 
+    color: var(--dark-mode-text) ;
+    background-color: var(--dark-mode-bg);
   }
   a {
-    color: #9ab0ff; 
+    color: var(--dark-mode-link);
   }
   a:hover {
-    color: #b3c4ff; 
+    color: var(--dark-mode-link_hover) 
   }
   button, .details-container>p {
-    background-color: #333333; 
+    background-color: var(--dark-mode-secondary_bg)
   }
-  button:hover {
-    border-color: #9ab0ff;
-  }
-  .letter, .phrase-letter, .key{
-    border-color:#9ab0ff ;
+ 
+  .letter, .phrase-letter, .key, button:hover{
+    border-color: var(--dark-mode-border)
   }
   .header-link svg>path, .keys svg>path{
-    fill: #8c9eff;
+    fill: var(--dark-mode-svg_fill)
   }
   .field-title{
-    color: #b3c4ff;
+    color: var(--dark-mode-movie_field)
   }
-  
+  h1, h2, .rules-header{
+    color: var(--dark-mode-text);
+    background-color: var(--dark-mode-bg) 
+  }
 }

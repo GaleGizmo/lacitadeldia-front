@@ -1,16 +1,19 @@
-.share-button {
+.share-buttons-container{
+  display: flex;
+  gap: 10px;
   position: fixed;
-  top: 5px;
-  right: calc(50% - 160px);
-  width: 32px;
-  height: 32px;
-    /* padding: 10px 20px;
-    background-color: #25D366; */
+    top: 97px;
+    right: calc(50% - 322px);
+}
+.share-button {
+  
+    width: 32px;
+    height: 32px;
     color: white;
     border: none;
     border-radius: 5px;
     cursor: pointer;
-   
+    transition: all 0.5s ease;
   }
   
   .share-button:hover {
@@ -18,10 +21,13 @@
   }
 
   @media  (max-width: 767px){
+    .share-buttons-container{
+      gap: 7px;
+      top: 78px;
+      right: calc(50% - 167px);
+    }
     .share-button{
-      width: 24px;
-      top: 9px;
-      right: calc(50% - 140px);
+      width: 22px;
     }
   }
     

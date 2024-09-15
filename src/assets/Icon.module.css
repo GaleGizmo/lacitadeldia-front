@@ -1,0 +1,32 @@
+.iconWrapper {
+    display: inline-block;
+}
+
+.iconBorder {
+   
+    transition: stroke 0.3s ease; /* Transición del borde */
+    stroke: transparent; /* Inicialmente sin borde */
+    stroke-width: 2px; /* Define el grosor del borde */
+}
+
+.iconPaths {
+    transition: stroke 0.3s ease;
+    stroke: transparent;
+    stroke-width: .75;
+}
+
+/* Aplica el borde al SVG siguiendo su forma */
+.iconBorder:hover {
+    stroke: var(--active-box-color); /* Aquí defines el color del borde en hover */
+}
+
+.iconBorder:hover .iconPaths {
+    stroke: var(--active-box-color); /* Esto sigue aplicando el efecto hover en las rutas internas */
+}
+@media (max-width:767px) {
+    .iconBorder{
+        width: 32px;
+        height: 32px;
+    }
+   
+}

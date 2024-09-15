@@ -6,7 +6,7 @@ import {
   addLetter,
   deleteLastLetter,
   clearWord,
-  nextTry,
+  addWordToTried,
 } from "../../redux/game/game.actions";
 import { useEffect, useCallback } from "react";
 import DeleteIcon from "../../assets/DeleteIcon";
@@ -16,41 +16,51 @@ import KeyboardRow from "../KeyboardRow/KeyboardRow";
 
 const Keyboard = ({ userId }) => {
   const dispatch = useDispatch();
+  
   const lettersUp = "QWERTYUIOP".split("");
+  // const [failedLetters, setFailedLetters] = useState("");
   const lettersMiddle = "ASDFGHJKLÑ".split("");
+  
   const lettersDown = "ZXCVBNM".split("");
-  const { phrase, wordToTry, isGameOver } = useSelector(
+
+  const { lettersFound, lettersFailed, wordToTry, gameStatus, isInputFocused } = useSelector(
     (reducer) => reducer.gameReducer
   );
+  
+
+
 
   const [result, verifyWord, isVerifying] = useCheckWord();
 
   //captura letras desde el teclado en pantalla
-  const handleClick = useCallback((content) => {
-    if (content === "DELETE") {
-      dispatch(deleteLastLetter());
-      return;
-    }
-    if (content === "SEND") {
-      if (wordToTry.length < 5) {
-        toast.error("La palabra debe tener 5 letras");
+  const handleClick = useCallback(
+    (content) => {
+      if (content === "DELETE") {
+        dispatch(deleteLastLetter());
         return;
       }
-      verifyWord(wordToTry, userId);
-      return;
-    }
-    if (wordToTry.length >= 5) {
-      return;
-    }
-    dispatch(addLetter(content));
-  }, [dispatch, wordToTry, userId, verifyWord]);
+      if (content === "SEND") {
+        if (wordToTry.length < 5) {
+          toast.error("La palabra debe tener 5 letras");
+          return;
+        }
+        verifyWord(wordToTry, userId);
+        return;
+      }
+      if (wordToTry.length >= 5) {
+        return;
+      }
+      dispatch(addLetter(content));
+    },
+    [dispatch, wordToTry, userId, verifyWord]
+  );
 
-//captura letras desde el teclado físico
+  //captura letras desde el teclado físico
   useEffect(() => {
     const handleKeyDown = (event) => {
       const { key } = event;
 
-      if (isGameOver) return;
+      if (gameStatus!="playing" || isInputFocused) return;
 
       if (key === "Backspace") {
         dispatch(deleteLastLetter());
@@ -73,16 +83,20 @@ const Keyboard = ({ userId }) => {
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
     };
-  }, [dispatch, wordToTry, userId, verifyWord, isGameOver]);
+  }, [dispatch, wordToTry, userId, verifyWord, gameStatus, isInputFocused]);
+
+  //verifica si la palabra es válida y la añade a triedWords
+  //luego limpia la palabra actual
+  //si no es válida muestra un mensaje de error
 
   useEffect(() => {
     if (result !== null && !isVerifying) {
       if (result) {
-        dispatch(nextTry());
+        dispatch(addWordToTried());
       } else {
         toast.error("Palabra no válida");
+        dispatch(clearWord());
       }
-      dispatch(clearWord());
     }
   }, [result, isVerifying, dispatch]);
 
@@ -91,33 +105,36 @@ const Keyboard = ({ userId }) => {
       <KeyboardRow
         letters={lettersUp}
         handleClick={handleClick}
-        isGameOver={isGameOver}
-        phrase={phrase}
+        gameStatus={gameStatus}
+        lettersFound={lettersFound}
+        lettersFailed={lettersFailed}
       />
       <KeyboardRow
         letters={lettersMiddle}
         handleClick={handleClick}
-        isGameOver={isGameOver}
-        phrase={phrase}
+        gameStatus={gameStatus}
+        lettersFound={lettersFound}
+        lettersFailed={lettersFailed}
       />
       <div className="keys">
         <div
           className="action"
-          onClick={() => !isGameOver && handleClick("DELETE")}
+          onClick={() => gameStatus==="playing" && handleClick("DELETE")}
         >
-          <DeleteIcon />
+          <DeleteIcon width="33" height="33" viewBox="2 3 20 18" />
         </div>
         <KeyboardRow
           letters={lettersDown}
           handleClick={handleClick}
-          isGameOver={isGameOver}
-          phrase={phrase}
+          gameStatus={gameStatus}
+          lettersFound={lettersFound}
+          lettersFailed={lettersFailed}
         />
         <div
           className="action"
-          onClick={() => !isGameOver && handleClick("SEND")}
+          onClick={() => gameStatus==="playing" && handleClick("SEND")}
         >
-          <AcceptIcon />
+          <AcceptIcon width="33" height="33" viewBox="2 3 20 18" />
         </div>
       </div>
     </div>

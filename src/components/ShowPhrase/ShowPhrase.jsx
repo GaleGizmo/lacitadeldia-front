@@ -1,84 +1,98 @@
-/* eslint-disable react/prop-types */
-/* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable no-unused-vars */
-import React, { useEffect, useState } from "react";
-
+import { useEffect, useState } from "react";
+import { PropTypes } from "prop-types";
 import "./showPhrase.css";
 import { getPhraseByNumber } from "../../shared/api";
-import { useDispatch } from "react-redux";
-import { updatePhrase } from "../../redux/game/game.actions";
-import processPhraseToShow from "../../customhooks/hideLetters";
-
+import { useSelector } from "react-redux";
 import isLetter from "../../customhooks/isLetter";
 import PhraseDetails from "../PhraseDetails/PhraseDetails";
+import GenericMoviePoster from "../../assets/GenericMoviePoster"; // Importa la imagen genérica
 
-const MAX_RETRY_ATTEMPTS = 3; // Número máximo de intentos de recarga
-
-const ShowPhrase = ({ triedWords, displayPhraseLink }) => {
-  const dispatch = useDispatch();
+const ShowPhrase = ({ displayPhraseLink, showModal, onModalClose }) => {
   const [phraseToWords, setPhraseToWords] = useState([]);
+  const [animatedLetters, setAnimatedLetters] = useState({});
   const [phraseDetails, setPhraseDetails] = useState(null);
-  const [showModal, setShowModal] = useState(false);
-  const [imageError, setImageError] = useState(false); // Estado para manejar el error de la imagen
-  const [imageSrc, setImageSrc] = useState(""); // Estado para manejar la fuente de la imagen
-  const [retryCount, setRetryCount] = useState(0); // Estado para el número de intentos de recarga
-  const [visibleFields, setVisibleFields] = useState(0);
 
+  const [imageError, setImageError] = useState(false);
+  const [imageSrc, setImageSrc] = useState("");
+  const [retryAttempted, setRetryAttempted] = useState(false); // Nuevo estado para rastrear si ya se ha intentado recargar la imagen
+  
+
+  // Obtener la frase y las nuevas letras desde el store
+  const { phrase, newLetters } = useSelector((state) => state.gameReducer);
+
+  //Muestra secuencialmente las nuevas letras descubiertas
+  useEffect(() => {
+    const animateLetters = async () => {
+      if (phrase && newLetters) {
+        const newAnimatedLetters = {};
+
+        let currentGlobalIndex = 0;
+
+        // Ocultar inicialmente las letras nuevas
+        phrase.split(" ").forEach((word) => {
+          word.split("").forEach((char) => {
+            if (newLetters.includes(char) && char !== "_") {
+              newAnimatedLetters[currentGlobalIndex] = false;
+            }
+            currentGlobalIndex++;
+          });
+          currentGlobalIndex++; // Contar el espacio entre palabras
+        });
+
+        // Actualizar `phraseToWords` para renderizado
+        setPhraseToWords(phrase.split(" "));
+
+        // Revelar y animar letras secuencialmente
+        for (let i = 0; i < Object.keys(newAnimatedLetters).length; i++) {
+          const index = Object.keys(newAnimatedLetters)[i];
+          await new Promise((resolve) => setTimeout(resolve, 300)); // Tiempo constante entre animaciones
+
+          setAnimatedLetters((prev) => ({
+            ...prev,
+            [index]: true,
+          }));
+        }
+      }
+    };
+
+    animateLetters();
+  }, [phrase, newLetters]);
+
+  // Carga los detalles de la frase cuando se ha acertado
   useEffect(() => {
     const fetchPhrase = async () => {
       try {
-        const phraseNumber = localStorage.getItem("phraseNumber");
-        const fetchedPhrase = await getPhraseByNumber(phraseNumber);
-        setPhraseDetails(fetchedPhrase);
-        setImageSrc(fetchedPhrase.poster); // Establecer la fuente de la imagen
+        if (displayPhraseLink) {
+          const phraseNumber = localStorage.getItem("phraseNumber");
+          let fetchedPhrase = await getPhraseByNumber(phraseNumber);
 
-        const processPhrase = processPhraseToShow(
-          fetchedPhrase.quote,
-          triedWords
-        );
-        dispatch(updatePhrase(processPhrase));
-
-        setPhraseToWords(processPhrase.split(" "));
+          setPhraseDetails(fetchedPhrase);
+          setImageSrc(fetchedPhrase.poster);
+        }
       } catch (error) {
         console.error("Error fetching phrase:", error);
       }
     };
 
     fetchPhrase();
-  }, [triedWords]);
+  }, [displayPhraseLink]);
 
-  useEffect(() => {
-    if (imageError && retryCount < MAX_RETRY_ATTEMPTS) {
-      const retryTimeout = setTimeout(() => {
-        setImageError(false);
-        setImageSrc(`${phraseDetails.poster}?retry=${new Date().getTime()}`); // Añadir un parámetro único para evitar el caché
-        setRetryCount(retryCount + 1);
-      }, 1000); // Esperar 1 segundo antes de intentar recargar la imagen
 
-      return () => clearTimeout(retryTimeout); // Limpiar el timeout si el componente se desmonta
-    }
-  }, [imageError, retryCount, phraseDetails]);
-
-  useEffect(() => {
-    if (showModal && visibleFields < 6) {  // 6 es el número total de campos
-      const timer = setTimeout(() => {
-        setVisibleFields(prev => prev + 1);
-      }, 500);  // Muestra un nuevo campo cada 500ms
-      return () => clearTimeout(timer);
-    }
-  }, [showModal, visibleFields]);
-
-  const handleOpenModal = () => {
-    setShowModal(true);
-  };
 
   const handleCloseModal = () => {
-    setShowModal(false);
-    setVisibleFields(0);
+    onModalClose();
+    
   };
 
   const handleImageError = () => {
-    setImageError(true);
+    if (!retryAttempted) {
+      // Si no se ha intentado recargar, intentar una vez más
+      setRetryAttempted(true);
+      setImageSrc(`${phraseDetails.poster}?retry=${new Date().getTime()}`);
+    } else {
+      // Si ya se intentó recargar, mostrar la imagen genérica
+      setImageError(true);
+    }
   };
 
   return (
@@ -86,95 +100,91 @@ const ShowPhrase = ({ triedWords, displayPhraseLink }) => {
       <div className="phrase-container">
         {phraseToWords.map((word, wordIndex) => (
           <span key={wordIndex} className="word">
-            {word.split("").map((char, charIndex) => (
-              <span
-                key={charIndex}
-                className={`phrase-letter ${
-                  char === "_"
-                    ? "letter-box"
-                    : isLetter(char)
-                    ? "visible-letter"
-                    : "visible-char"
-                }`}
-              >
-                {char}
-              </span>
-            ))}
+            {word.split("").map((char, charIndex) => {
+              const globalIndex =
+                phraseToWords
+                  .slice(0, wordIndex)
+                  .reduce((acc, w) => acc + w.length + 1, 0) + charIndex;
+
+              const displayChar =
+                animatedLetters[globalIndex] || !newLetters.includes(char)
+                  ? char
+                  : "_";
+
+              return (
+                <span
+                  key={`${wordIndex}-${charIndex}`}
+                  className={`phrase-letter ${
+                    displayChar === "_"
+                      ? "letter-box"
+                      : isLetter(displayChar)
+                      ? `in-phrase ${
+                          animatedLetters[globalIndex] ? "animate-reveal" : ""
+                        }`
+                      : "visible-char"
+                  }`}
+                >
+                  {displayChar}
+                </span>
+              );
+            })}
             <span className="space">&nbsp;</span>
           </span>
         ))}
-      </div>{" "}
-      {displayPhraseLink && (
-        <div className="phrase-link-container">
-          <button className="phrase-link" onClick={handleOpenModal}>
-            Ver detalles de la cita
-          </button>
-        </div>
-      )}
+      </div>
+
+      {/* Mostrar los detalles de la frase en un modal */}
       <PhraseDetails show={showModal} onClose={handleCloseModal}>
         {phraseDetails && (
           <div className="phrase-details">
-           
-              <div className="poster-container">
-                {imageError ? (
-                  <div className="image-error">Imagen no disponible</div>
-                ) : (
-                  <img
-                    src={imageSrc}
-                    alt="Póster"
-                    className="poster-image"
-                    onError={handleImageError}
-                  />
-                )}
-              </div>
-         
+            <div className="poster-container">
+              {imageError ? (
+                <GenericMoviePoster width={300} height={450} />
+              ) : (
+                <img
+                  src={imageSrc}
+                  alt="Póster"
+                  className="poster-image"
+                  onError={handleImageError}
+                />
+              )}
+            </div>
+
             <div className="details-container">
-              {visibleFields>0 && (
-                <p className="fade-in">
-                  <span className="field-title">Película:</span>{" "}
-                  <span className="field-content">
-                    {phraseDetails.movie} ({phraseDetails.year})
-                  </span>
-                </p>
-              )}
-              {visibleFields>1 && (
-                <p className="fade-in">
-                  <span className="field-title">Director:</span>{" "}
-                  <span className="field-content">
-                    {phraseDetails.director}
-                  </span>
-                </p>
-              )}
-              {visibleFields>2 && (
-                <p className="fade-in">
-                  <span className="field-title">Frase:</span>{" "}
-                  <span className="field-content">{phraseDetails.quote}</span>
-                </p>
-              )}
-              {visibleFields>3 && phraseDetails.original && (
-                <p className="fade-in">
-                  <span className="field-title">Original:</span>{" "}
+              <p className="fade-in delay-1">
+                <span className="field-title">Película: </span>
+                <span className="field-content">
+                  {phraseDetails.movie} ({phraseDetails.year})
+                </span>
+              </p>
+              <p className="fade-in delay-2">
+                <span className="field-title">Director: </span>
+                <span className="field-content">{phraseDetails.director}</span>
+              </p>
+              <p className="fade-in delay-3">
+                <span className="field-title">Frase: </span>
+                <span className="field-content">{phraseDetails.quote}</span>
+              </p>
+              {phraseDetails.original && (
+                <p className="fade-in delay-4">
+                  <span className="field-title">Original: </span>
                   <span className="field-content">
                     {phraseDetails.original}
                   </span>
                 </p>
               )}
-              {visibleFields>4 && (
-                <p className="fade-in">
-                  <span className="field-title">Personaje:</span>{" "}
-                  <span className="field-content">
-                    {phraseDetails.who_said_it.character} ({phraseDetails.who_said_it.actor})
-                  </span>
-                </p>
-              )}
-             
-              {visibleFields>5 && (
-                <p className="fade-in">
-                  <span className="field-content">
-                    {phraseDetails.who_said_it.context}
-                  </span>
-                </p>
-              )}
+              <p className="fade-in delay-5">
+                <span className="field-title">Personaje: </span>
+                <span className="field-content">
+                  {phraseDetails.who_said_it.character} (
+                  {phraseDetails.who_said_it.actor})
+                </span>
+              </p>
+              <p className="fade-in delay-6">
+                <span className="field-content">
+                  {phraseDetails.who_said_it.context}
+                </span>
+              </p>
             </div>
           </div>
         )}
@@ -182,5 +192,9 @@ const ShowPhrase = ({ triedWords, displayPhraseLink }) => {
     </div>
   );
 };
-
+ShowPhrase.propTypes = {
+  displayPhraseLink: PropTypes.bool,
+  showModal: PropTypes.bool,
+  onModalClose: PropTypes.func.isRequired,
+};
 export default ShowPhrase;
