@@ -7,7 +7,6 @@ const RulesPage = () => {
       <div className="rules-header">
         <h1>Información del Juego</h1>
       </div>
-
       <div className="rules-content">
         <section>
           <h2>Objetivo</h2>
@@ -87,8 +86,8 @@ const RulesPage = () => {
           </p>
           <p>
             Si además eres tan crack que te han sobrado intentos, sumarás
-            <span className="correct">10 puntos</span> adicionales a tu
-            marcador por cada uno de ellos.
+            <span className="correct">10 puntos</span> adicionales a tu marcador
+            por cada uno de ellos.
           </p>
           <p>
             Los puntos que ganes cada día se conservarán siempre y cuando
@@ -98,21 +97,18 @@ const RulesPage = () => {
           <p>
             En cada partida dispondrás de <strong>cuatro </strong>pistas:
           </p>
-          <img
-            className="clues-png"
-            src="assets/clues.png"
-            alt="clues"
-          />
+          <img className="clues-png" src="assets/clues.png" alt="clues" />
           <p>Cada pista solo se podrá usar una vez en cada partida.</p>
           <p>
-            Para usar una pista deberás hacer click en su icono, con lo que se mostrará una breve descripción de la misma junto con el botón para
+            Para usar una pista deberás hacer click en su icono, con lo que se
+            mostrará una breve descripción de la misma junto con el botón para
             utilizarla y su <strong>coste en puntos</strong>.
           </p>
           <p>Las pistas de las que dispones son:</p>
           <ul>
             <li>
-              <img className="clue-icon" src="assets/letra.png" alt="Letra" /> Se selecciona
-              una letra al azar de la cita y se muestra
+              <img className="clue-icon" src="assets/letra.png" alt="Letra" />{" "}
+              Se selecciona una letra al azar de la cita y se muestra
               <strong> en todas las posiciones</strong> de la cita en las que se
               encuentre. Coste:{" "}
               <span className="perdida">
@@ -121,7 +117,11 @@ const RulesPage = () => {
               .
             </li>
             <li>
-              <img className="clue-icon" src="assets/compara_letras.png" alt="Compara Letras" />{" "}
+              <img
+                className="clue-icon"
+                src="assets/compara_letras.png"
+                alt="Compara Letras"
+              />{" "}
               Muestra el número de <strong>letras comunes</strong> (de entre las
               no reveladas) entre una palabra de cinco letras y la cita. Por
               ejemplo, si escribes la palabra <strong>CEBRA</strong> y la cita
@@ -134,17 +134,22 @@ const RulesPage = () => {
               .
             </li>
             <li>
-              <img className="clue-icon" src="assets/actor.png" alt="Actor" /> Muestra el
-              nombre del<strong> actor</strong> que protagoniza la cita. Coste:{" "}
+              <img className="clue-icon" src="assets/actor.png" alt="Actor" />{" "}
+              Muestra el nombre del<strong> actor</strong> que protagoniza la
+              cita. Coste:{" "}
               <span className="perdida">
                 <strong>15 puntos</strong>
               </span>
               .
             </li>
             <li>
-              <img className="clue-icon" src="assets/director.png" alt="Director" /> Muestra el
-              nombre del <strong>director</strong> de la película a la que
-              pertenece la cita. Coste:{" "}
+              <img
+                className="clue-icon"
+                src="assets/director.png"
+                alt="Director"
+              />{" "}
+              Muestra el nombre del <strong>director</strong> de la película a
+              la que pertenece la cita. Coste:{" "}
               <span className="perdida">
                 <strong>15 puntos</strong>
               </span>
@@ -176,22 +181,25 @@ const RulesPage = () => {
           </p>
           <p>
             Si hay citas de días anteriores que no has jugado, puedes intentar
-            adivinarlas; ¡PERO RECUERDA!, en estas partidas se aplicará la <strong>misma
-            regla que para la cita del día</strong>: es decir, si empiezas a jugar y no
-            descubres la cita antes de las 7AM del día siguiente se considerará
-            partida <span className="perdida">PERDIDA</span>.
+            adivinarlas; ¡PERO RECUERDA!, en estas partidas se aplicará la{" "}
+            <strong>misma regla que para la cita del día</strong>: es decir, si
+            empiezas a jugar y no descubres la cita antes de las 7AM del día
+            siguiente se considerará partida{" "}
+            <span className="perdida">PERDIDA</span>.
           </p>
           <p>
             Para volver a la cita del día, usa el icono de la casa en la parte
             superior.
           </p>
         </section>
-        
       </div>
       <footer>
-         <small>© 2024 Miguel Abelleira</small>
-       <small> <Link to="/privacy-policy">Política de Privacidad</Link></small> 
-        </footer>{" "}
+        <small>© 2024 Miguel Abelleira</small>
+        <small>
+          {" "}
+          <Link to="/privacy-policy">Política de Privacidad</Link>
+        </small>
+      </footer>{" "}
     </div>
   );
 };

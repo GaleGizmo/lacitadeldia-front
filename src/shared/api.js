@@ -3,7 +3,7 @@ import axios from "axios";
 export const APIHeaders = {
   Accept: "application/json",
   "Content-Type": "application/json",
-  "Access-Control-Allow-Origin": "*",
+  
 };
 
 export const APIGetPhrase = axios.create({
@@ -19,123 +19,87 @@ export const APIAddPhrase = axios.create({
   baseURL: import.meta.env.VITE_APP_ADD_PHRASE,
   headers: APIHeaders,
 });
+//Manejo común de errores y respuestas
+const handleResponse = (response) => response.data;
 
+const handleError = (error) => {
+  console.error("Error en la API:", error.response?.data?.message || "Error desconocido");
+  throw error;
+}
+// Funciones relacionadas con el usuario
 export const createNewUser = async () => {
-  try {
-    const response = await APIBase.post("/user/register");
-    return response.data;
-  } catch (error) {
-    console.error("Error al crear el usuario:", error);
-  }
+  return APIBase.post("/user/register")
+    .then(handleResponse)
+    .catch(handleError);
 };
+
 export const getUserData = async (userId) => {
-  try {
-    const response = await APIBase.get(`/user/getuser/${userId}`);
-    return response.data;
-  } catch (error) {
-    console.error("Error al obtener los datos del usuario:", error);
-    throw error;
-  }
+  return APIBase.get(`/user/getuser/${userId}`)
+    .then(handleResponse)
+    .catch(handleError);
 };
+
 export const updateUserData = async (userId, userData) => {
-  try {
-    
-    const response = await APIBase.patch(`user/updateuser/${userId}`, {
-      userData,
-    });
-    return response.data;
-  } catch (error) {
-    console.error("Error al actualizar el usuario:", error);
-    throw error;
-  }
+  return APIBase.patch(`/user/updateuser/${userId}`, userData)
+    .then(handleResponse)
+    .catch(handleError);
 };
+
+// Funciones relacionadas con el juego
 export const checkWord = async (word, userId) => {
-  try {
-    const response = await APIBase.post("/game/checkWord", { word, userId });
-    return response.data;
-  } catch (error) {
-    console.error("Error al verificar la palabra:", error);
-    throw error;
-  }
+  return APIBase.post("/game/checkWord", { word, userId })
+    .then(handleResponse)
+    .catch(handleError);
 };
-export const getPhraseOfTheDay = async () => {
-  try {
-    const response = await APIGetPhrase.get("/");
 
-    return response.data;
-  } catch (error) {
-    console.error("Error al obtener la frase del día:", error);
-    throw error;
-  }
-};
-export const getPhraseOfTheDayNumber = async () => {
-  try {
-    const response = await APIGetPhrase.get(`/getnumber`);
-
-    return response.data;
-  } catch (error) {
-    console.error("Error al obtener la frase por número:", error);
-    throw error;
-  }
-};
-export const addPhrase = async (phraseData) => {
-  try {
-    const response = await APIAddPhrase.post("/", { phraseData });
-    return response.data;
-  } catch (err) {
-    console.error("Error al agregar la frase:", err);
-  }
-};
 export const updateGame = async (gameId, gameData) => {
-  try {
-    
-    const response = await APIBase.put(`/game/update/${gameId}`, { gameData });
-    
-    localStorage.setItem("activeGame", JSON.stringify(response.data));
-    return response.data;
-  } catch (err) {
-    console.error("Error al actualizar el juego:", err);
-  }
+  return APIBase.put(`/game/update/${gameId}`, gameData)
+    .then((response) => {
+      localStorage.setItem("activeGame", JSON.stringify(response.data)); // Asegúrate de no almacenar datos sensibles
+      return response.data;
+    })
+    .catch(handleError);
 };
 
-export const getUserPastPhrases = async (userId) => {
-  try {
-    const response = await APIBase.get(`/phrases/getoldphrases/${userId}`);
-   
-    return response.data;
-  } catch (err) {
-    console.error("Error al obtener los juegos pasados:", err);
-  }
-};
-
-export const getPhraseByNumber = async (phraseNumber) => {
-  try {
-    const response = await APIGetPhrase.get(
-      `/getphrasebynumber/${phraseNumber}`
-    );
-
-    return response.data;
-  } catch (error) {
-    console.error("Error al obtener la frase por número:", error);
-    throw error;
-  }
-};
 export const getUserStats = async (userId) => {
-  try {
-    const response = await APIBase.post(`/game/getuserstats`, { userId });
-
-    return response.data;
-  } catch (err) {
-    console.error("Error al obtener las stats");
-  }
+  return APIBase.post("/game/getuserstats", { userId })
+    .then(handleResponse)
+    .catch(handleError);
 };
 
 export const getUserPoints = async (userId) => {
-  try {
-    const response = await APIBase.get(`/user/getpoints/${userId}`);
+  return APIBase.get(`/user/getpoints/${userId}`)
+    .then(handleResponse)
+    .catch(handleError);
+};
 
-    return response.data;
-  } catch (err) {
-    console.error("Error al obtener los puntos");
-  }
+export const getUserPastPhrases = async (userId) => {
+  return APIBase.get(`/phrases/getoldphrases/${userId}`)
+    .then(handleResponse)
+    .catch(handleError);
+};
+
+// Funciones relacionadas con frases
+export const getPhraseOfTheDay = async () => {
+  return APIGetPhrase.get("/")
+    .then(handleResponse)
+    .catch(handleError);
+};
+
+export const getPhraseOfTheDayNumber = async () => {
+  return APIGetPhrase.get(`/getnumber`)
+    .then(handleResponse)
+    .catch(handleError);
+};
+
+export const getPhraseByNumber = async (phraseNumber) => {
+  return APIGetPhrase.get(`/getphrasebynumber/${phraseNumber}`)
+    .then(handleResponse)
+    .catch(handleError);
+};
+
+export const addPhrase = async (phraseData) => {
+  return APIAddPhrase.post("/", phraseData)
+    .then(handleResponse)
+    .catch(handleError);
 };
