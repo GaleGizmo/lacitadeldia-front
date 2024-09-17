@@ -37,7 +37,6 @@ const GameComponent = () => {
     const initializeGame = async () => {
       const phraseOfTheDayNumber = await getPhraseOfTheDayNumber();
       if (phraseOfTheDayNumber != game.phraseNumber) {
-      
         localStorage.removeItem("gameId");
       }
       dispatch(startGame(userId, phraseNumber));
@@ -45,7 +44,7 @@ const GameComponent = () => {
       setIsInitialized(true);
     };
     initializeGame();
-  
+
     localStorage.removeItem("oldPhraseToPlay");
   }, []);
 
@@ -95,17 +94,21 @@ const GameComponent = () => {
 
   return (
     <div className="game">
-      {game.gameStatus === "playing" && (
-        <div className="clues-container">
-          <Clues />{" "}
+      <div className="words-clues-points-container">
+       
+        <div className="words">{wordsToTry} </div>
+        <div className="clues-points-container">
+          <div className="showPoints">
+            <ShowPoints />{" "}
+          </div>{" "}
+          {game.gameStatus === "win" && (
+          <div className="clues-container">
+            <Clues />{" "}
+          </div>
+        )}
         </div>
-      )}
-      <div className="words">{wordsToTry} </div>
-     
-        <div className="showPoints">
-          <ShowPoints />{" "}
-        </div>
-      
+      </div>
+
       <div className="phrase-and-button-container">
         <ShowPhrase
           displayPhraseLink={game.gameStatus === "win"}
@@ -124,7 +127,7 @@ const GameComponent = () => {
         )}{" "}
       </div>
       <Keyboard userId={userId} />
-      {game.gameStatus != "playing" && (
+      {game.gameStatus != "win" && (
         <ShareButton
           gameStatus={game.gameStatus}
           phraseNumber={game.phraseNumber}

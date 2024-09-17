@@ -3,7 +3,7 @@ import axios from "axios";
 export const APIHeaders = {
   Accept: "application/json",
   "Content-Type": "application/json",
-  
+   
 };
 
 export const APIGetPhrase = axios.create({
@@ -99,7 +99,8 @@ export const getPhraseByNumber = async (phraseNumber) => {
 };
 
 export const addPhrase = async (phraseData) => {
-  return APIAddPhrase.post("/", phraseData)
+  
+  return APIAddPhrase.post("/", {phraseData})
     .then(handleResponse)
     .catch(handleError);
 };

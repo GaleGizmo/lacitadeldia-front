@@ -5,11 +5,11 @@
     border: 2px solid gray;
     border-radius: 8px;
     z-index: 100;
-    position: absolute;
-    width: 150px;
+    /* position: absolute; */
+    width: 170px;
     height: fit-content;
-    top: 0px;
-    right: calc(50% - 340px);
+    /* top: 0px;
+    right: calc(50% - 340px); */
 }
 .showPoints p {
    
@@ -21,9 +21,9 @@
 }
 @media (max-width: 767px) {
     .showPoints {
-      top: 3px;
-      right: calc(50% - 174px);
-      width: 90px;
+      /* top: 3px;
+      right: calc(50% - 174px); */
+      width: 130px;
     }
     .showPoints p {
    

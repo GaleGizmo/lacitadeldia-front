@@ -55,12 +55,16 @@ const AddPhraseForm = () => {
         if (!validate()) return;
     
         try {
+          const { actor, character, context, ...rest } = formData;
           const response = await addPhrase({
-            ...formData,
+            ...rest,
             who_said_it: {
-              actor: formData.actor,
-              character: formData.character,
-              context: formData.context,
+              actor,
+              
+              character,
+              
+              context
+              
             },
           });
           setSubmittedPhrase(response);

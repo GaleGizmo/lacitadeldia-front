@@ -5,13 +5,13 @@
   border: 2px solid gray;
   border-radius: 8px;
   z-index: 100;
-  position: absolute;
+  /* position: absolute; */
   width: 170px;
   height: fit-content;
-  top: 0px;
+  /* top: 0px;
   left: calc(
     50% - 360px
-  ); 
+  );  */
 }
 
 .clues-button {
@@ -53,9 +53,9 @@
 }
 @media (max-width: 767px) {
   .clues-container {
-    top: 3px;
-    left: calc(50% - 174px);
-    width: 90px;
+    /* top: 3px;
+    left: calc(50% - 174px); */
+    width: 130px;
   }
   .clue-icon {
     width: 22px;
