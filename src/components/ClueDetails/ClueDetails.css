@@ -72,6 +72,15 @@
   }
   .clue-details > input {
     padding: 1px;
+    font-size: 12px;
+   position: absolute;
+   left: 2px;
+   bottom: 4px;
+  }
+  .clue-details button{
+    padding: 1px 5px 2px 5px;
+   margin-bottom: 5px;
+   margin-left: 20px;
   }
   .clue-price {
     width: 14px;

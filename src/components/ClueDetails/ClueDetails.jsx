@@ -23,22 +23,22 @@ const ClueDetails = ({ typeOfClue }) => {
   useEffect(() => {
     switch (typeOfClue) {
       case "letter":
-        setClueDescription("Revela una letra de la frase");
+        setClueDescription("Revela una letra");
         if (clues.letter.value) setConsumedClueMessage(clues.letter.value) ;
         break;
       case "lettersRight":
-        setClueDescription("Letras comunes con la palabra:");
+        setClueDescription("Letras comunes con:");
         if (clues.lettersRight.value) setConsumedClueMessage(
               `${clues.lettersRight.value.word} (${clues.lettersRight.value.commons})`
             )
           ;
         break;
       case "actor":
-        setClueDescription("Actor/actriz que dijo la frase");
+        setClueDescription("Quién dijo la frase");
         if (clues.actor.value) setConsumedClueMessage(clues.actor.value);
         break;
       case "director":
-        setClueDescription("Quien dirigió la película");
+        setClueDescription("Quién dirigió la película");
        if (clues.director.value) setConsumedClueMessage(clues.director.value)
           ;
         break;

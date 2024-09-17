@@ -1,9 +1,10 @@
 .share-buttons-container{
   display: flex;
   gap: 10px;
-  position: fixed;
+  justify-content: center;
+  /* position: fixed;
     top: 97px;
-    right: calc(50% - 322px);
+    right: calc(50% - 322px); */
 }
 .share-button {
   
@@ -23,8 +24,8 @@
   @media  (max-width: 767px){
     .share-buttons-container{
       gap: 7px;
-      top: 78px;
-      right: calc(50% - 167px);
+      /* top: 78px;
+      right: calc(50% - 167px); */
     }
     .share-button{
       width: 22px;

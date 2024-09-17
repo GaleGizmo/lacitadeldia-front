@@ -7,7 +7,7 @@
     z-index: 100;
     /* position: absolute; */
     width: 170px;
-    height: fit-content;
+    height: 25px;
     /* top: 0px;
     right: calc(50% - 340px); */
 }
@@ -24,6 +24,7 @@
       /* top: 3px;
       right: calc(50% - 174px); */
       width: 130px;
+      height: 20px;
     }
     .showPoints p {
    

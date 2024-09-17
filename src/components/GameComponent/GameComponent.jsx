@@ -101,11 +101,19 @@ const GameComponent = () => {
           <div className="showPoints">
             <ShowPoints />{" "}
           </div>{" "}
-          {game.gameStatus === "win" && (
+          {game.gameStatus === "playing" && (
           <div className="clues-container">
             <Clues />{" "}
           </div>
         )}
+        {game.gameStatus != "playing" && (
+        <ShareButton
+          gameStatus={game.gameStatus}
+          phraseNumber={game.phraseNumber}
+          attempts={game.currentTry}
+          maxTries={game.maximumTries}
+        />
+      )}
         </div>
       </div>
 
@@ -127,14 +135,7 @@ const GameComponent = () => {
         )}{" "}
       </div>
       <Keyboard userId={userId} />
-      {game.gameStatus != "win" && (
-        <ShareButton
-          gameStatus={game.gameStatus}
-          phraseNumber={game.phraseNumber}
-          attempts={game.currentTry}
-          maxTries={game.maximumTries}
-        />
-      )}
+    
     </div>
   );
 };

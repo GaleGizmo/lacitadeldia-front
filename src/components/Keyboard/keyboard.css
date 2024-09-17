@@ -10,7 +10,7 @@
 }
 .keys {
   display: flex;
-
+  height: 32px;
   gap: 5px;
   justify-content: center;
   margin-bottom: 5px;
