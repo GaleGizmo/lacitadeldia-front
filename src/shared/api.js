@@ -40,7 +40,7 @@ export const getUserData = async (userId) => {
 };
 
 export const updateUserData = async (userId, userData) => {
-  return APIBase.patch(`/user/updateuser/${userId}`, userData)
+  return APIBase.patch(`/user/updateuser/${userId}`, {userData})
     .then(handleResponse)
     .catch(handleError);
 };
