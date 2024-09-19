@@ -67,13 +67,14 @@ const ClueDetails = ({ typeOfClue }) => {
       )}
       {clueDescription && clues[typeOfClue] && clues[typeOfClue].status ? (
        <> <button onClick={useClue}>Usar</button>
+       <p className="clue-price">{clues[typeOfClue].price}</p>
         </>
       ) : (
         clueDescription && (
           <p className="consumed-message">{consumedClueMessage}</p>
         )
       )} </div>
-      <p className="clue-price">{clues[typeOfClue].price}</p>
+      
       
     </div>
   );
