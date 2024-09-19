@@ -158,11 +158,11 @@ const ShowPhrase = ({ displayPhraseLink, showModal, onModalClose }) => {
                 </span>
               </p>
               <p className="fade-in delay-2">
-                <span className="field-title">Director: </span>
+                <span className="field-title">Dirección: </span>
                 <span className="field-content">{phraseDetails.director}</span>
               </p>
               <p className="fade-in delay-3">
-                <span className="field-title">Frase: </span>
+                <span className="field-title">Cita: </span>
                 <span className="field-content">{phraseDetails.quote}</span>
               </p>
               {phraseDetails.original && (

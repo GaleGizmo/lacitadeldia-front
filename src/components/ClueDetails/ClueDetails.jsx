@@ -60,6 +60,7 @@ const ClueDetails = ({ typeOfClue }) => {
         <input
           type="text"
           maxLength={"5"}
+          
           onChange={(e) => setWordToTry(e.target.value.toLocaleUpperCase())}
           onFocus={() => dispatch(setInputFocus(true))}
           onBlur={() => dispatch(setInputFocus(false))}

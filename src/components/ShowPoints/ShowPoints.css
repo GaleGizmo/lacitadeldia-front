@@ -27,7 +27,7 @@
       height: 20px;
     }
     .showPoints p {
-   
+        padding-top: 2px;
         font-size: 12px;
     }
 }
