@@ -56,7 +56,7 @@ const ClueDetails = ({ typeOfClue }) => {
   return (
     <div className="clue-details">
       <p className="clue-description">{clueDescription}</p>
-      {typeOfClue === "lettersRight" && clues.lettersRight.status && (
+      <div className="button-input-container">{typeOfClue === "lettersRight" && clues.lettersRight.status && (
         <input
           type="text"
           maxLength={"5"}
@@ -67,13 +67,13 @@ const ClueDetails = ({ typeOfClue }) => {
       )}
       {clueDescription && clues[typeOfClue] && clues[typeOfClue].status ? (
        <> <button onClick={useClue}>Usar</button>
-        <p className="clue-price">{clues[typeOfClue].price}</p></>
+        </>
       ) : (
         clueDescription && (
           <p className="consumed-message">{consumedClueMessage}</p>
         )
-      )}
-
+      )} </div>
+      <p className="clue-price">{clues[typeOfClue].price}</p>
       
     </div>
   );
