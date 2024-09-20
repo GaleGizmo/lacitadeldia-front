@@ -39,14 +39,17 @@ const GameComponent = () => {
       if (phraseOfTheDayNumber != game.phraseNumber) {
         localStorage.removeItem("gameId");
       }
-      dispatch(startGame(userId, phraseNumber));
-
-      setIsInitialized(true);
+      if (userId) {
+        dispatch(startGame(userId, phraseNumber));
+        setIsInitialized(true);
+      } else {
+        console.error("Error: userId no está definido");
+      }
     };
     initializeGame();
 
     localStorage.removeItem("oldPhraseToPlay");
-  }, []);
+  }, [userId]);
 
   useEffect(() => {
     if (game.error) {

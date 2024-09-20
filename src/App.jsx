@@ -26,7 +26,7 @@ function App() {
     if (!userId) {
       dispatch(createUser());
     } else dispatch(getUser(userId));
-  }, []);
+  }, [dispatch]);
 
   const handleCloseBanner = () => {
     dispatch(closeInstructionsBanner());
@@ -43,19 +43,26 @@ function App() {
         <Route path="/info" element={<RulesPage />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         <Route path="*" element={<h1>Not Found</h1>} />
-      </Routes>{" "}
+      </Routes>
       <CookieConsent
         location="bottom"
         buttonText="Aceptar"
         cookieName="lacitadeldiaCookieConsent"
         style={{ background: "#333", color: "#fff" }}
         buttonStyle={{ background: "#007DBB", color: "#fff", fontSize: "14px" }}
-       
       >
-        Utilizamos cookies estrictamente necesarias para el funcionamiento básico del sitio web. No usamos cookies de seguimiento ni recopilamos datos personales. Para más información, consulta nuestra{" "}
-        <a href="/privacy-policy"  target="_blank" rel="noopener noreferrer" style={{ color: "#fff", textDecoration: "underline" }}>
+        Utilizamos cookies estrictamente necesarias para el funcionamiento
+        básico del sitio web. No usamos cookies de seguimiento ni recopilamos
+        datos personales. Para más información, consulta nuestra{" "}
+        <a
+          href="/privacy-policy"
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{ color: "#fff", textDecoration: "underline" }}
+        >
           Política de Privacidad
-        </a>.
+        </a>
+        .
       </CookieConsent>
       {!dontShowInstructions && <NewUserBanner onClose={handleCloseBanner} />}
     </div>
