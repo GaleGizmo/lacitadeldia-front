@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useLocation } from "react-router-dom";
 import "./App.css";
 import GameComponent from "./components/GameComponent/GameComponent";
 import AddPhraseForm from "./components/AddPhraseForm/AddPhraseForm";
@@ -16,9 +16,20 @@ import { useEffect } from "react";
 import NewUserBanner from "./components/NewUserBanner/NewUSerBanner";
 import PrivacyPolicy from "./pages/Privacy/PrivacyPolicy";
 import CookieConsent from "react-cookie-consent";
+import NotFound from "./components/NotFound/NotFound";
 
 function App() {
   const dispatch = useDispatch();
+  const location = useLocation();
+
+  const validRoutes = [
+    "/",
+    "/oldgames",
+    "/game",
+    "/youshouldntbehere",
+    "/info",
+    "/privacy-policy",
+  ];
 
   const { dontShowInstructions } = useSelector((state) => state.userReducer);
   useEffect(() => {
@@ -42,8 +53,13 @@ function App() {
         <Route path="/youshouldntbehere" element={<AddPhraseForm />} />
         <Route path="/info" element={<RulesPage />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-        <Route path="*" element={<h1>Not Found</h1>} />
+        <Route path="*" element={<NotFound />}/>
       </Routes>
+
+      {validRoutes.includes(location.pathname) && !dontShowInstructions && (
+        <NewUserBanner onClose={handleCloseBanner} />
+      )}
+
       <CookieConsent
         location="bottom"
         buttonText="Aceptar"
@@ -64,7 +80,6 @@ function App() {
         </a>
         .
       </CookieConsent>
-      {!dontShowInstructions && <NewUserBanner onClose={handleCloseBanner} />}
     </div>
   );
 }

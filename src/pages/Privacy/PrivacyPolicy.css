@@ -1,4 +1,6 @@
 .privacy-policy{
+    width: 100%;
     overflow: auto;
     margin: 0 7px 10px 7px;
+    scrollbar-width: none;
 }
