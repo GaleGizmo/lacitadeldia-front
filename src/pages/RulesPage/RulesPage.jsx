@@ -181,7 +181,7 @@ const RulesPage = () => {
           </p>
           <p>
             Si hay citas de días anteriores que no has jugado, puedes intentar
-            adivinarlas; ¡PERO RECUERDA!, en estas partidas se aplicará la{" "}
+            adivinarlas; ¡PERO ATENCIÓN!, en estas partidas se aplicará la{" "}
             <strong>misma regla que para la cita del día</strong>: es decir, si
             empiezas a jugar y no descubres la cita antes de las 7AM del día
             siguiente se considerará partida{" "}

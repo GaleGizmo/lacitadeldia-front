@@ -1,7 +1,7 @@
 .rules-container {
-  max-width: 900px;
-  margin: 0 auto;
-  width: 100%;
+  
+ 
+ 
   font-family: Arial, sans-serif;
 
   display: flex;
@@ -10,15 +10,16 @@
   height: 100vh;
 }
 .rules-header {
-  padding: 20px;
+ 
  
   z-index: 10;
 }
 
 .rules-content {
   flex-grow: 1;
-  overflow-y: auto;
-  padding: 0 20px 20px;
+  overflow-y: scroll; 
+  scrollbar-width: none;
+  
 }
 .rules-content .clue-icon{
   display: inline;
@@ -28,11 +29,12 @@ h1 {
   color: #333;
   text-align: center;
   position: sticky;
-
+  font-size: 2.2em;
+  padding: 0;
   top: 0;
   background-color: #fff;
   padding: 20px 0;
-
+  margin: 0;
   z-index: 1;
 }
 
@@ -55,10 +57,7 @@ ul {
   display: inline-block;
   text-align: center;
 }
-h1{
-    font-size: 3em;
-    padding: 0;
-}
+
 
 li {
   margin-bottom: 10px;
@@ -87,14 +86,17 @@ li>img{
   vertical-align: middle;
 }
 @media (max-width: 767px) {
+  .rules-container{
+    padding: 0 10px;
+  }
     h1{
-        font-size: 2em;
+        font-size: 1.7em;
     }
     .try-word-gif{
       width: 150px;
     }
     .phrase-gif{
-      width: 90vw;
+      width: 320px;
     }
     .clues-png{
       width: 130px;
