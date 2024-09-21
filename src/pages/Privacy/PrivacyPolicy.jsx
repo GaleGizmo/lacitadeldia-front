@@ -4,7 +4,7 @@ const PrivacyPolicy = () => {
   return (
     <div className="privacy-policy">
       <h1>Política de Privacidad</h1>
-      <p><strong>Última actualización:</strong> [Fecha]</p>
+      <p><strong>Última actualización:</strong> [21/9/2024]</p>
 
       <p>En <strong>La Cita del Día</strong> (<a href="https://www.lacitadeldia.com" target="_blank" rel="noopener noreferrer">https://www.lacitadeldia.com</a>), valoramos tu privacidad y queremos que comprendas cómo recolectamos y utilizamos información cuando visitas nuestro sitio web. Nuestra prioridad es garantizar la protección de tus datos personales y mantener un entorno seguro y transparente.</p>
 
@@ -44,7 +44,7 @@ const PrivacyPolicy = () => {
 
       <h2>6. Contacto</h2>
       <p>
-        Si tienes preguntas o inquietudes sobre esta política de privacidad o el tratamiento de tus datos, por favor contáctanos a través de: <a href="mailto:tuemail@lacitadeldia.com">[Tu correo electrónico de contacto]</a>.
+        Si tienes preguntas o inquietudes sobre esta política de privacidad o el tratamiento de tus datos, por favor contáctanos a través de: <a href="mailto:info@lacitadeldia.com">[info@lacitadeldia.com]</a>.
       </p>
     </div>
   );
