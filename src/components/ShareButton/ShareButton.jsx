@@ -9,7 +9,8 @@ const ShareButton = ({ gameStatus, phraseNumber, attempts, maxTries }) => {
   const shareResult = (platform) => {
     const emoji = gameStatus === 'win' ? '🎉' : '😔';
     const attemptsText = gameStatus === 'win' ? `en ${attempts}/${maxTries} intentos` : 'pero sin suerte';
-    const message = `Jugué la frase #${phraseNumber} ${attemptsText} ${emoji}\n¡Juega tú también en https://guessthequote.vercel.app/!`;
+    const resultMessage = gameStatus === 'win' ? 'Descubrí la cita' : 'Intenté la cita';
+    const message = `${resultMessage} #${phraseNumber} ${attemptsText} ${emoji}\n¡Juega tú también en https://lacitadeldia-front.vercel.app/!`;
     const encodedMessage = encodeURIComponent(message);
 
     if (platform === 'whatsapp') {
