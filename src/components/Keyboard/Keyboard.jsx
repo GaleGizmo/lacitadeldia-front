@@ -16,30 +16,30 @@ import KeyboardRow from "../KeyboardRow/KeyboardRow";
 
 const Keyboard = ({ userId }) => {
   const dispatch = useDispatch();
-  
+
   const lettersUp = "QWERTYUIOP".split("");
   // const [failedLetters, setFailedLetters] = useState("");
   const lettersMiddle = "ASDFGHJKLÑ".split("");
-  
+
   const lettersDown = "ZXCVBNM".split("");
 
-  const { lettersFound, lettersFailed, wordToTry, gameStatus, isInputFocused } = useSelector(
-    (reducer) => reducer.gameReducer
-  );
-  
-
-
+  const { lettersFound, lettersFailed, wordToTry, gameStatus, isInputFocused } =
+    useSelector((reducer) => reducer.gameReducer);
 
   const [result, verifyWord, isVerifying] = useCheckWord();
 
   //captura letras desde el teclado en pantalla
   const handleClick = useCallback(
     (content) => {
+   
+      
       if (content === "DELETE") {
+        if (wordToTry.length === 0) return;
         dispatch(deleteLastLetter());
         return;
       }
       if (content === "SEND") {
+      
         if (wordToTry.length < 5) {
           toast.error("La palabra debe tener 5 letras");
           return;
@@ -47,7 +47,7 @@ const Keyboard = ({ userId }) => {
         verifyWord(wordToTry, userId);
         return;
       }
-      if (wordToTry.length >= 5) {
+      if (wordToTry.length === 5) {
         return;
       }
       dispatch(addLetter(content));
@@ -60,7 +60,7 @@ const Keyboard = ({ userId }) => {
     const handleKeyDown = (event) => {
       const { key } = event;
 
-      if (gameStatus!="playing" || isInputFocused) return;
+      if (gameStatus != "playing" || isInputFocused) return;
 
       if (key === "Backspace") {
         dispatch(deleteLastLetter());
@@ -119,7 +119,7 @@ const Keyboard = ({ userId }) => {
       <div className="keys">
         <div
           className="action"
-          onClick={() => gameStatus==="playing" && handleClick("DELETE")}
+          onClick={() => gameStatus === "playing" && handleClick("DELETE")}
         >
           <DeleteIcon width="33" height="33" viewBox="2 3 20 18" />
         </div>
@@ -132,7 +132,7 @@ const Keyboard = ({ userId }) => {
         />
         <div
           className="action"
-          onClick={() => gameStatus==="playing" && handleClick("SEND")}
+          onClick={() => gameStatus === "playing" && handleClick("SEND")}
         >
           <AcceptIcon width="33" height="33" viewBox="2 3 20 18" />
         </div>
