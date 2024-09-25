@@ -27,6 +27,7 @@
   --wrong-letter-color: #80808063;
   --active-box-color:#157ad1;
   --color-orange-dark:#e53b08;
+  --icon-fill-color: #1C274C;
 }
 
 a {
@@ -87,6 +88,7 @@ button:focus-visible {
   :root {
     color: var(--dark-mode-text) ;
     background-color: var(--dark-mode-bg);
+    --icon-fill-color: var(--dark-mode-svg_fill);
   }
   a {
     color: var(--dark-mode-link);
@@ -97,7 +99,9 @@ button:focus-visible {
   button, .details-container>p {
     background-color: var(--dark-mode-secondary_bg)
   }
- 
+ .newuser-container{
+  color: #1c274c7f;
+ }
   .letter, .phrase-letter, .key, button:hover{
     border-color: var(--dark-mode-border)
   }
@@ -107,7 +111,7 @@ button:focus-visible {
   .field-title{
     color: var(--dark-mode-movie_field)
   }
-  h1, h2, .rules-header{
+  h1, h2, .home, .rules-header{
     color: var(--dark-mode-text);
     background-color: var(--dark-mode-bg) 
   }
