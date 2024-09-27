@@ -11,7 +11,7 @@ const RulesPage = () => {
         <section>
           <h2>Objetivo</h2>
           <p>
-            ¡Hola cinéfilo! El objetivo de este juego es descubrir la cita de
+            ¡Hola cinéfilo/a! El objetivo de este juego es descubrir la cita de
             una película.
           </p>
         </section>
@@ -70,7 +70,7 @@ const RulesPage = () => {
           <p>
             Las citas más fáciles pueden llegar a tener tan solo
             <strong> 3 intentos</strong>, mientras que las más complicadas
-            podrán tener un máximo de <strong>6 intentos</strong>.
+            podrán tener un máximo de <strong>7 intentos</strong>.
           </p>
         </section>
         <section>
