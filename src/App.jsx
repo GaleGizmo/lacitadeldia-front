@@ -17,6 +17,7 @@ import NewUserBanner from "./components/NewUserBanner/NewUSerBanner";
 import PrivacyPolicy from "./pages/Privacy/PrivacyPolicy";
 import CookieConsent from "react-cookie-consent";
 import NotFound from "./components/NotFound/NotFound";
+import ContactForm from "./pages/Contact/Contact";
 
 function App() {
   const dispatch = useDispatch();
@@ -29,6 +30,7 @@ function App() {
     "/youshouldntbehere",
     "/info",
     "/privacy-policy",
+    "/contact",
   ];
 
   const { dontShowInstructions } = useSelector((state) => state.userReducer);
@@ -53,6 +55,7 @@ function App() {
         <Route path="/youshouldntbehere" element={<AddPhraseForm />} />
         <Route path="/info" element={<RulesPage />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+        <Route path="/contact" element={<ContactForm />} />
         <Route path="*" element={<NotFound />}/>
       </Routes>
 

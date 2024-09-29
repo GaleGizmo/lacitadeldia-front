@@ -109,6 +109,16 @@ const GameComponent = () => {
             <Clues />{" "}
           </div>
         )}
+        {game.gameStatus === "win" && (
+          <div className="phrase-link-container">
+            <button
+              className="phrase-link"
+              onClick={() => setShowPhraseDetails(true)}
+            >
+              Detalles de la cita
+            </button>
+          </div>
+        )}
         {game.gameStatus != "playing" && (
         <ShareButton
           gameStatus={game.gameStatus}
@@ -126,16 +136,7 @@ const GameComponent = () => {
           showModal={showPhraseDetails}
           onModalClose={() => setShowPhraseDetails(false)}
         />
-        {game.gameStatus === "win" && (
-          <div className="phrase-link-container">
-            <button
-              className="phrase-link"
-              onClick={() => setShowPhraseDetails(true)}
-            >
-              Ver detalles de la cita
-            </button>
-          </div>
-        )}{" "}
+     {" "}
       </div>
       <Keyboard userId={userId} />
     

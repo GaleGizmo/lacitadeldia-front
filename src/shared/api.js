@@ -104,3 +104,8 @@ export const addPhrase = async (phraseData) => {
     .then(handleResponse)
     .catch(handleError);
 };
+export const addMessage = async (messageData) => {
+  return APIBase.post("/messages/addmessage", {message:messageData})
+    .then(handleResponse)
+    .catch(handleError);
+};

@@ -81,6 +81,9 @@ footer {
   
   margin-top: 10px;
 }
+footer>small{
+  margin: 0 5px;
+}
 li>img{
   width: 30px;
   vertical-align: middle;

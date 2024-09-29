@@ -1,0 +1,102 @@
+/* Estilos generales del formulario */
+form {
+    background-color: var(--dark-mode-bg); /* Color de fondo en modo oscuro */
+    color: var(--dark-mode-text); /* Texto en modo oscuro */
+    padding: 20px;
+    border-radius: 8px;
+   width: 100%;;
+    margin: 0 auto;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+    height: 80vh;
+    overflow-y: auto;
+    scrollbar-width: none;
+  }
+  
+  /* Input, select y textarea generales */
+  input, select, textarea {
+    width: 90%;
+    padding: 12px;
+    margin: 10px 0;
+    border: 1px solid var(--dark-mode-border); /* Borde en modo oscuro */
+    border-radius: 4px;
+    background-color: var(--dark-mode-secondary_bg); /* Fondo en modo oscuro */
+    color: var(--dark-mode-text);
+    font-size: 16px;
+    font-family: inherit;
+  }
+  
+  /* Cambios en el modo claro */
+  @media (prefers-color-scheme: light) {
+    form {
+      background-color: #ffffff;
+      color: #213547; /* Texto en modo claro */
+    }
+    
+    input, select, textarea {
+      background-color: #f9f9f9;
+      border: 1px solid #ccc; /* Borde en modo claro */
+      color: #213547;
+    }
+  }
+  
+  /* Estilo del label */
+  label {
+    font-weight: bold;
+    display: block;
+    margin-top: 10px;
+   
+  }
+  
+  /* Botón de envío */
+  form button {
+    width: 100%;
+    background-color: var(--active-box-color); /* Botón en el color principal */
+    color: #fff;
+    padding: 12px;
+    border: none;
+    border-radius: 4px;
+    font-size: 18px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  /* Hover del botón */
+  button:hover {
+    background-color: var(--dark-mode-link_hover); /* Cambio de color al hacer hover */
+  }
+  
+  /* Mensaje de error */
+  form p {
+    color: var(--color-orange-dark); /* Color para los mensajes de error */
+    font-size: 14px;
+    margin-top: 5px;
+  }
+  
+  /* Estilos adicionales */
+  input:focus, select:focus, textarea:focus {
+    border-color: var(--dark-mode-border); /* Borde más visible en foco */
+    outline: none;
+  }
+  
+  textarea {
+    resize: vertical;
+    min-height: 100px;
+  }
+  
+  /* Mejoras visuales para pantallas pequeñas */
+  @media (max-width: 600px) {
+    form {
+      padding: 15px;
+    }
+    
+    input, select, textarea {
+      padding: 10px;
+      font-size: 14px;
+    }
+  
+   form button {
+      font-size: 16px;
+    }
+  }
+  

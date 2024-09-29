@@ -199,6 +199,10 @@ const RulesPage = () => {
           {" "}
           <Link to="/privacy-policy">Política de Privacidad</Link>
         </small>
+        <small>
+          {" "}
+          <Link to="/contact">Contacto</Link>
+        </small>
       </footer>{" "}
     </div>
   );
