@@ -54,10 +54,13 @@ const RulesPage = () => {
               verde), podrás ver la información detallada de la misma.
             </li>
             <li>
-              Todas las partidas que se empiecen un día y no estén terminadas a
+              Todas las partidas empezadas que no estén terminadas a
               las 7AM del día siguiente, se considerarán{" "}
               <span className="perdida">PARTIDAS PERDIDAS</span>.{" "}
             </li>
+
+            <li>
+              Se considerarán empezadas aquellas partidas en las que se haya consumido al menos uno de los intentos disponibles.</li>
           </ol>
         </section>
         <section>
@@ -98,9 +101,9 @@ const RulesPage = () => {
             En cada partida dispondrás de <strong>cuatro </strong>pistas:
           </p>
           <img className="clues-png" src="assets/clues.png" alt="clues" />
-          <p>Cada pista solo se podrá usar una vez en cada partida.</p>
+          <p>- Cada pista solo se podrá usar una vez en cada partida.</p>
           <p>
-            Para usar una pista deberás hacer click en su icono, con lo que se
+            - Para usar una pista deberás hacer click en su icono, con lo que se
             mostrará una breve descripción de la misma junto con el botón para
             utilizarla y su <strong>coste en puntos</strong>.
           </p>
