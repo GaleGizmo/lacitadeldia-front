@@ -1,3 +1,4 @@
+import { toast } from "sonner";
 import { addMessage } from "../../shared/api";
 import "./Contact.css"
 import{ useState } from 'react';
@@ -52,8 +53,7 @@ const ContactForm = () => {
       
       try {
        await addMessage(formData)
-        console.log('Formulario enviado:', formData);
-        // Limpieza de campos o mostrar notificación de éxito
+       toast.success("Mensaje enviado correctamente", { style: { background: "#51e651" } });
         setFormData({
           name: '',
           email: '',
@@ -71,11 +71,11 @@ const ContactForm = () => {
   return (
     <form onSubmit={handleSubmit}>
     <h2>Formulario de contacto</h2>
-      <h4>Puedes usar el siguiente formulario para contactar con nosotros, o si lo prefieres mándanos un email a <a href="mailto:info@lacitadeldia.com">[info@lacitadeldia.com]</a></h4>
+      <h4>Puedes usar el siguiente formulario para contactar con nosotros, o si lo prefieres mandarnos un email a: <a href="mailto:info@lacitadeldia.com">[info@lacitadeldia.com]</a></h4>
 
       
       <div>
-        <label htmlFor="name">Nombre(opcional):</label>
+        <label htmlFor="name">Nombre <span style={{color:'grey'}}>(opcional)</span>:</label>
         <input
           type="text"
           id="name"
@@ -86,7 +86,7 @@ const ContactForm = () => {
       </div>
 
       <div>
-        <label htmlFor="email">Email(opcional):</label>
+        <label htmlFor="email">Email <span style={{color:'grey'}}>(opcional)</span>:</label>
         <input
           type="email"
           id="email"
@@ -97,7 +97,7 @@ const ContactForm = () => {
       </div>
 
       <div>
-        <label htmlFor="type">Tipo de mensaje <span style={{color: 'red'}}>*</span>:</label>
+        <label htmlFor="type">Asunto <span style={{color: 'red'}}>*</span>:</label>
         <select
           id="type"
           name="type"
@@ -115,7 +115,7 @@ const ContactForm = () => {
 
 
       <div>
-        <label htmlFor="content">Mensaje:</label>
+        <label htmlFor="content">Mensaje <span style={{color: 'red'}}>*</span>:</label>
         <textarea
           id="content"
           name="content"

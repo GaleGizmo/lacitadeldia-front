@@ -4,7 +4,7 @@ form {
     color: var(--dark-mode-text); /* Texto en modo oscuro */
     padding: 20px;
     border-radius: 8px;
-   width: 100%;;
+  
     margin: 0 auto;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
@@ -62,7 +62,7 @@ form {
   }
   
   /* Hover del botón */
-  button:hover {
+  form button:hover {
     background-color: var(--dark-mode-link_hover); /* Cambio de color al hacer hover */
   }
   
@@ -87,16 +87,22 @@ form {
   /* Mejoras visuales para pantallas pequeñas */
   @media (max-width: 600px) {
     form {
-      padding: 15px;
+      padding: 10px;
+      height: 100dvh;
     }
     
     input, select, textarea {
       padding: 10px;
-      font-size: 14px;
+      font-size: 12px;
     }
-  
+  label {
+    font-size: 14px;
+  }
    form button {
       font-size: 16px;
+    }
+    form h4{
+        font-size: 13px;
     }
   }
   
