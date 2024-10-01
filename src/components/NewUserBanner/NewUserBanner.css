@@ -77,6 +77,10 @@
     gap: 5px;
 }
 .dont-show-again input{
-    margin-top: 4px;
+    width: fit-content;
     padding: 0;
+}
+.dont-show-again label{
+    font-weight: 600;
+    margin: 0;
 }

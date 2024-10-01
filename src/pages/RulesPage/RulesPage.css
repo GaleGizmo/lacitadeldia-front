@@ -77,12 +77,13 @@ li {
   font-weight: bold;
 }
 footer {
-  text-align: center;
-  
+  display: flex;
+  justify-content: center;
+  gap: 7px;
   margin-top: 10px;
 }
 footer>small{
-  margin: 0 5px;
+  margin: 0 ;
 }
 li>img{
   width: 30px;
