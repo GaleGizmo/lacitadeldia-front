@@ -92,7 +92,7 @@ const Keyboard = ({ userId }) => {
   useEffect(() => {
     if (result !== null && !isVerifying) {
       if (result) {
-        dispatch(addWordToTried());
+        dispatch(addWordToTried(wordToTry));
       } else {
         toast.error("Palabra no válida");
         dispatch(clearWord());

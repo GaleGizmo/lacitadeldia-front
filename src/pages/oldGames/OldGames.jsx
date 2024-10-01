@@ -6,6 +6,7 @@ import UserStats from "../../components/UserStats/UserStats";
 
 const OldGames = () => {
   const playerId = localStorage.getItem("laCitaDelDiaUserId");
+  
   const [phrasesToShow, setPhrasesToShow] = useState(null);
   const navigate = useNavigate();
   const handleNavigate = (phraseToPlay) => {

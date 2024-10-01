@@ -111,7 +111,7 @@ export const gameReducer = (state = INITIAL_STATE, action) => {
     case "CLEAR_PHRASE":
       return { ...state, phrase: null };
     case "ADD_WORD_TO_TRIEDWORDS": {
-      const newTriedWords = [...state.triedWords, state.wordToTry];
+      const newTriedWords = [...state.triedWords, action.payload];
     
       return {
         ...state,

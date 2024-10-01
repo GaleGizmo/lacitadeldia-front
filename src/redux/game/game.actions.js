@@ -86,7 +86,7 @@ const addLetter = (letter) => ({ type: "ADD_LETTER", payload: letter });
 const deleteLastLetter = () => ({
   type: "DELETE_LAST_LETTER",
 });
-const addWordToTried = () => ({ type: "ADD_WORD_TO_TRIEDWORDS" });
+const addWordToTried = (verifiedWord) => ({ type: "ADD_WORD_TO_TRIEDWORDS", payload:verifiedWord });
 
 const clearWord = () => ({ type: "CLEAR_WORD" });
 

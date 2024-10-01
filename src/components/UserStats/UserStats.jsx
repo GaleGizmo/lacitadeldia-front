@@ -8,26 +8,26 @@ const UserStats = () => {
   const [userStats, setUserStats] = useState(null);
   const userId = localStorage.getItem("laCitaDelDiaUserId");
 
-  const storedUserStats = useSelector(state => state.userReducer.userStats);
+  const storedUserStats = useSelector((state) => state.userReducer.userStats);
   const dispatch = useDispatch();
   useEffect(() => {
     const loadUserStats = async () => {
-        if (storedUserStats===null) {
-            const statsFromServer = await getUserStats(userId);
-          
-            setUserStats(statsFromServer);
-            // Guardar las estadísticas en el reducer
-            dispatch(setUserStatsAction(statsFromServer));
-          } else {
-            setUserStats(storedUserStats);
-            //Compara las stats del server y del reducer y usa las primeras si son distintas
-            const statsFromServer = await getUserStats(userId);
-           
-            if (JSON.stringify(statsFromServer) !== JSON.stringify(storedUserStats)) {
-              setUserStats(statsFromServer);
-              dispatch(setUserStatsAction(statsFromServer));
-            }
-          }
+      const statsFromServer = await getUserStats(userId);
+      if (storedUserStats === null) {
+        setUserStats(statsFromServer);
+        // Guardar las estadísticas en el reducer
+        dispatch(setUserStatsAction(statsFromServer));
+      } else {
+        //Compara las stats del server y del reducer y usa las primeras si son distintas
+        if (
+          JSON.stringify(statsFromServer) !== JSON.stringify(storedUserStats)
+        ) {
+          setUserStats(statsFromServer);
+          dispatch(setUserStatsAction(statsFromServer));
+        } else {
+          setUserStats(storedUserStats);
+        }
+      }
     };
     if (userId) loadUserStats();
   }, [userId, storedUserStats, dispatch]);
