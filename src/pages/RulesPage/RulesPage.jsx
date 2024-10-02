@@ -54,13 +54,15 @@ const RulesPage = () => {
               verde), podrás ver la información detallada de la misma.
             </li>
             <li>
-              Todas las partidas empezadas que no estén terminadas a
-              las 7AM del día siguiente, se considerarán{" "}
+              Todas las partidas empezadas que no estén terminadas a las 7AM del
+              día siguiente, se considerarán{" "}
               <span className="perdida">PARTIDAS PERDIDAS</span>.{" "}
             </li>
 
             <li>
-              Se considerarán empezadas aquellas partidas en las que se haya consumido al menos uno de los intentos disponibles.</li>
+              Se considerarán empezadas aquellas partidas en las que se haya
+              consumido al menos uno de los intentos disponibles.
+            </li>
           </ol>
         </section>
         <section>
@@ -179,12 +181,13 @@ const RulesPage = () => {
         <section>
           <h2>Citas Pasadas</h2>
           <p>
-            Puedes acceder a citas de días anteriores desde el calendario en la
-            parte superior de la pantalla.
+            Puedes acceder a las citas de días anteriores con el icono del
+            calendario en la parte superior de la pantalla.
           </p>
           <p>
-            Si hay citas de días anteriores que no has jugado, puedes intentar
-            adivinarlas; ¡PERO ATENCIÓN!, en estas partidas se aplicará la{" "}
+            Si hay citas pasadas que no has jugado, puedes intentar adivinarlas
+            simplemente haciendo click sobre su número; ¡PERO ATENCIÓN!, en
+            estas partidas se aplicará la{" "}
             <strong>misma regla que para la cita del día</strong>: es decir, si
             empiezas a jugar y no descubres la cita antes de las 7AM del día
             siguiente se considerará partida{" "}
@@ -197,7 +200,16 @@ const RulesPage = () => {
         </section>
       </div>
       <footer>
-        <small>© 2024 Miguel Abelleira</small>
+        <small>
+          © 2024{" "}
+          <a
+            href="https://miguelabelleira.es"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Miguel Abelleira
+          </a>
+        </small>
         <small>
           {" "}
           <Link to="/privacy-policy">Política de Privacidad</Link>

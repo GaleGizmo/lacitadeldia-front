@@ -5,6 +5,7 @@ import HomeIcon from "../../assets/HomeIcon";
 import Info from "../../assets/InfoIcon";
 import { useDispatch } from "react-redux";
 import { startGame } from "../../redux/game/game.actions";
+import ContactIcon from "../../assets/ContactIcon";
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -13,9 +14,13 @@ const Header = () => {
   return (
     <div className="header">
       <div className="header-links-container">
-        <Link to="/oldgames" className="header-link">
-          <CalendarIcon width="40" height="40" viewBox="2 3 20 18" />{" "}
+      <Link to="/contact" className="header-link">
+          <ContactIcon width="30" height="30" viewBox="2 3 20 18" />{" "}
         </Link>
+        <Link to="/oldgames" className="header-link">
+          <CalendarIcon width="30" height="30" viewBox="2 3 20 18" />{" "}
+        </Link>
+        <h1>LA CITA DEL DÍA</h1>
         <Link
           to="/game"
           onClick={() => {
@@ -24,10 +29,10 @@ const Header = () => {
           }}
           className="header-link"
         >
-          <HomeIcon width="40" height="40" viewBox="2 3 20 18" />
+          <HomeIcon width="30" height="30" viewBox="2 3 20 18" />
         </Link>
         <Link to="/info" className="header-link">
-          <Info width="40" height="40" viewBox="2 3 20 18" />
+          <Info width="30" height="30" viewBox="2 3 20 18" />
         </Link>{" "}
       </div>
     </div>

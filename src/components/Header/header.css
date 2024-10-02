@@ -13,10 +13,17 @@
     left: 50%;
     top:5px;
     transform: translateX(-50%);
-    width: 410px;
+    width: 100%;
     display: flex;
     justify-content: space-between;
     
+}
+ .header-links-container h1{
+    margin: 0 auto;
+    padding: 0;
+    font-size: 1.3em;
+    display: flex;
+    align-items: center;
 }
 
 .header-link {
@@ -35,9 +42,7 @@
         margin-bottom: 5px;
         height: 40px;
     }
-    .header-links-container{
-        width: 310px;
-    }
+   
     /* .header-link{
         width: 32px;
         padding-left: 5px;
@@ -46,5 +51,8 @@
    */
    .header-link [class*="iconBorder"]{
     width: 27px;
+   }
+   .header-links-container h1{
+    font-size: 1.1em;
    }
   }
