@@ -1,21 +1,30 @@
+.oldgames-stats-container{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100dvh;
+  width: 100%;
+  max-width: 420px;
+}
 .oldgames {
-  min-width: 80%;
+ 
+  width: 410px;
+  box-sizing: border-box;
   
   border: 1px solid gray;
   border-radius: 8px;
   padding: 10px;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
   gap: 5px;
  
   overflow: auto;
-  margin-bottom: 30px;
-  margin-top: 30px;
+  margin: 30px auto
 }
 
 .phrase-box {
-  width: 100px;
-  height: 100px;
+  width: 90px;
+  height: 90px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -32,7 +41,7 @@
 .oldgames::after {
   content: "";
   flex-grow: 9999;
-  min-width: 100px; /* El ancho de un .phrase-box */
+  min-width: 90px; /* El ancho de un .phrase-box */
 }
 
 .oldgames > .phrase-box:last-child {
@@ -70,9 +79,13 @@
   margin: 0 3px 0 7px;
 }
 @media (max-width: 767px) {
+  .oldgames-stats-container{
+    max-width: 95%;
+  }
   .oldgames {
     grid-template-columns: repeat(auto-fill, minmax(40px, 1fr));
     min-height: unset;
+    width: 100%;
   }
   .phrase-box {
     width: 40px;

@@ -9,7 +9,7 @@ const ContactForm = () => {
     name: "",
     email: "",
     type: "", // Obligatorio
-
+    user: localStorage.getItem("laCitaDelDiaUserId"),
     content: "",
   });
 
@@ -59,7 +59,7 @@ const ContactForm = () => {
           name: "",
           email: "",
           type: "",
-
+          user: localStorage.getItem("laCitaDelDiaUserId"),
           content: "",
         });
         setErrors({});

@@ -6,7 +6,9 @@ import UserStats from "../../components/UserStats/UserStats";
 
 const OldGames = () => {
   const playerId = localStorage.getItem("laCitaDelDiaUserId");
-  
+  const [percentages, setPercentages]= useState();
+  const [phrasesPlaying, setPhrasesPlaying]=useState(0)
+  const [notPlayed, setNotPlayed]=useState(0)
   const [phrasesToShow, setPhrasesToShow] = useState(null);
   const navigate = useNavigate();
   const handleNavigate = (phraseToPlay) => {
@@ -19,7 +21,10 @@ const OldGames = () => {
     const fetchPhrases = async (playerId) => {
       const oldPhrases = await getUserPastPhrases(playerId);
     
-      setPhrasesToShow(oldPhrases);
+      setPhrasesToShow(oldPhrases.result);
+      setPercentages(oldPhrases.percentages);
+      setPhrasesPlaying(oldPhrases.playing);
+      setNotPlayed(oldPhrases.np);
     };
     if (playerId) {
       fetchPhrases(playerId);
@@ -33,7 +38,7 @@ const OldGames = () => {
     return <div className="consumed-message"><h3>{phrasesToShow.message}</h3></div>
   }
   return (
-    <>
+    <div className="oldgames-stats-container">
       <div className="oldgames">
         {Object.entries(phrasesToShow).map(([number, status]) => (
           <div
@@ -46,7 +51,7 @@ const OldGames = () => {
         ))}
        
       </div>
-      <UserStats />
+      <UserStats percentages={percentages} playing={phrasesPlaying} notPlayed={notPlayed}/>
       <footer className="color-codes">
         <div className="phrase-box win footer-box"></div>
         <small>GANADA</small>
@@ -57,7 +62,7 @@ const OldGames = () => {
         <div className="phrase-box playing footer-box"></div>
         <small>JUGANDO</small>
       </footer>
-    </>
+    </div>
   );
 };
 

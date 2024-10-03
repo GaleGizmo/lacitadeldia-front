@@ -6,16 +6,18 @@
 }
 .stats-container{
     display: flex;
-    gap: 10px
+    gap: 10px;
+    height: fit-content;
 
 }
 .stats-data{
     display: flex;
     flex-direction: column;
+    margin: 0;
 
 }
 .stats-data>span{
-    font-size: 2em;
+    font-size: 1.8em;
     font-weight: 600;
 }
 @media (max-width: 767px) {

@@ -15,7 +15,7 @@ import { PropTypes } from "prop-types";
 import ShareButton from "../ShareButton/ShareButton";
 import Clues from "../Clues/Clues";
 import ShowPoints from "../ShowPoints/ShowPoints";
-import { getPhraseOfTheDayNumber } from "../../shared/api";
+import { getPhraseOfTheDayNumber, updateUserData } from "../../shared/api";
 
 const GameComponent = () => {
   let oldPhraseNumber = localStorage.getItem("oldPhraseToPlay");
@@ -77,17 +77,26 @@ const GameComponent = () => {
 
   useEffect(() => {
     if (game.gameStatus != "playing" && !game.gameResultNotification) {
+      let phrasesWon=null
+      let phrasesLost=null
       if (game.gameStatus === "win") {
         toast.success("¡Bien hecho!", { style: { background: "#51e651" } });
+        phrasesWon=game.phraseNumber
         setShowPhraseDetails(true);
       } else if (game.gameStatus === "lose") {
         toast.error("Has perdido, lo siento");
+        phrasesLost=game.phraseNumber
       }
       const gameData = {
         gameResultNotification: true,
       };
 
       dispatch(updateGameData(gameId, gameData));
+      if(phrasesWon) {
+        updateUserData(userId,{phrasesWon})
+      } else {
+        updateUserData(userId,{phrasesLost})
+      }
     }
   }, [game.gameStatus]);
 
