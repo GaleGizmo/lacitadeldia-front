@@ -26,14 +26,22 @@ const startGame = (userId, phraseToPlay) => async (dispatch) => {
 
 const updateGameData = (gameId, gameData) => async (dispatch) => {
   dispatch({ type: "UPDATE_GAME_DATA_REQUEST" });
+  
   try {
-   
     const updatedData = await APIBase.put(`/game/update/${gameId}`, {
       gameData,
     });
     
+    if (updatedData.data.deleteFromTried){
+      
+      dispatch({
+        type: "DELETE_WORD_FROM_TRIEDWORDS",
+        payload: updatedData.data
+      });
+      
+    } else {
     localStorage.setItem("activeGame", JSON.stringify(updatedData.data));
-    dispatch({ type: "UPDATE_GAME_DATA_SUCCESS", payload: updatedData.data });
+    dispatch({ type: "UPDATE_GAME_DATA_SUCCESS", payload: updatedData.data });}
   } catch (err) {
     dispatch({ type: "UPDATE_GAME_DATA_FAILURE", payload: err.message });
   }
@@ -54,7 +62,7 @@ const handleClues = (clue, wordToTry) => async (dispatch) => {
       clue,
       wordToTry,
     });
-   
+
     if (response.data.unusable) {
       dispatch({
         type: "HANDLE_CLUES_FAILURE",
@@ -70,11 +78,15 @@ const handleClues = (clue, wordToTry) => async (dispatch) => {
       },
     });
     //Si la pista de letra devuelve la última letra, espera y muestra los detalles de la cita
-    if (response.data.clueResult.lastLetterRemaining){
-      setTimeout(()=>dispatch({
-        type: "UPDATE_GAME_STATUS",
-        payload: "win"
-      }), 3000)
+    if (response.data.clueResult.lastLetterRemaining) {
+      setTimeout(
+        () =>
+          dispatch({
+            type: "UPDATE_GAME_STATUS",
+            payload: "win",
+          }),
+        3000
+      );
     }
   } catch (err) {
     dispatch({ type: "HANDLE_CLUES_FAILURE", payload: err.message });
@@ -86,7 +98,13 @@ const addLetter = (letter) => ({ type: "ADD_LETTER", payload: letter });
 const deleteLastLetter = () => ({
   type: "DELETE_LAST_LETTER",
 });
-const addWordToTried = (verifiedWord) => ({ type: "ADD_WORD_TO_TRIEDWORDS", payload:verifiedWord });
+const addWordToTried = (verifiedWord) => (
+ 
+  {
+  
+  type: "ADD_WORD_TO_TRIEDWORDS",
+  payload: verifiedWord,
+});
 
 const clearWord = () => ({ type: "CLEAR_WORD" });
 

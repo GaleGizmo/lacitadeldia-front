@@ -118,6 +118,19 @@ export const gameReducer = (state = INITIAL_STATE, action) => {
         triedWords: newTriedWords,
       };
     }
+    case "DELETE_WORD_FROM_TRIEDWORDS": {
+      const newTriedWords = state.triedWords.filter(
+        (word) => word !== action.payload.deleteFromTried
+      );
+
+      return {
+        ...state,
+        triedWords: newTriedWords,
+        wordToTry: "",
+        error:action.payload.message,
+        loading:false,
+      };
+    }
     case "UPDATE_LETTERS_FOUND": {
       return {
         ...state,

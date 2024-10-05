@@ -13,7 +13,6 @@ import DeleteIcon from "../../assets/DeleteIcon";
 import AcceptIcon from "../../assets/AcceptIcon";
 import { toast } from "sonner";
 import KeyboardRow from "../KeyboardRow/KeyboardRow";
-import getRandomInvalidWordMessage from "../../customhooks/randomInvalidWordMessages";
 
 const Keyboard = ({ userId }) => {
   const dispatch = useDispatch();
@@ -27,38 +26,38 @@ const Keyboard = ({ userId }) => {
   const { lettersFound, lettersFailed, wordToTry, gameStatus, isInputFocused } =
     useSelector((reducer) => reducer.gameReducer);
 
-  const [ verifyWord, isVerifying] = useCheckWord();
- // Función para manejar el resultado de la verificación
+  const [verifyWord, isVerifying] = useCheckWord();
+
+  // Función para manejar el resultado de la verificación
   const handleWordVerificationResult = useCallback(
     (result) => {
-      if (result) {
+      if (result.wordIsValid) {
+       
         dispatch(addWordToTried(wordToTry)); // Añade la palabra si es válida
       } else {
-        const randomMessage = getRandomInvalidWordMessage();
-        toast.error(randomMessage); // Muestra el error si la palabra es inválida
-         dispatch(clearWord()); // Limpia la palabra actual
+        toast.error(result.message); // Muestra el error si la palabra es inválida
+        dispatch(clearWord()); // Limpia la palabra actual
       }
-      
     },
     [dispatch, wordToTry]
   );
   //captura letras desde el teclado en pantalla
   const handleClick = useCallback(
-   async (content) => {
-      if (gameStatus !== "playing" || isVerifying) return; 
-      
+    async (content) => {
+      if (gameStatus !== "playing" || isVerifying) return;
+
       if (content === "DELETE") {
         if (wordToTry.length === 0) return;
         dispatch(deleteLastLetter());
         return;
       }
       if (content === "SEND") {
-      
         if (wordToTry.length < 5) {
           toast.error("La palabra debe tener 5 letras");
           return;
         }
         const result = await verifyWord(wordToTry, userId);
+        
         handleWordVerificationResult(result);
         return;
       }
@@ -91,7 +90,16 @@ const Keyboard = ({ userId }) => {
         dispatch(addLetter(key.toUpperCase()));
       }
     },
-    [dispatch, wordToTry, userId, verifyWord, gameStatus, isInputFocused, isVerifying, handleWordVerificationResult]
+    [
+      dispatch,
+      wordToTry,
+      userId,
+      verifyWord,
+      gameStatus,
+      isInputFocused,
+      isVerifying,
+      handleWordVerificationResult,
+    ]
   );
 
   // Añade el listener del teclado físico

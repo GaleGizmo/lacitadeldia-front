@@ -58,7 +58,7 @@ const GameComponent = () => {
     }
   }, [game.error]);
   useEffect(() => {
-    if (!isInitialized) return;
+    if (!isInitialized ) return;
 
     const words = [];
     for (let i = 0; i < game.maximumTries; i++) {

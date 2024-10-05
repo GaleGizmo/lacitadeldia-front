@@ -55,7 +55,7 @@ export const checkWord = async (word, userId) => {
 export const updateGame = async (gameId, gameData) => {
   return APIBase.put(`/game/update/${gameId}`, gameData)
     .then((response) => {
-      localStorage.setItem("activeGame", JSON.stringify(response.data)); 
+       
       return response.data;
     })
     .catch(handleError);

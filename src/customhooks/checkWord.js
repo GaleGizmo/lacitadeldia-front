@@ -8,7 +8,7 @@ function useCheckWord() {
     setIsVerifying(true);
     try {
       const response = await checkWord(word, userId); // Llamada a la API
-      return response.wordFound; // Retorna directamente el resultado
+      return response; // Retorna directamente el resultado
     } catch (error) {
       console.error("Error al verificar la palabra:", error);
       return false; // Si hay error, retorna `false`

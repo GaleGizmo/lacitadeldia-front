@@ -14,7 +14,7 @@ const invalidWordMessages = [
     "¿Así escribes tú? Qué interesante",
     "Skynet ha rechazado esa palabra",
     "Francamente, querida, ¿qué palabra es esa?",
-    "No es la palabra que estamos buscando",
+    "Esa no es la palabra que buscamos",
     "Siempre nos quedará... Otra palabra",
     "Houston, tenemos un palabro",
     "Esa palabra está más perdida que Nemo",
@@ -23,7 +23,7 @@ const invalidWordMessages = [
     "Ni Mary Poppins aceptaría esa palabra",
     "Qué bien si existiera esa palabra, ¿eh?",
     "Esa palabra hace llorar a Pérez Reverte",
-    "Escritura creativa no es lo que crees",
+    "¿Qué es eso? ¿Escritura creativa?",
     "¡Sigue probando, sigue probando!",
     "¡Claro que sí! ¿Qué sabrá la RAE?",
     
