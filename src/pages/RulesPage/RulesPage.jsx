@@ -11,115 +11,47 @@ const RulesPage = () => {
         <section>
           <h2>Objetivo</h2>
           <p>
-            ¡Hola cinéfilo/a! El objetivo de este juego es descubrir la cita de
-            una película.
+            Descubre la cita de una película. Cada día, a las 7AM, se presenta una nueva cita con letras ocultas.
           </p>
         </section>
         <section>
           <h2>Cómo Jugar</h2>
           <ol>
-            <li>
-              Cada día <strong>a las 7AM</strong> se presenta una nueva cita de
-              una película con sus letras ocultas.
-            </li>
-            <li>
-              Tienes un máximo de intentos para adivinar la cita completa. El
-              número de intentos dependerá de la dificultad de la cita.
-            </li>
-            <li>
-              En cada intento, debes introducir una palabra{" "}
-              <strong>de cinco letras:</strong>
-            </li>
+            <li>Adivina la cita introduciendo palabras <strong>de cinco letras:</strong></li>
             <img
               className="try-word-gif"
               src="assets/try_word.gif"
               alt="tryword"
             />
-            <li>
-              Puedes usar el teclado físico o el teclado en la zona inferior de
-              la pantalla para enviar tu intento.
-            </li>
-            <li>
-              Después de cada intento, se mostrarán las letras de la palabra
-              introducida que están en la cita oculta:
-            </li>
+            <li>Las letras correctas se mostrarán en verde.</li>
             <img
               className="phrase-gif"
               src="assets/phrase_discover.gif"
               alt="Letra"
             />
-
-            <li>
-              Si descubres la cita completa (todas las letras deben estar en
-              verde), podrás ver la información detallada de la misma.
-            </li>
-            <li>
-              Todas las partidas empezadas que no estén terminadas a las 7AM del
-              día siguiente, se considerarán{" "}
-              <span className="perdida">PARTIDAS PERDIDAS</span>.{" "}
-            </li>
-
-            <li>
-              Se considerarán empezadas aquellas partidas en las que se haya
-              consumido al menos uno de los intentos disponibles.
-            </li>
+            <li>Usa el teclado físico o el de la pantalla.</li>
+            <li>Partidas no completadas antes de las 7AM se consideran <span className="perdida">PERDIDAS</span>.</li>
           </ol>
         </section>
         <section>
           <h2>Dificultad</h2>
-          <p>
-            El número de intentos que tienes para adivinar la cita dependerá de
-            la longitud de la misma así como de la cantidad de letras poco
-            frecuentes que contenga.
-          </p>
-          <p>
-            Las citas más fáciles pueden llegar a tener tan solo
-            <strong> 3 intentos</strong>, mientras que las más complicadas
-            podrán tener un máximo de <strong>7 intentos</strong>.
-          </p>
+          <p>El número de intentos disponibles varía <strong> entre 3 y 7</strong> según la longitud de la cita y las letras menos comunes.</p>
         </section>
         <section>
-          <h2>Sistema de Puntos y Pistas</h2>
-          <p>
-            Por cada letra de la cita que encuentres se sumará{" "}
-            <span className="correct">1 punto</span> a tu marcador.
-          </p>
-          <p>
-            Si descubres la cita completa se sumarán{" "}
-            <span className="correct">20 puntos</span> adicionales a tu
-            marcador.
-          </p>
-          <p>
-            Si además eres tan crack que te han sobrado intentos, sumarás
-            <span className="correct">10 puntos</span> adicionales a tu marcador
-            por cada uno de ellos.
-          </p>
-          <p>
-            Los puntos que ganes cada día se conservarán siempre y cuando
-            juegues en el <strong>mismo dispositivo y navegador</strong>.
-          </p>
-          <h3>Usar las pistas</h3>
-          <p>
-            En cada partida dispondrás de <strong>cuatro </strong>pistas:
-          </p>
+          <h2>Puntos y Pistas</h2>
+          <ul>
+            <li><span className="correct">1 punto</span> por cada letra descubierta.</li>
+            <li><span className="correct">20 puntos</span> extra por completar la cita.</li>
+            <li><span className="correct">10 puntos</span> extra por cada intento no usado.</li>
+            
+          </ul>
+          <h3>Pistas disponibles</h3>
           <img className="clues-png" src="assets/clues.png" alt="clues" />
-          <p>- Cada pista solo se podrá usar una vez en cada partida.</p>
-          <p>
-            - Para usar una pista deberás hacer click en su icono, con lo que se
-            mostrará una breve descripción de la misma junto con el botón para
-            utilizarla y su <strong>coste en puntos</strong>.
-          </p>
-          <p>Las pistas de las que dispones son:</p>
+          <br></br>
           <ul>
             <li>
-              <img className="clue-icon" src="assets/letra.png" alt="Letra" />{" "}
-              Se selecciona una letra al azar de la cita y se muestra
-              <strong> en todas las posiciones</strong> de la cita en las que se
-              encuentre. Coste:{" "}
-              <span className="perdida">
-                <strong>50 puntos</strong>
-              </span>
-              .
+              <img className="clue-icon" src="assets/letra.png" alt="Letra" /> {" "}
+              Revelar una letra al azar (50 puntos).
             </li>
             <li>
               <img
@@ -127,25 +59,11 @@ const RulesPage = () => {
                 src="assets/compara_letras.png"
                 alt="Compara Letras"
               />{" "}
-              Muestra el número de <strong>letras comunes</strong> (de entre las
-              no reveladas) entre una palabra de cinco letras y la cita. Por
-              ejemplo, si escribes la palabra <strong>CEBRA</strong> y la cita
-              contiene las letras <strong>C, R y E</strong>, pero la E ya está
-              revelada, al usar la pista se te dirá que hay{" "}
-              <strong>dos letras</strong> comunes(la C y la R). Coste:{" "}
-              <span className="perdida">
-                <strong>25 puntos</strong>
-              </span>
-              .
+              Comparar letras comunes (25 puntos).
             </li>
             <li>
               <img className="clue-icon" src="assets/actor.png" alt="Actor" />{" "}
-              Muestra el nombre del<strong> actor</strong> que protagoniza la
-              cita. Coste:{" "}
-              <span className="perdida">
-                <strong>15 puntos</strong>
-              </span>
-              .
+              Mostrar el actor (15 puntos).
             </li>
             <li>
               <img
@@ -153,49 +71,23 @@ const RulesPage = () => {
                 src="assets/director.png"
                 alt="Director"
               />{" "}
-              Muestra el nombre del <strong>director</strong> de la película a
-              la que pertenece la cita. Coste:{" "}
-              <span className="perdida">
-                <strong>15 puntos</strong>
-              </span>
-              .
+              Mostrar el director (15 puntos).
             </li>
           </ul>
+          <p>Cada pista se podrá usar una vez por partida.</p>
         </section>
         <section>
           <h2>Consejos</h2>
           <ul>
-            <li>
-              Al principio, intenta usar palabras con las letras más comunes.
-            </li>
-            <li>
-              Presta atención a las letras que ya has usado e intenta no
-              repetirlas.
-            </li>
-            <li>
-              No uses la pista de revelar letra al inicio, así será más probable
-              que te desvele una letra infrecuente.
-            </li>
+            <li>Usa primero palabras con letras comunes.</li>
+            <li>No repitas letras ya usadas si puedes evitarlo.</li>
+            <li>Reserva la pista de revelar letra para el final.</li>
           </ul>
         </section>
         <section>
           <h2>Citas Pasadas</h2>
           <p>
-            Puedes acceder a las citas de días anteriores con el icono del
-            calendario en la parte superior de la pantalla.
-          </p>
-          <p>
-            Si hay citas pasadas que no has jugado, puedes intentar adivinarlas
-            simplemente haciendo click sobre su número; ¡PERO ATENCIÓN!, en
-            estas partidas se aplicará la{" "}
-            <strong>misma regla que para la cita del día</strong>: es decir, si
-            empiezas a jugar y no descubres la cita antes de las 7AM del día
-            siguiente se considerará partida{" "}
-            <span className="perdida">PERDIDA</span>.
-          </p>
-          <p>
-            Para volver a la cita del día, usa el icono de la casa en la parte
-            superior.
+            Accede a citas anteriores con el calendario. Si empiezas una cita pasada, debes completarla antes de las 7AM del día siguiente para no perderla.
           </p>
         </section>
       </div>
@@ -214,8 +106,7 @@ const RulesPage = () => {
           {" "}
           <Link to="/privacy-policy">Política de Privacidad</Link>
         </small>
-       
-      </footer>{" "}
+      </footer>
     </div>
   );
 };
