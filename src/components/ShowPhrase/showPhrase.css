@@ -123,6 +123,7 @@
 @media (max-width: 340px){
   .phrase-letter{
     width: 18px;
-    height: 20px;
+    height: 18px;
+    line-height: 1.1;
   }
 }
