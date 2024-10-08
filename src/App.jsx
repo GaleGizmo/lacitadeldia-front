@@ -18,6 +18,7 @@ import PrivacyPolicy from "./pages/Privacy/PrivacyPolicy";
 import CookieConsent from "react-cookie-consent";
 import NotFound from "./components/NotFound/NotFound";
 import ContactForm from "./pages/Contact/Contact";
+import Cookies from "js-cookie";
 
 function App() {
   const dispatch = useDispatch();
@@ -34,11 +35,36 @@ function App() {
   ];
 
   const { dontShowInstructions } = useSelector((state) => state.userReducer);
+
   useEffect(() => {
-    const userId = localStorage.getItem("laCitaDelDiaUserId");
-    if (!userId) {
-      dispatch(createUser());
-    } else dispatch(getUser(userId));
+    const getUserData = async () => {
+      const userId =  Cookies.get("laCitaDelDiaUserId") || localStorage.getItem("laCitaDelDiaUserId") ;
+      
+      if (userId) {
+        try {
+           dispatch(getUser(userId))
+        } catch (error) {
+          // Si hay un error al obtener el usuario (por ejemplo, no existe), creamos uno nuevo
+          console.error("Error al obtener usuario, creando uno nuevo:", error);
+          Cookies.remove("laCitaDelDiaUserId");
+          localStorage.removeItem("laCitaDelDiaUserId");
+          await createNewUser();
+        }
+      } else {
+        await createNewUser();
+      }
+    };
+  
+    const createNewUser = async () => {
+      try {
+         dispatch(createUser())
+      } catch (error) {
+        console.error("Error al crear nuevo usuario:", error);
+       
+      }
+    };
+  
+    getUserData();
   }, [dispatch]);
 
   const handleCloseBanner = () => {
@@ -56,7 +82,7 @@ function App() {
         <Route path="/info" element={<RulesPage />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         <Route path="/contact" element={<ContactForm />} />
-        <Route path="*" element={<NotFound />}/>
+        <Route path="*" element={<NotFound />} />
       </Routes>
 
       {validRoutes.includes(location.pathname) && !dontShowInstructions && (
