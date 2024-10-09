@@ -51,10 +51,19 @@ const setUserStatsAction = (userStats) => async (dispatch) => {
   }
 };
 
+const setUserPointsAction = (userPoints) => async (dispatch) => {
+  try {
+    dispatch({ type: "SET_USERPOINTS", payload: userPoints });
+  } catch (err) {
+    dispatch({ type: "SET_USERPOINTS_FAIL", payload: err.message });
+  }
+};
+
 export {
   createUser,
   updateDontShowInstructions,
   getUser,
   setUserStatsAction,
   closeInstructionsBanner,
+  setUserPointsAction
 };

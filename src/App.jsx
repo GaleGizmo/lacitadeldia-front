@@ -42,7 +42,7 @@ function App() {
       
       if (userId) {
         try {
-           dispatch(getUser(userId))
+          await dispatch(getUser(userId))
         } catch (error) {
           // Si hay un error al obtener el usuario (por ejemplo, no existe), creamos uno nuevo
           console.error("Error al obtener usuario, creando uno nuevo:", error);
@@ -57,7 +57,7 @@ function App() {
   
     const createNewUser = async () => {
       try {
-         dispatch(createUser())
+        await dispatch(createUser())
       } catch (error) {
         console.error("Error al crear nuevo usuario:", error);
        

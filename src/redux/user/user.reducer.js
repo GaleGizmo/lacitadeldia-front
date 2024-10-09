@@ -1,7 +1,13 @@
+import Cookies from 'js-cookie';
+
+const getUserId = () => {
+  return Cookies.get("laCitaDelDiaUserId") || localStorage.getItem("laCitaDelDiaUserId");
+};
 const INITIAL_STATE = {
-  userId: localStorage.getItem("laCitaDelDiaUserId"),
+  userId: getUserId(),
   dontShowInstructions: true,
   userStats:null,
+  userPoints: null,
   loading: false,
   error: null,
 };
@@ -74,6 +80,16 @@ export const userReducer = (state = INITIAL_STATE, action) => {
         ...state,
         error: action.payload,
       };
+    case "SET_USERPOINTS":
+      return {
+        ...state,
+        userPoints: action.payload,
+      };
+      case "SET_USERPOINTS_FAIL":
+        return {
+          ...state,
+          error: action.payload,
+        };
     default:
       return state;
   }

@@ -31,7 +31,7 @@ const GameComponent = () => {
   const phraseNumber = oldPhraseNumber;
   const [isInitialized, setIsInitialized] = useState(false);
   let game = useSelector((state) => state.gameReducer);
-  const { userId } = useSelector((state) => state.userReducer);
+  const { userId, userPoints } = useSelector((state) => state.userReducer);
 
   useEffect(() => {
     const initializeGame = async () => {
@@ -134,6 +134,7 @@ const GameComponent = () => {
           phraseNumber={game.phraseNumber}
           attempts={game.currentTry}
           maxTries={game.maximumTries}
+          points={userPoints}
         />
       )}
         </div>
