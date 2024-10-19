@@ -23,8 +23,14 @@ const getUser = (userId) => async (dispatch) => {
     }
     dispatch({ type: "GET_USER_SUCCESS", payload: user });
   } catch (error) {
-    dispatch({ type: "GET_USER_FAIL", payload: error.message });
-    throw error;
+    if (error.response && error.response.status === 404) {
+      // Si el servidor devuelve un 404, es que el usuario no existe en la base de datos
+      dispatch({ type: "GET_USER_FAIL", payload: "Usuario no encontrado" });
+    } else {
+      // Otros errores 
+      dispatch({ type: "GET_USER_FAIL", payload: "Error al obtener usuario" });
+    }
+    throw error;  
   }
 };
 const updateDontShowInstructions = (userId, updates) => async (dispatch) => {

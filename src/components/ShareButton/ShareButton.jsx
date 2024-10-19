@@ -30,6 +30,7 @@ const ShareButton = ({ gameStatus, phraseNumber, attempts, maxTries, points }) =
 
   return (
     <div className="share-buttons-container">
+    
       <div onClick={() => shareResult('whatsapp')} className="share-button">
         <WhatsappIcon />
       </div>

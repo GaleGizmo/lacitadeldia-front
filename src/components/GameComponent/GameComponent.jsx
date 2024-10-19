@@ -58,7 +58,7 @@ const GameComponent = () => {
     }
   }, [game.error]);
   useEffect(() => {
-    if (!isInitialized ) return;
+    if (!isInitialized) return;
 
     const words = [];
     for (let i = 0; i < game.maximumTries; i++) {
@@ -77,25 +77,25 @@ const GameComponent = () => {
 
   useEffect(() => {
     if (game.gameStatus != "playing" && !game.gameResultNotification) {
-      let phrasesWon=null
-      let phrasesLost=null
+      let phrasesWon = null;
+      let phrasesLost = null;
       if (game.gameStatus === "win") {
         toast.success("¡Bien hecho!", { style: { background: "#51e651" } });
-        phrasesWon=game.phraseNumber
+        phrasesWon = game.phraseNumber;
         setShowPhraseDetails(true);
       } else if (game.gameStatus === "lose") {
         toast.error("Has perdido, lo siento");
-        phrasesLost=game.phraseNumber
+        phrasesLost = game.phraseNumber;
       }
       const gameData = {
         gameResultNotification: true,
       };
 
       dispatch(updateGameData(gameId, gameData));
-      if(phrasesWon) {
-        updateUserData(userId,{phrasesWon})
+      if (phrasesWon) {
+        updateUserData(userId, { phrasesWon });
       } else {
-        updateUserData(userId,{phrasesLost})
+        updateUserData(userId, { phrasesLost });
       }
     }
   }, [game.gameStatus]);
@@ -107,36 +107,40 @@ const GameComponent = () => {
   return (
     <div className="game">
       <div className="words-clues-points-container">
-       
         <div className="words">{wordsToTry} </div>
         <div className="clues-points-container">
           <div className="showPoints">
             <ShowPoints />{" "}
           </div>{" "}
           {game.gameStatus === "playing" && (
-          <div className="clues-container">
-            <Clues />{" "}
-          </div>
-        )}
-        {game.gameStatus === "win" && (
-          <div className="phrase-link-container">
-            <button
-              className="phrase-link"
-              onClick={() => setShowPhraseDetails(true)}
-            >
-              Detalles de la cita
-            </button>
-          </div>
-        )}
-        {game.gameStatus != "playing" && (
-        <ShareButton
-          gameStatus={game.gameStatus}
-          phraseNumber={game.phraseNumber}
-          attempts={game.currentTry}
-          maxTries={game.maximumTries}
-          points={userPoints}
-        />
-      )}
+            <div className="clues-container">
+              <Clues />{" "}
+            </div>
+          )}
+          {game.gameStatus === "win" && (
+            <div className="phrase-link-container">
+              <button
+                className="phrase-link"
+                onClick={() => setShowPhraseDetails(true)}
+              >
+                Detalles de la cita
+              </button>
+            </div>
+          )}
+          {game.gameStatus != "playing" && (
+            <>
+              <div className="showPoints">
+                <p className="share-text">Compartir resultado:</p>
+              </div>
+              <ShareButton
+                gameStatus={game.gameStatus}
+                phraseNumber={game.phraseNumber}
+                attempts={game.currentTry}
+                maxTries={game.maximumTries}
+                points={userPoints}
+              />
+            </>
+          )}
         </div>
       </div>
 
@@ -145,11 +149,9 @@ const GameComponent = () => {
           displayPhraseLink={game.gameStatus === "win"}
           showModal={showPhraseDetails}
           onModalClose={() => setShowPhraseDetails(false)}
-        />
-     {" "}
+        />{" "}
       </div>
       <Keyboard userId={userId} />
-    
     </div>
   );
 };

@@ -11,13 +11,17 @@ const RulesPage = () => {
         <section>
           <h2>Objetivo</h2>
           <p>
-            Descubre la cita de una película. Cada día, a las 7AM, se presenta una nueva cita con letras ocultas.
+            Descubre la cita de una película. Cada día, a las 7AM, se presenta
+            una nueva cita con letras ocultas.
           </p>
         </section>
         <section>
           <h2>Cómo Jugar</h2>
           <ol>
-            <li>Adivina la cita introduciendo palabras <strong>de cinco letras:</strong></li>
+            <li>
+              Adivina la cita introduciendo palabras{" "}
+              <strong>de cinco letras:</strong>
+            </li>
             <img
               className="try-word-gif"
               src="assets/try_word.gif"
@@ -29,29 +33,51 @@ const RulesPage = () => {
               src="assets/phrase_discover.gif"
               alt="Letra"
             />
-            <li>Usa el teclado físico o el de la pantalla.</li>
-            <li>Partidas no completadas antes de las 7AM se consideran <span className="perdida">PERDIDAS</span>.</li>
+            <li>
+              <span className="perdida">No existe la opción</span> de resolver
+              la frase completa de una sola vez.{" "}
+            </li>
+            <li>
+              Las partidas no completadas antes de las 7AM se consideran{" "}
+              <span className="perdida">PERDIDAS</span>.
+            </li>
+            <li>
+              Al terminar una partida, tendrás la posibilidad de compartir el
+              resultado de la misma en tus RRSS.
+            </li>
           </ol>
         </section>
         <section>
           <h2>Dificultad</h2>
-          <p>El número de intentos disponibles varía <strong> entre 3 y 7</strong> según la longitud de la cita y las letras menos comunes.</p>
+          <p>
+            El número de intentos disponibles varía{" "}
+            <strong> entre 3 y 7</strong> según la longitud de la cita y las
+            letras poco comunes que contenga.
+          </p>
         </section>
         <section>
           <h2>Puntos y Pistas</h2>
           <ul>
-            <li><span className="correct">1 punto</span> por cada letra descubierta.</li>
-            <li><span className="correct">20 puntos</span> extra por completar la cita.</li>
-            <li><span className="correct">10 puntos</span> extra por cada intento no usado.</li>
-            
+            <li>
+              <span className="correct">1 punto</span> por cada letra
+              descubierta.
+            </li>
+            <li>
+              <span className="correct">20 puntos</span> extra por completar la
+              cita.
+            </li>
+            <li>
+              <span className="correct">10 puntos</span> extra por cada intento
+              no usado.
+            </li>
           </ul>
           <h3>Pistas disponibles</h3>
           <img className="clues-png" src="assets/clues.png" alt="clues" />
           <br></br>
           <ul>
             <li>
-              <img className="clue-icon" src="assets/letra.png" alt="Letra" /> {" "}
-              Revelar una letra al azar (50 puntos).
+              <img className="clue-icon" src="assets/letra.png" alt="Letra" />{" "}
+              Revelar una letra al azar (30 puntos).
             </li>
             <li>
               <img
@@ -59,11 +85,11 @@ const RulesPage = () => {
                 src="assets/compara_letras.png"
                 alt="Compara Letras"
               />{" "}
-              Comparar letras comunes (25 puntos).
+              Comparar letras comunes (20 puntos).
             </li>
             <li>
               <img className="clue-icon" src="assets/actor.png" alt="Actor" />{" "}
-              Mostrar el actor (15 puntos).
+              Mostrar el actor (10 puntos).
             </li>
             <li>
               <img
@@ -71,10 +97,20 @@ const RulesPage = () => {
                 src="assets/director.png"
                 alt="Director"
               />{" "}
-              Mostrar el director (15 puntos).
+              Mostrar el director (10 puntos).
             </li>
           </ul>
           <p>Cada pista se podrá usar una vez por partida.</p>
+          <p>
+            Tus puntos y resultados de partidas se conservarán si juegas en el
+            mismo dispositivo y navegador{" "}
+            <strong className="perdida">
+              {" "}
+              SALVO QUE TENGAS ACTIVADO LOS MODOS INCÓGNITO (Android) O PRIVADO
+              (iOS)
+            </strong>
+            .
+          </p>
         </section>
         <section>
           <h2>Consejos</h2>
@@ -87,7 +123,9 @@ const RulesPage = () => {
         <section>
           <h2>Citas Pasadas</h2>
           <p>
-            Accede a citas anteriores con el calendario. Si empiezas una cita pasada, debes completarla antes de las 7AM del día siguiente para no perderla.
+            Accede a citas anteriores con el calendario. Si empiezas una cita
+            pasada, debes completarla antes de las 7AM del día siguiente para no
+            perderla.
           </p>
         </section>
       </div>

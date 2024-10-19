@@ -31,11 +31,15 @@
   
 .phrase-link-container{
    
-    margin-top: 5px;
+    width: 174px;
 }
 @media (width<420px){
     .game{
         margin-top: 5px;
         margin-bottom: 0;
+    }
+    .phrase-link-container{
+   
+        width: 134px;
     }
 }

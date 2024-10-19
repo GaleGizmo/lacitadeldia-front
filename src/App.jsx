@@ -13,6 +13,7 @@ import {
   getUser,
 } from "./redux/user/user.actions";
 import { useEffect } from "react";
+import { toast } from "sonner";
 import NewUserBanner from "./components/NewUserBanner/NewUSerBanner";
 import PrivacyPolicy from "./pages/Privacy/PrivacyPolicy";
 import CookieConsent from "react-cookie-consent";
@@ -38,32 +39,57 @@ function App() {
 
   useEffect(() => {
     const getUserData = async () => {
-      const userId =  Cookies.get("laCitaDelDiaUserId") || localStorage.getItem("laCitaDelDiaUserId") ;
-      
+      const localUserId = localStorage.getItem("laCitaDelDiaUserId");
+      const cookieUserId = Cookies.get("laCitaDelDiaUserId");
+
+      let userId = cookieUserId || localUserId;
+
       if (userId) {
         try {
-          await dispatch(getUser(userId))
+          await dispatch(getUser(userId));
+          // Sincronizar `localStorage` y cookies si están desincronizados
+          syncUserIdStorage(localUserId, cookieUserId);
         } catch (error) {
-          // Si hay un error al obtener el usuario (por ejemplo, no existe), creamos uno nuevo
-          console.error("Error al obtener usuario, creando uno nuevo:", error);
-          Cookies.remove("laCitaDelDiaUserId");
-          localStorage.removeItem("laCitaDelDiaUserId");
-          await createNewUser();
+          // Sólo eliminar cookies/localStorage si el error es 404 (Usuario no encontrado)
+          await handleUserDataError(error);
         }
       } else {
         await createNewUser();
       }
     };
-  
-    const createNewUser = async () => {
-      try {
-        await dispatch(createUser())
-      } catch (error) {
-        console.error("Error al crear nuevo usuario:", error);
-       
+    const syncUserIdStorage = (localUserId, cookieUserId) => {
+      if (!localUserId && cookieUserId) {
+        localStorage.setItem("laCitaDelDiaUserId", cookieUserId);
+      } else if (localUserId && !cookieUserId) {
+        Cookies.set("laCitaDelDiaUserId", localUserId);
       }
     };
-  
+    const handleUserDataError = async (error) => {
+      if (error.response?.status === 404) {
+        Cookies.remove("laCitaDelDiaUserId");
+        localStorage.removeItem("laCitaDelDiaUserId");
+        await createNewUser();
+      } else {
+        toast.error(
+          "Error al obtener datos del usuario. Inténtalo de nuevo más tarde."
+        );
+        console.error(
+          "Error transitorio, intentando nuevamente más tarde:",
+          error
+        );
+      }
+    };
+    const createNewUser = async () => {
+      try {
+        await dispatch(createUser());
+      } catch (error) {
+        console.error("Error al crear nuevo usuario:", error);
+        toast.error(
+          "Error al crear nuevo usuario. Inténtalo de nuevo más tarde."
+        );
+      }
+    };
+
     getUserData();
   }, [dispatch]);
 
