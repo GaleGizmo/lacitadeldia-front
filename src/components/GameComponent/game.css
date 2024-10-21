@@ -33,7 +33,7 @@
    
     width: 174px;
 }
-@media (width<420px){
+@media (width<767px){
     .game{
         margin-top: 5px;
         margin-bottom: 0;
