@@ -28,6 +28,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  border: 1px solid gray;
   border-radius: 5px;
   font-size: 1.5em;
   color: white;
@@ -47,20 +48,20 @@
 .oldgames > .phrase-box:last-child {
   margin-right: auto; /* Empuja el último elemento hacia la izquierda */
 }
-.phrase-box.win {
-  background-color: green;
+.win {
+  background-color: var(--right-letter-color)
 }
 
-.phrase-box.lose {
-  background-color: red;
+.lose {
+  background-color: var(--color-orange-dark)
 }
 
-.phrase-box.np {
+.np {
   background-color: gray;
 }
 
-.phrase-box.playing {
-  background-color: rgb(249, 115, 47);
+.playing {
+  background-color: var(--playing-color);
 }
 .color-codes {
   display: flex;

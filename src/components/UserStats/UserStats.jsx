@@ -13,19 +13,19 @@ const UserStats = ({percentages, playing, notPlayed}) => {
       {percentages && (
         <div className="stats-container">
           <p className="stats-data">
-            <span>{percentages.win}</span>GANADAS{" "}
+            <span className="win-txt">{percentages.win}</span>
           </p>
           <p className="stats-data">
-            <span>{percentages.lose}</span>PERDIDAS{" "}
+            <span className="lose-txt">{percentages.lose}</span>
           </p>
           <p className="stats-data">
-            <span>{playing}</span>JUGANDO
+            <span className="playing-txt">{playing}</span>
           </p>
           <p className="stats-data">
-            <span>
+            <span className="np-txt">
               {notPlayed}
             </span>
-            NO JUGADA
+           
           </p>
         </div>
       )}

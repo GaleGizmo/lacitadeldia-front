@@ -8,6 +8,7 @@
     display: flex;
     gap: 10px;
     height: fit-content;
+    justify-content: space-around;
 
 }
 .stats-data{
@@ -21,15 +22,15 @@
     font-weight: 600;
 }
 @media (max-width: 767px) {
-    .stats-data>span{
-        font-size: 1.6em;
-    }
+  
     .stats-data{
         font-size: 12px;
     }
     .user-stats h2{
         margin-top: 5px;
         margin-bottom: 5px;
+        font-size: 1.4em;
+        padding-bottom: 0;
     }
     .user-stats{
         margin-top: auto;

@@ -62,17 +62,20 @@ ul {
 li {
   margin-bottom: 10px;
 }
-
-.correct {
+.playing-txt{
+  color: var(--playing-color);
+  font-weight: bold;
+}
+.win-txt {
   color: var(--right-letter-color);
   font-weight: bold;
 }
 
-.absent {
+.np-txt {
   color: gray;
   font-weight: bold;
 }
-.perdida{
+.lose-txt{
   color: var(--color-orange-dark);
   font-weight: bold;
 }

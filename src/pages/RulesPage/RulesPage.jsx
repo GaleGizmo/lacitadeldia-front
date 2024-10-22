@@ -34,12 +34,12 @@ const RulesPage = () => {
               alt="Letra"
             />
             <li>
-              <span className="perdida">No existe la opción</span> de resolver
+              <span className="lose-txt">No existe la opción</span> de resolver
               la frase completa de una sola vez.{" "}
             </li>
             <li>
               Las partidas no completadas antes de las 7AM se consideran{" "}
-              <span className="perdida">PERDIDAS</span>.
+              <span className="lose-txt">PERDIDAS</span>.
             </li>
             <li>
               Al terminar una partida, tendrás la posibilidad de compartir el
@@ -59,15 +59,15 @@ const RulesPage = () => {
           <h2>Puntos y Pistas</h2>
           <ul>
             <li>
-              <span className="correct">1 punto</span> por cada letra
+              <span className="win-txt">1 punto</span> por cada letra
               descubierta.
             </li>
             <li>
-              <span className="correct">20 puntos</span> extra por completar la
+              <span className="win-txt">20 puntos</span> extra por completar la
               cita.
             </li>
             <li>
-              <span className="correct">10 puntos</span> extra por cada intento
+              <span className="win-txt">10 puntos</span> extra por cada intento
               no usado.
             </li>
           </ul>
@@ -104,7 +104,7 @@ const RulesPage = () => {
           <p>
             Tus puntos y resultados de partidas se conservarán si juegas en el
             mismo dispositivo y navegador{" "}
-            <strong className="perdida">
+            <strong className="lose-txt">
               {" "}
               SALVO QUE TENGAS ACTIVADO LOS MODOS INCÓGNITO (Android) O PRIVADO
               (iOS)
