@@ -31,7 +31,7 @@ const GameComponent = () => {
   const phraseNumber = oldPhraseNumber;
   const [isInitialized, setIsInitialized] = useState(false);
   let game = useSelector((state) => state.gameReducer);
-  const { userId, userPoints } = useSelector((state) => state.userReducer);
+  const { userId, userPoints, userRanking } = useSelector((state) => state.userReducer);
 
   useEffect(() => {
     const initializeGame = async () => {
@@ -109,7 +109,7 @@ const GameComponent = () => {
       <div className="words-clues-points-container">
         <div className="words">{wordsToTry} </div>
         <div className="clues-points-container">
-          <div className="showPoints">
+          <div className="right-div-container">
             <ShowPoints />{" "}
           </div>{" "}
           {game.gameStatus === "playing" && (
@@ -118,7 +118,7 @@ const GameComponent = () => {
             </div>
           )}
           {game.gameStatus === "win" && (
-            <div className="phrase-link-container">
+            <div className="right-div-container">
               <button
                 className="phrase-link"
                 onClick={() => setShowPhraseDetails(true)}
@@ -129,7 +129,7 @@ const GameComponent = () => {
           )}
           {game.gameStatus != "playing" && (
             <>
-              <div className="showPoints">
+              <div className="right-div-container share-text-container">
                 <p className="share-text">Compartir resultado:</p>
               </div>
               <ShareButton
@@ -138,6 +138,7 @@ const GameComponent = () => {
                 attempts={game.currentTry}
                 maxTries={game.maximumTries}
                 points={userPoints}
+                ranking={userRanking}
               />
             </>
           )}

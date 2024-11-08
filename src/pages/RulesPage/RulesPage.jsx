@@ -11,8 +11,8 @@ const RulesPage = () => {
         <section>
           <h2>Objetivo</h2>
           <p>
-            Descubre la cita de una película. Cada día, a las 7AM, se presenta
-            una nueva cita con letras ocultas.
+            Descubre la cita de una película. Cada día a las 7AM se presenta
+            una nueva cita con sus letras ocultas.
           </p>
         </section>
         <section>
@@ -27,7 +27,7 @@ const RulesPage = () => {
               src="assets/try_word.gif"
               alt="tryword"
             />
-            <li>Las letras correctas se mostrarán en verde.</li>
+            <li>Las letras de cada palabra que estén en la cita se mostrarán en verde.</li>
             <img
               className="phrase-gif"
               src="assets/phrase_discover.gif"
@@ -71,6 +71,7 @@ const RulesPage = () => {
               no usado.
             </li>
           </ul>
+          <div className="ranking-phrase"><span>Tus puntos determinarán tu posición en el ranking</span> <img className="ranking-icon" src="assets/ranking.png" alt="Ranking" /> </div>
           <h3>Pistas disponibles</h3>
           <img className="clues-png" src="assets/clues.png" alt="clues" />
           <br></br>

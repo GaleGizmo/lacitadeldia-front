@@ -48,7 +48,7 @@ function App() {
         try {
           await dispatch(getUser(userId));
           // Sincronizar `localStorage` y cookies si están desincronizados
-          syncUserIdStorage(localUserId, cookieUserId);
+          if (localUserId !== cookieUserId) { syncUserIdStorage(localUserId, cookieUserId);}
         } catch (error) {
           // Sólo eliminar cookies/localStorage si el error es 404 (Usuario no encontrado)
           await handleUserDataError(error);

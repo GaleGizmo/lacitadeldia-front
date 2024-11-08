@@ -39,23 +39,7 @@
 .space {
   width: 10px;
 }
-.phrase-link  {
-  border: 1px solid gray ;
-  background-image: 
-    linear-gradient(to bottom, var(--color-yellow-light), var(--color-yellow-dark)),
-    linear-gradient(to bottom, var(--color-yellow-dark), var(--color-yellow-light));
-  background-size: 100% 200%;
-  background-position: 0 0, 0 100%;
-  background-repeat: no-repeat;
-  transition: background-position 0.5s ease;
-  width: 100%;
-  padding: 0.2em 0;
-  
-}
 
-.phrase-link:hover {
-  background-position: 0 100%, 0 0;
-}
 
 @keyframes fadeIn {
   from {
@@ -112,7 +96,7 @@
 }
 @media (max-width: 767px) {
   .phrase-link {
-    font-size: .8em;
+    font-size: 12px;
     padding: 0.3em 0.6em 0.2em 0.6em;
   }
   .phrase-letter {

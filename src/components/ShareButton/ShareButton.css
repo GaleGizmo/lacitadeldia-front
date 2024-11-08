@@ -1,10 +1,12 @@
 .share-buttons-container{
   display: flex;
-  gap: 10px;
+  gap: 15px;
   justify-content: center;
-  /* position: fixed;
-    top: 97px;
-    right: calc(50% - 322px); */
+ 
+}
+.share-text-container{
+  height: 30px;
+  background-color: #1c274c18;
 }
 .share-button {
   
@@ -30,7 +32,14 @@
       right: calc(50% - 167px); */
     }
     .share-button{
-      width: 28px;
+      width: 24px;
+      height: 24px;
+    }
+    .share-text-container{
+      height: 24px;
+    }
+    .share-text{
+      font-size: 12px;
     }
   }
     

@@ -64,6 +64,13 @@ const setUserPointsAction = (userPoints) => async (dispatch) => {
     dispatch({ type: "SET_USERPOINTS_FAIL", payload: err.message });
   }
 };
+const setUserRankingAction = (userRanking) => async (dispatch) => {
+  try {
+    dispatch({ type: "SET_USERRANKING", payload: userRanking });
+  } catch (err) {
+    dispatch({ type: "SET_USERRANKING_FAIL", payload: err.message });
+  }
+};
 
 export {
   createUser,
@@ -71,5 +78,6 @@ export {
   getUser,
   setUserStatsAction,
   closeInstructionsBanner,
-  setUserPointsAction
+  setUserPointsAction,
+  setUserRankingAction
 };

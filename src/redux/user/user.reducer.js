@@ -7,6 +7,7 @@ const INITIAL_STATE = {
   userId: getUserId(),
   dontShowInstructions: true,
   userStats:null,
+  userRanking:0,
   userPoints: null,
   loading: false,
   error: null,
@@ -23,6 +24,7 @@ export const userReducer = (state = INITIAL_STATE, action) => {
         ...state,
         loading: false,
         userId: action.payload._id,
+        
         dontShowInstructions: action.payload.dontShowInstructions,
       };
     case "GET_USER_FAIL":
@@ -86,6 +88,16 @@ export const userReducer = (state = INITIAL_STATE, action) => {
         userPoints: action.payload,
       };
       case "SET_USERPOINTS_FAIL":
+        return {
+          ...state,
+          error: action.payload,
+        };
+    case "SET_USERRANKING":
+      return {
+        ...state,
+        userRanking: action.payload,
+      };
+      case "SET_USERRANKING_FAIL":
         return {
           ...state,
           error: action.payload,

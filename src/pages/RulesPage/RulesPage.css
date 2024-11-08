@@ -57,7 +57,11 @@ ul {
   display: inline-block;
   text-align: center;
 }
-
+.ranking-phrase{
+  display: inline-block;
+ margin: 0;
+ height: min-content;
+}
 
 li {
   margin-bottom: 10px;
@@ -107,5 +111,9 @@ li>img{
     }
     .clues-png{
       width: 130px;
+    }
+    .ranking-icon{
+      width: 24px;
+      height: 24px;
     }
 }

@@ -5,13 +5,13 @@ import TelegramIcon from "../../assets/TelegramIcon";
 import TwitterIcon from "../../assets/TwitterIcon";
 
 
-const ShareButton = ({ gameStatus, phraseNumber, attempts, maxTries, points }) => {
+const ShareButton = ({ gameStatus, phraseNumber, attempts, maxTries, points, ranking }) => {
   const shareResult = (platform) => {
     const gameUrl='https://www.lacitadeldia.com'
     const emoji = gameStatus === 'win' ? '🎉' : '😔';
     const attemptsText = gameStatus === 'win' ? `en ${attempts}/${maxTries} intentos` : 'pero sin suerte';
     const resultMessage = gameStatus === 'win' ? 'Descubrí la cita' : 'Intenté la cita';
-    const message = `${resultMessage} #${phraseNumber} ${attemptsText} ${emoji} ¡Tengo ${points} puntos!\n ¡Juega tú también en ${gameUrl}!`;
+    const message = `${resultMessage} #${phraseNumber} ${attemptsText} ${emoji} ¡Tengo ${points} puntos y estoy en el puesto ${ranking}!\n ¡Juega tú también en ${gameUrl}!`;
     const encodedMessage = encodeURIComponent(message);
 
     if (platform === 'whatsapp') {
