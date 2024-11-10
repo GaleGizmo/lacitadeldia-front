@@ -12,7 +12,7 @@ import {
   createUser,
   getUser,
 } from "./redux/user/user.actions";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import NewUserBanner from "./components/NewUserBanner/NewUSerBanner";
 import PrivacyPolicy from "./pages/Privacy/PrivacyPolicy";
@@ -36,6 +36,7 @@ function App() {
   ];
 
   const { dontShowInstructions } = useSelector((state) => state.userReducer);
+  const [userIdReady, setUserIdReady] = useState(false);
 
   useEffect(() => {
     const getUserData = async () => {
@@ -49,6 +50,7 @@ function App() {
           await dispatch(getUser(userId));
           // Sincronizar `localStorage` y cookies si están desincronizados
           if (localUserId !== cookieUserId) { syncUserIdStorage(localUserId, cookieUserId);}
+          setUserIdReady(true);
         } catch (error) {
           // Sólo eliminar cookies/localStorage si el error es 404 (Usuario no encontrado)
           await handleUserDataError(error);
@@ -82,6 +84,7 @@ function App() {
     const createNewUser = async () => {
       try {
         await dispatch(createUser());
+        setUserIdReady(true); 
       } catch (error) {
         console.error("Error al crear nuevo usuario:", error);
         toast.error(
@@ -101,9 +104,9 @@ function App() {
     <div className="home">
       <Header />
       <Routes>
-        <Route path="/" element={<GameComponent />} />
+      <Route path="/" element={userIdReady ? <GameComponent /> : <div className="loader"></div>} />
         <Route path="/oldgames" element={<OldGames />} />
-        <Route path="/game" element={<GameComponent />} />
+        <Route path="/game" element={userIdReady ? <GameComponent /> : <div className="loader"></div>} />
         <Route path="/youshouldntbehere" element={<AddPhraseForm />} />
         <Route path="/info" element={<RulesPage />} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />

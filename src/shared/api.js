@@ -72,7 +72,11 @@ export const getUserPoints = async (userId) => {
     .then(handleResponse)
     .catch(handleError);
 };
-
+export const getUserRanking = async (userId) => {
+  return APIBase.get(`/user/getranking/${userId}`)
+    .then(handleResponse)
+    .catch(handleError);
+};
 export const getUserPastPhrases = async (userId) => {
   return APIBase.get(`/phrases/getoldphrases/${userId}`)
     .then(handleResponse)

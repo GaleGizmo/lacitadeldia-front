@@ -23,6 +23,14 @@
     color: gray;
     font-weight: 700;
 }
+.trend-up{
+    font-size: 16px;
+    color: var(--right-letter-color);
+}
+.trend-down{
+    font-size: 16px;
+    color: var(--color-orange-dark)
+}
 .rank-medium{
    
     width: 26px;

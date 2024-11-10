@@ -1,13 +1,17 @@
-import Cookies from 'js-cookie';
+import Cookies from "js-cookie";
 
 const getUserId = () => {
-  return Cookies.get("laCitaDelDiaUserId") || localStorage.getItem("laCitaDelDiaUserId");
+  return (
+    Cookies.get("laCitaDelDiaUserId") ||
+    localStorage.getItem("laCitaDelDiaUserId")
+  );
 };
 const INITIAL_STATE = {
   userId: getUserId(),
   dontShowInstructions: true,
-  userStats:null,
-  userRanking:0,
+  userStats: null,
+  userRanking: 0,
+  
   userPoints: null,
   loading: false,
   error: null,
@@ -24,7 +28,7 @@ export const userReducer = (state = INITIAL_STATE, action) => {
         ...state,
         loading: false,
         userId: action.payload._id,
-        
+
         dontShowInstructions: action.payload.dontShowInstructions,
       };
     case "GET_USER_FAIL":
@@ -45,7 +49,7 @@ export const userReducer = (state = INITIAL_STATE, action) => {
         userId: action.payload._id,
         dontShowInstructions: action.payload.instructions,
       };
-      
+
     case "CREATE_USER_FAIL":
       return {
         ...state,
@@ -87,21 +91,23 @@ export const userReducer = (state = INITIAL_STATE, action) => {
         ...state,
         userPoints: action.payload,
       };
-      case "SET_USERPOINTS_FAIL":
-        return {
-          ...state,
-          error: action.payload,
-        };
-    case "SET_USERRANKING":
+    case "SET_USERPOINTS_FAIL":
+      return {
+        ...state,
+        error: action.payload,
+      };
+    case "SET_USERRANKING": 
+      
       return {
         ...state,
         userRanking: action.payload,
       };
-      case "SET_USERRANKING_FAIL":
-        return {
-          ...state,
-          error: action.payload,
-        };
+    
+    case "SET_USERRANKING_FAIL":
+      return {
+        ...state,
+        error: action.payload,
+      };
     default:
       return state;
   }
