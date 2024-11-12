@@ -97,7 +97,7 @@ const ShowPoints = () => {
     <div className="points-ranking-container">
       <p className="ranking">
         <img src="assets/points.png" alt="Points" width={30} height={30} />{" "}
-        {userPoints || userPoints === 0 && <span className="points">{userPoints}</span>}
+        { userPoints >= 0 && <span className="points">{userPoints}</span>}
       </p>
       <p className="ranking">
         {" "}
