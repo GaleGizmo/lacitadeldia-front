@@ -26,11 +26,10 @@ const ShowPoints = () => {
           const data = await getUserPoints(userId);
           if (isMounted) {
             // Solo actualiza el estado si el componente está montado
-           
+
             setUserPoints(data.points);
-           
+
             dispatch(setUserPointsAction(data.points));
-            
           }
         }
       } catch (err) {
@@ -89,16 +88,16 @@ const ShowPoints = () => {
   // Clase condicional basada en el valor de userRanking
   const rankingClass =
     userRanking > 3 && userRanking <= 10
-      ? "rank-medium"
-      : userRanking > 10 && userRanking < 50
-      ? "rank-low"
+      ? "rank rank-high"
+      : userRanking > 10 && userRanking <= 50
+      ? "rank rank-medium" : userRanking > 50 ? "rank-low" 
       : "";
-  const trendClass = rankingTrend === "↑" ? "trend-up" : "trend-down";
+  const trendImg = rankingTrend === "↑" ? "up-arrow" : "down-arrow";
   return (
     <div className="points-ranking-container">
       <p className="ranking">
         <img src="assets/points.png" alt="Points" width={30} height={30} />{" "}
-        {userPoints && <span className="points">{userPoints}</span>}
+        {userPoints || userPoints === 0 && <span className="points">{userPoints}</span>}
       </p>
       <p className="ranking">
         {" "}
@@ -110,10 +109,8 @@ const ShowPoints = () => {
           </span>
         )}
         {rankingTrend && (
-          <span className={`rank-data ${trendClass}`}>
-            {" "}
-            {rankingTrend}
-            {rankingTrend}{" "}
+          <span className={`trend-img ${trendImg === "up-arrow" ? "shine-up" : "shine-down"}`}>
+            <img id="trend-arrow" src={`assets/${trendImg}.png`} alt="Trend" />
           </span>
         )}
       </p>
