@@ -29,6 +29,7 @@
   --color-orange-dark:#e53b08;
   --icon-fill-color: #1C274C;
   --playing-color: #f9732f;
+  --color-transparent-black: #1c274c18;
 }
 
 a {
@@ -115,5 +116,8 @@ button:focus-visible {
   h1, h2, .home, .rules-header{
     color: var(--dark-mode-text);
     background-color: var(--dark-mode-bg) 
+  }
+  .clues-container, .right-div-container, .share-text-container{
+    background-color: var( --dark-mode-movie_field);
   }
 }

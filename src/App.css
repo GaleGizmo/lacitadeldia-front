@@ -4,7 +4,7 @@
   width: 100%;
   min-height: 100dvh;
   text-align: center;
-  background-color: #1c274c18;
+  background-color: var(--color-transparent-black)
   /* margin: 0 auto; */
 }
 .home {

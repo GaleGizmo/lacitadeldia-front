@@ -17,7 +17,7 @@
     
 }
 .right-div-container{
-    background-color: #1c274c18;
+    background-color: var(--color-transparent-black);
     display: flex;
     justify-content: center;
     align-items: center;

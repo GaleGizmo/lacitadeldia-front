@@ -6,7 +6,7 @@
 }
 .share-text-container{
   height: 30px;
-  background-color: #1c274c18;
+  background-color:var(--color-transparent-black);
 }
 .share-button {
   
