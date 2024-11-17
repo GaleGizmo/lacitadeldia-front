@@ -140,7 +140,7 @@ const AddPhraseForm = () => {
         
           <button type="submit">Add Phrase</button>
           {submittedPhrase && (
-        <div>
+        <div className='added-phrase'>
           <h3>Added Phrase:</h3>
           <pre>{JSON.stringify(submittedPhrase, null, 2)}</pre>
         </div>

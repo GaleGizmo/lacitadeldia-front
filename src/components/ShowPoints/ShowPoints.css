@@ -86,10 +86,16 @@
 .rank-low {
   margin: 0 3px;
 }
-.ranking img {
+/* .ranking img {
   display: flex;
   align-items: center;
   height: 30px;
+} */
+.right-icon{
+  filter:contrast(.65) ;
+  display: flex;
+  align-items: center;
+  
 }
 .points-ranking-container {
   display: flex;
@@ -106,7 +112,7 @@
 }
 @media (max-width: 767px) {
 
-  .ranking img {
+  .right-icon {
     height: 20px;
     width: 20px;
   }

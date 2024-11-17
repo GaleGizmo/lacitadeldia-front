@@ -16,6 +16,7 @@ import ShareButton from "../ShareButton/ShareButton";
 import Clues from "../Clues/Clues";
 import ShowPoints from "../ShowPoints/ShowPoints";
 import { getPhraseOfTheDayNumber, updateUserData } from "../../shared/api";
+import MyLettersList from "../MyLettersList/MyLettersList";
 
 const GameComponent = () => {
   let oldPhraseNumber = localStorage.getItem("oldPhraseToPlay");
@@ -115,6 +116,11 @@ const GameComponent = () => {
           {game.gameStatus === "playing" && (
             <div className="clues-container">
               <Clues />{" "}
+            </div>
+          )}
+          {game.gameStatus === "playing" && (
+            <div className="right-div-container">
+              <MyLettersList />
             </div>
           )}
           {game.gameStatus === "win" && (

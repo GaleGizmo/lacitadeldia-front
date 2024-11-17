@@ -6,3 +6,10 @@
     margin-top: 20px;
     margin-bottom: 10px;
 }
+.added-phrase{
+    max-width: 400px;
+}
+.added-phrase pre {
+    max-width: 100%;
+    overflow: scroll;
+}

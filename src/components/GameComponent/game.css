@@ -19,7 +19,7 @@
 .right-div-container{
     background-color: var(--color-transparent-black);
     display: flex;
-    justify-content: center;
+    /* justify-content: center;*/
     align-items: center;
     border: 2px solid gray;
     border-radius: 8px;
@@ -51,13 +51,17 @@
     background-position: 0 100%, 0 0;
   }
 .words-clues-points-container{
+    position: relative;
+    overflow: visible;
     min-height: 130px;
     width: 100%;
     display: flex;
-    justify-content: center;
+    /* justify-content: center; */
     gap: 20px
 }
 .clues-points-container{
+    position: absolute;
+    right: 0;
     display: flex;
     flex-direction: column;
     gap: 5px
@@ -81,4 +85,6 @@
         width: 134px;
         font-size: 12px;
     }
+    .words-clues-points-container{
+        width: 92%;}
 }

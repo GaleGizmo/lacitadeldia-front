@@ -24,14 +24,14 @@ const ClueDetails = ({ typeOfClue }) => {
     switch (typeOfClue) {
       case "letter":
         setClueDescription("Revela una letra");
-        if (clues.letter.value) setConsumedClueMessage(clues.letter.value) ;
+        if (clues.letter.value) setConsumedClueMessage(clues.letter.value);
         break;
       case "lettersRight":
         setClueDescription("Letras comunes con:");
-        if (clues.lettersRight.value) setConsumedClueMessage(
-              `${clues.lettersRight.value.word} (${clues.lettersRight.value.commons})`
-            )
-          ;
+        if (clues.lettersRight.value)
+          setConsumedClueMessage(
+            `${clues.lettersRight.value.word} (${clues.lettersRight.value.commons})`
+          );
         break;
       case "actor":
         setClueDescription("Quién dijo la frase");
@@ -39,8 +39,7 @@ const ClueDetails = ({ typeOfClue }) => {
         break;
       case "director":
         setClueDescription("Quién dirigió la película");
-       if (clues.director.value) setConsumedClueMessage(clues.director.value)
-          ;
+        if (clues.director.value) setConsumedClueMessage(clues.director.value);
         break;
       default:
         setClueDescription("");
@@ -56,27 +55,28 @@ const ClueDetails = ({ typeOfClue }) => {
   return (
     <div className="clue-details">
       <p className="clue-description">{clueDescription}</p>
-      <div className="button-input-container">{typeOfClue === "lettersRight" && clues.lettersRight.status && (
-        <input
-          type="text"
-          maxLength={"5"}
-          
-          onChange={(e) => setWordToTry(e.target.value.toLocaleUpperCase())}
-          onFocus={() => dispatch(setInputFocus(true))}
-          onBlur={() => dispatch(setInputFocus(false))}
-        />
-      )}
-      {clueDescription && clues[typeOfClue] && clues[typeOfClue].status ? (
-       <> <button onClick={useClue}>Usar</button>
-       <p className="clue-price">{clues[typeOfClue].price}</p>
-        </>
-      ) : (
-        clueDescription && (
-          <p className="consumed-message">{consumedClueMessage}</p>
-        )
-      )} </div>
-      
-      
+      <div className="button-input-container">
+        {typeOfClue === "lettersRight" && clues.lettersRight.status && (
+          <input
+            type="text"
+            maxLength={"5"}
+            onChange={(e) => setWordToTry(e.target.value.toLocaleUpperCase())}
+            onFocus={() => dispatch(setInputFocus(true))}
+            onBlur={() => dispatch(setInputFocus(false))}
+          />
+        )}
+        {clueDescription && clues[typeOfClue] && clues[typeOfClue].status ? (
+          <>
+            {" "}
+            <button onClick={useClue}>Usar</button>
+            <p className="clue-price">{clues[typeOfClue].price}</p>
+          </>
+        ) : (
+          clueDescription && (
+            <p className="consumed-message">{consumedClueMessage}</p>
+          )
+        )}{" "}
+      </div>
     </div>
   );
 };

@@ -56,7 +56,7 @@ const RulesPage = () => {
           </p>
         </section>
         <section>
-          <h2>Puntos y Pistas</h2>
+          <h2>Puntos y Ayudas</h2>
           <ul>
             <li>
               <span className="win-txt">1 punto</span> por cada letra
@@ -72,7 +72,7 @@ const RulesPage = () => {
             </li>
           </ul>
           <div className="ranking-phrase"><span>Tus puntos determinarán tu posición en el ranking</span> <img className="ranking-icon" src="assets/ranking.png" alt="Ranking" /> </div>
-          <h3>Pistas disponibles</h3>
+          <h3>Ayudas disponibles</h3>
           <img className="clues-png" src="assets/clues.png" alt="clues" />
           <br></br>
           <ul>
@@ -99,6 +99,14 @@ const RulesPage = () => {
                 alt="Director"
               />{" "}
               Mostrar el director (10 puntos).
+            </li>
+            <li>
+              <img
+                className="right-icon clue-icon"
+                src="assets/notepad.png"
+                alt="Notepad"
+              />{" "}
+              Apunta las letras que te faltan (gratuito).
             </li>
           </ul>
           <p>Cada pista se podrá usar una vez por partida.</p>

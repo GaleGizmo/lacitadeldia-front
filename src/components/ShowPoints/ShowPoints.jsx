@@ -96,12 +96,12 @@ const ShowPoints = () => {
   return (
     <div className="points-ranking-container">
       <p className="ranking">
-        <img src="assets/points.png" alt="Points" width={30} height={30} />{" "}
+        <img src="assets/points.png" className="right-icon" alt="Points" width={30} height={30} />{" "}
         { userPoints >= 0 && <span className="points">{userPoints}</span>}
       </p>
       <p className="ranking">
         {" "}
-        <img src="assets/ranking.png" alt="Points" width={30} height={30} />
+        <img src="assets/ranking.png" className="right-icon" alt="Points" width={30} height={30} />
         {userRanking && (
           <span className={`rank-data ${rankingClass}`}>
             {" "}
