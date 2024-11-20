@@ -4,13 +4,21 @@ import "./MyLettersList.css";
 import { useDispatch } from "react-redux";
 
 const MyLettersList = () => {
+   let lettersListOnLocalStorage = localStorage.getItem("myLettersList");
   const dispatch = useDispatch();
-  const [lettersList, setLettersList] = useState("");
+  const [lettersList, setLettersList] = useState(lettersListOnLocalStorage);
+
+  const handleMyLettersList = (e) => {
+    e.preventDefault();
+    lettersListOnLocalStorage = e.target.value.toLocaleUpperCase();
+    setLettersList(lettersListOnLocalStorage);
+    localStorage.setItem("myLettersList", lettersListOnLocalStorage);
+  };
 
 
 
   return (
-    <div className="my-letters-list">
+    <div className="my-letters-list ">
       <span >
         <img src="./assets/notepad.png"  width={30} height={30} className='right-icon' />
       </span>
@@ -19,7 +27,7 @@ const MyLettersList = () => {
         type="text"
         maxLength={"12"}
         value={lettersList}
-        onChange={(e) => setLettersList(e.target.value.toLocaleUpperCase())}
+        onChange={handleMyLettersList}
         onFocus={() => dispatch(setInputFocus(true))}
         onBlur={() => dispatch(setInputFocus(false))}
         

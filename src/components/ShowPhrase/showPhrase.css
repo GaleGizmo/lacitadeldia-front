@@ -10,6 +10,7 @@
   flex-wrap: wrap;
 }
 .phrase-letter {
+  font-weight: 500;
   width: 20px;
   height: 25px;
   border: 1px solid #000;

@@ -62,6 +62,7 @@
   animation-direction: reverse;
   transform-origin: 50% calc(200% - 2px);
 }
+
 @keyframes l2 {
   100% {
     transform: rotate(1turn);

@@ -36,7 +36,7 @@ const Clues = () => {
   };
 
   return (
-    <div className="clues">
+    <div className="clues ">
      
       
         <div className="clues-icons">

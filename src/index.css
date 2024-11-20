@@ -117,7 +117,7 @@ button:focus-visible {
     color: var(--dark-mode-text);
     background-color: var(--dark-mode-bg) 
   }
-  .clues-container, .right-div-container, .share-text-container{
+   .points-ranking-container, .share-text-container{
     background-color: var( --dark-mode-movie_field);
   }
 }

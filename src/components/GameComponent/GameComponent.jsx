@@ -20,7 +20,7 @@ import MyLettersList from "../MyLettersList/MyLettersList";
 
 const GameComponent = () => {
   let oldPhraseNumber = localStorage.getItem("oldPhraseToPlay");
-
+  if (!localStorage.getItem("myLettersList")) {localStorage.setItem("myLettersList", "")}
   if (!oldPhraseNumber) {
     oldPhraseNumber = 0;
   }
@@ -98,6 +98,7 @@ const GameComponent = () => {
       } else {
         updateUserData(userId, { phrasesLost });
       }
+      localStorage.setItem("myLettersList", "");
     }
   }, [game.gameStatus]);
 
@@ -114,12 +115,12 @@ const GameComponent = () => {
             <ShowPoints />{" "}
           </div>{" "}
           {game.gameStatus === "playing" && (
-            <div className="clues-container">
+            <div className="clues-container helpers-container">
               <Clues />{" "}
             </div>
           )}
           {game.gameStatus === "playing" && (
-            <div className="right-div-container">
+            <div className="right-div-container helpers-container">
               <MyLettersList />
             </div>
           )}

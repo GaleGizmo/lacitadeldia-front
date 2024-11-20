@@ -5,6 +5,7 @@
  
 }
 .share-text-container{
+  color: #157ad1;
   height: 30px;
   background-color:var(--color-transparent-black);
 }
