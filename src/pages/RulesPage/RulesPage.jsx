@@ -42,6 +42,9 @@ const RulesPage = () => {
               <span className="lose-txt">PERDIDAS</span>.
             </li>
             <li>
+              Si pierdes la partida tendrás que usar 20 puntos para mostrar los detalles de la cita.
+            </li>
+            <li>
               Al terminar una partida, tendrás la posibilidad de compartir el
               resultado de la misma en tus RRSS.
             </li>

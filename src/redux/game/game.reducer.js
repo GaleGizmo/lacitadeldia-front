@@ -12,6 +12,7 @@ const INITIAL_STATE = (() => {
         newLetters: [],
         wordToTry: "",
         isInputFocused: false,
+        hasBoughtDetails: false,
       };
     } catch (e) {
       console.error("Error parsing activeGame from localStorage", e);
@@ -41,6 +42,7 @@ function getDefaultState() {
     lettersFailed: [],
     clues: { actor: {}, director: {}, letters: {}, lettersRight: {} },
     isInputFocused: false,
+    hasBoughtDetails: false,
   };
 }
 
@@ -64,7 +66,7 @@ export const gameReducer = (state = INITIAL_STATE, action) => {
         currentTry: action.payload.currentTry,
         gameStatus: action.payload.gameStatus,
         gameResultNotification: action.payload.gameResultNotification,
-
+        hasBoughtDetails: action.payload.hasBoughtDetails,
         clues: action.payload.clues,
       };
     case "START_GAME_FAILURE":
@@ -89,7 +91,7 @@ export const gameReducer = (state = INITIAL_STATE, action) => {
         maximumTries: action.payload.maximumTries,
         gameStatus: action.payload.gameStatus,
         gameResultNotification: action.payload.gameResultNotification,
-
+        hasBoughtDetails: action.payload.hasBoughtDetails,
         clues: action.payload.clues,
       };
     case "UPDATE_GAME_DATA_FAILURE":
@@ -172,6 +174,11 @@ export const gameReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         isInputFocused: action.payload,
+      };
+    case "SET_HAS_BOUGHT_DETAILS":
+      return {
+        ...state,
+        hasBoughtDetails: action.payload,
       };
     case "CLEAR_ERROR":
       return { ...state, error: null };

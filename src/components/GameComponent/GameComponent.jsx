@@ -17,22 +17,27 @@ import Clues from "../Clues/Clues";
 import ShowPoints from "../ShowPoints/ShowPoints";
 import { getPhraseOfTheDayNumber, updateUserData } from "../../shared/api";
 import MyLettersList from "../MyLettersList/MyLettersList";
+import { buyPhraseDetailsAction } from "../../redux/user/user.actions";
 
 const GameComponent = () => {
   let oldPhraseNumber = localStorage.getItem("oldPhraseToPlay");
-  if (!localStorage.getItem("myLettersList")) {localStorage.setItem("myLettersList", "")}
+  if (!localStorage.getItem("myLettersList")) {
+    localStorage.setItem("myLettersList", "");
+  }
   if (!oldPhraseNumber) {
     oldPhraseNumber = 0;
   }
   const dispatch = useDispatch();
   const [showPhraseDetails, setShowPhraseDetails] = useState(false);
-
+  const [showConfirmationModal, setShowConfirmationModal] = useState(false);
   const [wordsToTry, setWordsToTry] = useState([]);
   const gameId = localStorage.getItem("gameId");
   const phraseNumber = oldPhraseNumber;
   const [isInitialized, setIsInitialized] = useState(false);
   let game = useSelector((state) => state.gameReducer);
-  const { userId, userPoints, userRanking } = useSelector((state) => state.userReducer);
+  const { userId, userPoints, userRanking } = useSelector(
+    (state) => state.userReducer
+  );
 
   useEffect(() => {
     const initializeGame = async () => {
@@ -102,6 +107,39 @@ const GameComponent = () => {
     }
   }, [game.gameStatus]);
 
+  const handleShowDetails = async () => {
+    if (game.gameStatus === "lose" && !game.hasBoughtDetails) {
+      setShowConfirmationModal(true); // Muestra el modal antes de proceder
+      return;
+    }
+    setShowPhraseDetails(true);
+  };
+
+  const confirmShowDetails = async () => {
+    try {
+      if (game.gameStatus === "lose") {
+        const response = await dispatch(buyPhraseDetailsAction(userId));
+        console.log(response);
+        if (response) {
+          toast.error(response);
+          dispatch(clearError());
+        } else {
+        const gameData = {
+          hasBoughtDetails: true,
+        };
+        await dispatch(updateGameData(gameId, gameData)); // Marca la compra en la partida
+      
+      setShowPhraseDetails(true);}}
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setShowConfirmationModal(false); // Cierra el modal
+    }
+  };
+
+  const cancelShowDetails = () => {
+    setShowConfirmationModal(false); // Cierra el modal sin realizar acción
+  };
   if (game.loading) {
     return <div className="loader"></div>;
   }
@@ -124,14 +162,26 @@ const GameComponent = () => {
               <MyLettersList />
             </div>
           )}
-          {game.gameStatus === "win" && (
+          {game.gameStatus != "playing" && (
             <div className="right-div-container">
-              <button
-                className="phrase-link"
-                onClick={() => setShowPhraseDetails(true)}
-              >
-                Detalles de la cita
+              <button className="phrase-link" onClick={handleShowDetails}>
+                <span>Detalles de la cita</span>{" "}
+                {game.gameStatus === "lose" && !game.hasBoughtDetails && (
+                  <span className="clue-price show-phrase-price">20</span>
+                )}
               </button>
+            </div>
+          )}
+          {/* Modal de Confirmación */}
+          {showConfirmationModal && (
+            <div className="modal-backdrop">
+              <div className="newuser-container">
+                <p>¿Quieres ver los detalles de la cita por 20 puntos?</p>
+                <div className="modal-buttons">
+                  <button onClick={confirmShowDetails}>Sí</button>
+                  <button onClick={cancelShowDetails}>No</button>
+                </div>
+              </div>
             </div>
           )}
           {game.gameStatus != "playing" && (
@@ -154,7 +204,7 @@ const GameComponent = () => {
 
       <div className="phrase-and-button-container">
         <ShowPhrase
-          displayPhraseLink={game.gameStatus === "win"}
+          displayPhraseLink={game.gameStatus != "playing"}
           showModal={showPhraseDetails}
           onModalClose={() => setShowPhraseDetails(false)}
         />{" "}

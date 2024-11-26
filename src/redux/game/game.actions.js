@@ -26,22 +26,27 @@ const startGame = (userId, phraseToPlay) => async (dispatch) => {
 
 const updateGameData = (gameId, gameData) => async (dispatch) => {
   dispatch({ type: "UPDATE_GAME_DATA_REQUEST" });
-  
+
   try {
-    const updatedData = await APIBase.put(`/game/update/${gameId}`, {
-      gameData,
-    });
-    
-    if (updatedData.data.deleteFromTried){
-      
-      dispatch({
-        type: "DELETE_WORD_FROM_TRIEDWORDS",
-        payload: updatedData.data
+    if (!gameId) gameId = localStorage.getItem("gameId");
+    if (gameId && gameData) {
+      const updatedData = await APIBase.put(`/game/update/${gameId}`, {
+        gameData,
       });
-      
-    } else {
-    localStorage.setItem("activeGame", JSON.stringify(updatedData.data));
-    dispatch({ type: "UPDATE_GAME_DATA_SUCCESS", payload: updatedData.data });}
+
+      if (updatedData.data.deleteFromTried) {
+        dispatch({
+          type: "DELETE_WORD_FROM_TRIEDWORDS",
+          payload: updatedData.data,
+        });
+      } else {
+        localStorage.setItem("activeGame", JSON.stringify(updatedData.data));
+        dispatch({
+          type: "UPDATE_GAME_DATA_SUCCESS",
+          payload: updatedData.data,
+        });
+      }
+    }
   } catch (err) {
     dispatch({ type: "UPDATE_GAME_DATA_FAILURE", payload: err.message });
   }
@@ -98,10 +103,7 @@ const addLetter = (letter) => ({ type: "ADD_LETTER", payload: letter });
 const deleteLastLetter = () => ({
   type: "DELETE_LAST_LETTER",
 });
-const addWordToTried = (verifiedWord) => (
- 
-  {
-  
+const addWordToTried = (verifiedWord) => ({
   type: "ADD_WORD_TO_TRIEDWORDS",
   payload: verifiedWord,
 });
@@ -131,4 +133,5 @@ export {
   updateGameData,
   handleClues,
   setInputFocus,
+  
 };

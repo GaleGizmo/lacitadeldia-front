@@ -119,9 +119,11 @@
   }
   .rank-medium {
     width: 20px;
+    height: 20px;
   }
   .rank-high {
     width: 20px;
+    height: 20px;
   }
   .points-ranking-container {
     padding: 0 3px;

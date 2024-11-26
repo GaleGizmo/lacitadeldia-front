@@ -14,7 +14,7 @@ const ShowPoints = () => {
   const [userRanking, setUserRanking] = useState(0);
   const [rankingTrend, setRankingTrend] = useState("");
   const [rankingContent, setRankingContent] = useState("");
-  const { clues } = useSelector((state) => state.gameReducer);
+  const { clues, hasBoughtDetails } = useSelector((state) => state.gameReducer);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -42,7 +42,7 @@ const ShowPoints = () => {
     return () => {
       isMounted = false; // Actualiza la bandera cuando el componente se desmonta
     };
-  }, [userId, clues, dispatch]);
+  }, [userId, clues, hasBoughtDetails, dispatch]);
   useEffect(() => {
     let isMounted = true;
 

@@ -7,11 +7,11 @@ export const APIHeaders = {
 };
 
 export const APIGetPhrase = axios.create({
-  baseURL: import.meta.env.VITE_APP_DAILY_URL,
+  baseURL: import.meta.env.VITE_APP_LOCAL_DAILY_URL,
   headers: APIHeaders,
 });
 export const APIBase = axios.create({
-  baseURL: import.meta.env.VITE_APP_BASE_URL,
+  baseURL: import.meta.env.VITE_APP_LOCAL_BASE_URL,
   headers: APIHeaders,
 });
 
@@ -44,7 +44,11 @@ export const updateUserData = async (userId, userData) => {
     .then(handleResponse)
     .catch(handleError);
 };
-
+export const buyPhraseDetails = async(userId) => {
+  return APIBase.get(`/user/buydetails/${userId}`)
+    .then(handleResponse)
+    .catch(handleError);
+};
 // Funciones relacionadas con el juego
 export const checkWord = async (word, userId) => {
   return APIBase.post("/game/checkWord", { word, userId })

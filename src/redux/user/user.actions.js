@@ -1,4 +1,9 @@
-import { createNewUser, updateUserData, getUserData } from "../../shared/api";
+import {
+  createNewUser,
+  updateUserData,
+  getUserData,
+  buyPhraseDetails,
+} from "../../shared/api";
 import Cookies from "js-cookie";
 
 const createUser = () => async (dispatch) => {
@@ -27,10 +32,10 @@ const getUser = (userId) => async (dispatch) => {
       // Si el servidor devuelve un 404, es que el usuario no existe en la base de datos
       dispatch({ type: "GET_USER_FAIL", payload: "Usuario no encontrado" });
     } else {
-      // Otros errores 
+      // Otros errores
       dispatch({ type: "GET_USER_FAIL", payload: "Error al obtener usuario" });
     }
-    throw error;  
+    throw error;
   }
 };
 const updateDontShowInstructions = (userId, updates) => async (dispatch) => {
@@ -52,23 +57,40 @@ const closeInstructionsBanner = () => ({
 const setUserStatsAction = (userStats) => async (dispatch) => {
   try {
     dispatch({ type: "SET_USERSTATS", payload: userStats });
-  } catch (err) {
-    dispatch({ type: "SET_USERSTATS_FAIL", payload: err.message });
+  } catch (error) {
+    dispatch({ type: "SET_USERSTATS_FAIL", payload: error.message });
   }
 };
+const buyPhraseDetailsAction = (userId) => async (dispatch) => {
+  try {
+    const response = await buyPhraseDetails(userId);
 
+    dispatch({ type: "SET_USERPOINTS", payload: response.points });
+  } catch (error) {
+    if (error.response && error.response.status === 400) {
+      console.log(error.response);
+      dispatch({
+        type: "SET_USERPOINTS_FAIL",
+        payload: error.response.data.message,
+      });
+      return error.response.data.message;
+    } else {
+      dispatch({ type: "SET_USERPOINTS_FAIL", payload: error.message });
+    }
+  }
+};
 const setUserPointsAction = (userPoints) => async (dispatch) => {
   try {
     dispatch({ type: "SET_USERPOINTS", payload: userPoints });
-  } catch (err) {
-    dispatch({ type: "SET_USERPOINTS_FAIL", payload: err.message });
+  } catch (error) {
+    dispatch({ type: "SET_USERPOINTS_FAIL", payload: error.message });
   }
 };
 const setUserRankingAction = (userRanking) => async (dispatch) => {
   try {
     dispatch({ type: "SET_USERRANKING", payload: userRanking });
-  } catch (err) {
-    dispatch({ type: "SET_USERRANKING_FAIL", payload: err.message });
+  } catch (error) {
+    dispatch({ type: "SET_USERRANKING_FAIL", payload: error.message });
   }
 };
 
@@ -79,5 +101,6 @@ export {
   setUserStatsAction,
   closeInstructionsBanner,
   setUserPointsAction,
-  setUserRankingAction
+  setUserRankingAction,
+  buyPhraseDetailsAction,
 };

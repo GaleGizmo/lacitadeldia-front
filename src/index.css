@@ -101,7 +101,7 @@ button:focus-visible {
   button, .details-container>p {
     background-color: var(--dark-mode-secondary_bg)
   }
- .newuser-container{
+ .newuser-container, .clue-description{
   color: #1c274c7f;
  }
   .letter, .phrase-letter, .key, button:hover{

@@ -38,6 +38,9 @@
     margin: 0;
 }
 .phrase-link  {
+    display: flex;
+    justify-content: center;
+    gap: 5px;
     color: var(--active-box-color);
     border: none;
     background-image: 
@@ -51,7 +54,7 @@
     padding: 0.2em 0;
     
   }
-  
+ 
   .phrase-link:hover {
     background-position: 0 100%, 0 0;
   }
@@ -77,6 +80,35 @@
     width: 174px;
 }
 
+  
+  .modal-buttons {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 15px;
+  }
+  
+  .confirm-button {
+    background-color: #51e651;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .cancel-button {
+    background-color: red;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .confirm-button:hover,
+  .cancel-button:hover {
+    opacity: 0.9;
+  }
 @media (width<767px){
     .game{
         margin-top: 5px;
