@@ -28,7 +28,7 @@ export const userReducer = (state = INITIAL_STATE, action) => {
         ...state,
         loading: false,
         userId: action.payload._id,
-
+        userPoints: action.payload.points,
         dontShowInstructions: action.payload.dontShowInstructions,
       };
     case "GET_USER_FAIL":

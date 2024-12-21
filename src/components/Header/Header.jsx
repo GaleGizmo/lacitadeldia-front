@@ -6,6 +6,7 @@ import Info from "../../assets/InfoIcon";
 import { useDispatch } from "react-redux";
 import { startGame } from "../../redux/game/game.actions";
 import ContactIcon from "../../assets/ContactIcon";
+import UserManagementIcon from "../../assets/UserManagementIcon";
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -14,7 +15,7 @@ const Header = () => {
   return (
     <div className="header">
       <div className="header-links-container">
-      <Link to="/contact" className="header-link">
+        <Link to="/contact" className="header-link">
           <ContactIcon width="30" height="30" viewBox="2 3 20 18" />{" "}
         </Link>
         <Link to="/oldgames" className="header-link">
@@ -31,6 +32,9 @@ const Header = () => {
         >
           <HomeIcon width="30" height="30" viewBox="2 3 20 18" />
         </Link>
+        <Link to="/usermanager" className="header-link">
+          <UserManagementIcon width="30" height="30" viewBox="2 3 20 18" />
+        </Link>{" "}
         <Link to="/info" className="header-link">
           <Info width="30" height="30" viewBox="2 3 20 18" />
         </Link>{" "}

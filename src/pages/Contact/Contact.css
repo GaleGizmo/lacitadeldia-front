@@ -41,7 +41,7 @@ form {
   }
   
   /* Estilo del label */
-  label {
+  form label {
     font-weight: bold;
     display: block;
     margin-top: 10px;
