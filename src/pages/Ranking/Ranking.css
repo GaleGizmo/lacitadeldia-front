@@ -1,0 +1,14 @@
+.ranking-stats-container{
+    width: 100%;
+    max-width: 420px;
+    flex-grow: 1;
+    margin: 0;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+@media (max-width: 767px){
+    .ranking-stats-container{
+       width: 95%;;
+    }
+}

@@ -3,7 +3,7 @@
     border-radius: 8px;
     padding: 10px 20px; 
     margin-bottom: 20px;
-    width: 88%;
+    /* width: 88%; */
 }
 .stats-container{
     display: flex;
@@ -34,7 +34,7 @@
         padding-bottom: 0;
     }
     .user-stats{
-        width: 82%;
+        /* width: 82%; */
         margin-bottom: 30px;
     }
 }

@@ -3,6 +3,7 @@ import { getUserPastPhrases } from "../../shared/api";
 import UserStats from "../../components/UserStats/UserStats";
 import UserRanking from "../../components/UserRanking/UserRanking";
 import Footer from "../../components/Footer/Footer";
+import "./Ranking.css";
 
 const Ranking=()=>{
     const playerId = localStorage.getItem("laCitaDelDiaUserId");
@@ -23,12 +24,12 @@ const Ranking=()=>{
       }, [playerId]);
 
       return (
-        <>
+        <div className="ranking-stats-container">
             <h1>Ranking</h1>
             <UserRanking/>
             <UserStats percentages={percentages} playing={phrasesPlaying} notPlayed={notPlayed}/>
             <Footer/>
-        </>
+        </div>
       );
 }
 
