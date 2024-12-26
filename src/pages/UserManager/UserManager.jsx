@@ -1,5 +1,6 @@
 import Cookies from "js-cookie";
 import "./UserManager.css";
+import { toast } from "sonner";
 
 const UserManager = () => {
   // Función para exportar el userId a un archivo JSON
@@ -9,7 +10,7 @@ const UserManager = () => {
       localStorage.getItem("laCitaDelDiaUserId");
 
     if (!userId) {
-      alert("No se encontró ningún ID de usuario para exportar.");
+      toast.error("No se encontró ningún usuario para guardar.");
       return;
     }
 
@@ -20,12 +21,13 @@ const UserManager = () => {
 
     const link = document.createElement("a");
     link.href = url;
-    link.download = "userId.json";
+    link.download = "userLaCitaDelDia.json";
     document.body.appendChild(link);
     link.click();
 
     document.body.removeChild(link);
     URL.revokeObjectURL(url);
+    toast.success("Archivo guardado exitosamente.");
   };
 
   // Función para importar el userId desde un archivo JSON
@@ -33,7 +35,7 @@ const UserManager = () => {
     const file = event.target.files[0];
 
     if (!file) {
-      alert("Por favor selecciona un archivo JSON.");
+      toast.error("Por favor selecciona el archivo correcto.");
       return;
     }
 
@@ -50,14 +52,14 @@ const UserManager = () => {
         Cookies.set("laCitaDelDiaUserId", userData.userId);
         localStorage.setItem("laCitaDelDiaUserId", userData.userId);
 
-        alert("¡ID de usuario restaurado exitosamente!");
+        toast.success("¡Usuario restaurado exitosamente!");
       } catch (error) {
-        alert(`Error al importar el ID de usuario: ${error.message}`);
+        toast.error(`Error al importar el ID de usuario: ${error.message}`);
       }
     };
 
     reader.onerror = () => {
-      alert("Error al leer el archivo. Por favor, inténtalo de nuevo.");
+      toast.error("Error al leer el archivo. Por favor, inténtalo de nuevo.");
     };
 
     reader.readAsText(file);
@@ -66,13 +68,13 @@ const UserManager = () => {
   return (
     <div className="user-id-manager">
       <div className="manager-button-container">
-        <p>Guarda tu Identificador de Usuario</p>
+        <p>Guarda tu Usuario</p>
         <button onClick={handleExport} className="export-button">
           Guardar Usuario
         </button>{" "}
       </div>
       <div className="manager-button-container">
-      <p>Carga tu Identificador de Usuario</p>
+        <p>Carga tu Usuario</p>
         <label htmlFor="import-file" className="import-label">
           Cargar Usuario
         </label>
@@ -84,6 +86,18 @@ const UserManager = () => {
           className="import-input"
         />{" "}
       </div>
+      <p>
+        <strong className="win-txt">GUARDADO DEL USUARIO: </strong> Haz click en Guardar Usuario y se creará en la carpeta de descargas de tu
+        dispositivo un archivo con el nombre <strong>userLaCitaDelDia</strong>.
+        <p>
+          <strong className="win-txt">RESTAURAR USUARIO: </strong> Haz click en Cargar Usuario y busca el archivo <strong>userLaCitaDelDia</strong>{" "}
+          en tu dispositivo.
+        </p>
+        <small>
+          <strong className="lose-txt">IMPORTANTE: </strong> Si vacías
+          la carpeta de descargas recuerda copiar este archivo a otra ubicación.
+        </small>
+      </p>
     </div>
   );
 };

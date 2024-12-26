@@ -7,6 +7,7 @@ import { useDispatch } from "react-redux";
 import { startGame } from "../../redux/game/game.actions";
 import ContactIcon from "../../assets/ContactIcon";
 import UserManagementIcon from "../../assets/UserManagementIcon";
+import RankingIcon from "../../assets/RankingIcon";
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -20,6 +21,9 @@ const Header = () => {
         </Link>
         <Link to="/oldgames" className="header-link">
           <CalendarIcon width="30" height="30" viewBox="2 3 20 18" />{" "}
+        </Link>
+        <Link to="/ranking" className="header-link">
+          <RankingIcon width="30" height="30" viewBox="2 3 20 18" />{" "}
         </Link>
         <h1>LA CITA DEL DÍA</h1>
         <Link

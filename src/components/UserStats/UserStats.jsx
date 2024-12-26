@@ -18,14 +18,15 @@ const UserStats = ({percentages, playing, notPlayed}) => {
           <p className="stats-data">
             <span className="lose-txt">{percentages.lose}</span>
           </p>
-          <p className="stats-data">
-            <span className="playing-txt">{playing}</span>
-          </p>
+         
           <p className="stats-data">
             <span className="np-txt">
               {notPlayed}
             </span>
            
+          </p>
+          <p className="stats-data">
+            <span className="playing-txt">{playing}</span>
           </p>
         </div>
       )}

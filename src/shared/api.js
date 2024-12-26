@@ -7,11 +7,11 @@ export const APIHeaders = {
 };
 
 export const APIGetPhrase = axios.create({
-  baseURL: import.meta.env.VITE_APP_DAILY_URL,
+  baseURL: import.meta.env.VITE_APP_LOCAL_DAILY_URL,
   headers: APIHeaders,
 });
 export const APIBase = axios.create({
-  baseURL: import.meta.env.VITE_APP_BASE_URL,
+  baseURL: import.meta.env.VITE_APP_LOCAL_BASE_URL,
   headers: APIHeaders,
 });
 

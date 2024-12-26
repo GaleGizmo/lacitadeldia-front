@@ -1,5 +1,7 @@
 import { Link } from "react-router-dom";
 import "./RulesPage.css";
+import CalendarIcon from "../../assets/CalendarIcon";
+import UserManagementIcon from "../../assets/UserManagementIcon";
 
 const RulesPage = () => {
   return (
@@ -11,8 +13,8 @@ const RulesPage = () => {
         <section>
           <h2>Objetivo</h2>
           <p>
-            Descubre la cita de una película. Cada día a las 7AM se presenta
-            una nueva cita con sus letras ocultas.
+            Descubre la cita de una película. Cada día a las 7AM se presenta una
+            nueva cita con sus letras ocultas.
           </p>
         </section>
         <section>
@@ -27,7 +29,10 @@ const RulesPage = () => {
               src="assets/try_word.gif"
               alt="tryword"
             />
-            <li>Las letras de cada palabra que estén en la cita se mostrarán en verde.</li>
+            <li>
+              Las letras de cada palabra que estén en la cita se mostrarán en
+              verde.
+            </li>
             <img
               className="phrase-gif"
               src="assets/phrase_discover.gif"
@@ -38,15 +43,16 @@ const RulesPage = () => {
               la frase completa de una sola vez.{" "}
             </li>
             <li>
-              Las partidas no completadas antes de las 7AM se consideran{" "}
+              Las partidas no completadas antes de las <strong>7AM</strong> se considerarán{" "}
               <span className="lose-txt">PERDIDAS</span>.
             </li>
             <li>
-              Si pierdes la partida tendrás que usar 20 puntos para mostrar los detalles de la cita.
+              Si pierdes la partida te costará 20 puntos poder ver los detalles
+              de la cita.
             </li>
             <li>
-              Al terminar una partida, tendrás la posibilidad de compartir el
-              resultado de la misma en tus RRSS.
+              Al terminar una partida, podrás compartir el resultado de la misma
+              en tus RRSS.
             </li>
           </ol>
         </section>
@@ -74,7 +80,14 @@ const RulesPage = () => {
               no usado.
             </li>
           </ul>
-          <div className="ranking-phrase"><span>Tus puntos determinarán tu posición en el ranking</span> <img className="ranking-icon" src="assets/ranking.png" alt="Ranking" /> </div>
+          <div className="ranking-phrase">
+            <span>Tus puntos determinarán tu posición en el ranking</span>{" "}
+            <img
+              className="ranking-icon"
+              src="assets/ranking.png"
+              alt="Ranking"
+            />{" "}
+          </div>
           <h3>Ayudas disponibles</h3>
           <img className="clues-png" src="assets/clues.png" alt="clues" />
           <br></br>
@@ -134,10 +147,30 @@ const RulesPage = () => {
         </section>
         <section>
           <h2>Citas Pasadas</h2>
+          <CalendarIcon width="30" height="30" viewBox="2 3 20 18" />{" "}
           <p>
-            Accede a citas anteriores con el calendario. Si empiezas una cita
-            pasada, debes completarla antes de las 7AM del día siguiente para no
-            perderla.
+            Aquí puedes acceder a las citas de días anteriores. </p>
+            <ul>
+            <li><span className="win-txt">Cita ganada.</span></li>
+            <li><span className="lose-txt">Cita perdida</span></li>
+            <li><span className="playing-txt">Cita en juego</span></li>
+            <li><span className="np-txt">Cita no jugada</span></li>
+          </ul>
+           <p>Si empiezas una cita anterior no jugada, debes completarla también antes de las 7AM del día
+           siguiente.</p> 
+          
+        </section>
+        <section>
+          <h2>Guardar/Restaurar Usuario</h2>
+          <UserManagementIcon width="30" height="30" viewBox="2 3 20 18" />{" "}
+          <p>
+            Este juego guarda tu identificador de usuario en una cookie.</p><p> Para
+            evitar perder tu progreso en el juego es{" "}
+            <span className="lose-txt">MUY RECOMENDABLE</span> guardar una copia
+            de tu usuario usando el botón{" "}
+            <strong>&quot;Guardar usuario&quot;</strong>.</p> <p>Ante un borrado
+           de las cookies podrás restaurar tus datos con el
+            botón <strong>&quot;Cargar Usuario&quot;</strong>.
           </p>
         </section>
       </div>

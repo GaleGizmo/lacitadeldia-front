@@ -1,0 +1,43 @@
+.color-codes {
+    display: flex;
+    justify-content: space-between;
+   
+    width: 98%; 
+    gap: 0;
+    margin: auto auto 5px auto;
+    
+    
+  }
+.footer-box {
+    width: 20px;
+    height: 20px;
+    margin: 0 ;
+  }
+  .color-code{
+ 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+  }
+  .color-codes .color-code:first-child {
+    /* Reglas CSS para el primer div */
+   justify-content: flex-start;
+  }
+  .color-codes .color-code:last-child {
+    /* Reglas CSS para el primer div */
+   justify-content: flex-end;
+  }
+  @media (max-width: 767px) {
+    
+    .footer-box {
+      width: 15px;
+      height: 15px;
+      margin: 0;
+      
+    }
+   .color-codes{
+    width: 92%;
+   }
+  }
+  

@@ -3,6 +3,7 @@
     border-radius: 8px;
     padding: 10px 20px; 
     margin-bottom: 20px;
+    width: 88%;
 }
 .stats-container{
     display: flex;
@@ -28,12 +29,12 @@
     }
     .user-stats h2{
         margin-top: 5px;
-        margin-bottom: 5px;
+        margin-bottom: 10px;
         font-size: 1.4em;
         padding-bottom: 0;
     }
     .user-stats{
-        margin-top: auto;
+        width: 82%;
         margin-bottom: 30px;
     }
 }

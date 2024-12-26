@@ -1,0 +1,61 @@
+.user-ranking {
+  display: flex;
+  justify-content: center;
+  gap: 70px;
+}
+.top-three-container {
+  height: 265px;
+}
+.top-three {
+  display: flex;
+  height: 175px;
+  list-style-type: none;
+  font-weight: 600;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.top-three_element {
+  display: flex;
+  align-items: center;
+}
+.rank-on-stats {
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.user-points{
+  font-weight: 700;
+}
+.rank-on-stats > .actual-ranking {
+  font-size: 28px;
+  font-weight: 800;
+}
+.rank-on-stats > .actual-points {
+  font-size: 14px;
+  font-weight: 600;
+}
+.rank-close {
+  width: 40px;
+  height: 40px;
+}
+.rank-self {
+  width: 70px;
+  height: 70px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  color: white;
+}
+.close-ranking {
+  font-size: 12px;
+  font-weight: 500;
+}
+.close-points {
+  font-size: 10px;
+}
+@media (max-width: 767px) {
+  .top-three-container {
+    height: 235px;
+  }
+}

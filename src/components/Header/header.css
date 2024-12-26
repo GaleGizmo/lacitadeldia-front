@@ -50,9 +50,12 @@
     }
    */
    .header-link [class*="iconBorder"]{
-    width: 27px;
+    width: 25px;
+   }
+   .header-link{
+    width: 36px;
    }
    .header-links-container h1{
-    font-size: 1.1em;
+    font-size: .9em;
    }
   }

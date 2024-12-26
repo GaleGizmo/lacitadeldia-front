@@ -48,6 +48,7 @@ export const userReducer = (state = INITIAL_STATE, action) => {
         loading: false,
         userId: action.payload._id,
         dontShowInstructions: action.payload.instructions,
+        userRanking: action.payload.ranking
       };
 
     case "CREATE_USER_FAIL":

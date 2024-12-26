@@ -104,7 +104,7 @@ button:focus-visible {
  .newuser-container, .clue-description{
   color: #1c274c7f;
  }
-  .letter, .phrase-letter, .key, button:hover{
+  .letter, .manager-button-container, .phrase-letter, .key, button:hover{
     border-color: var(--dark-mode-border)
   }
   .header-link svg>path, .keys svg>path{

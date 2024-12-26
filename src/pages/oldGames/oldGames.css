@@ -17,11 +17,13 @@
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
   gap: 5px;
- 
+  scrollbar-width: none;
   overflow: auto;
   margin: 30px auto
 }
-
+.oldgames::-webkit-scrollbar{
+  display: none;
+}
 .phrase-box {
   width: 90px;
   height: 90px;
@@ -63,22 +65,8 @@
 .playing {
   background-color: var(--playing-color);
 }
-.color-codes {
-  display: flex;
-  justify-content: center;
-  /* position: fixed;
-  bottom: 3px;
-  left: 0px;
-  width: 100%; */
-  padding-top: 3px;
-  margin: 0 auto;
-  
-}
-.footer-box {
-  width: 20px;
-  height: 20px;
-  margin: 0 3px 0 7px;
-}
+
+
 @media (max-width: 767px) {
   .oldgames-stats-container{
     max-width: 95%;
@@ -102,11 +90,7 @@
   .oldgames::after{
     min-width: 40px;
   }
-  .footer-box {
-    width: 15px;
-    height: 15px;
-    margin: 0 3px 0 7px;
-  }
+
   .color-codes small{
     font-size: 10px;
   }

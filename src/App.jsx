@@ -21,6 +21,7 @@ import NotFound from "./components/NotFound/NotFound";
 import ContactForm from "./pages/Contact/Contact";
 import Cookies from "js-cookie";
 import UserManager from "./pages/UserManager/UserManager";
+import Ranking from "./pages/Ranking/Ranking";
 
 function App() {
   const dispatch = useDispatch();
@@ -34,7 +35,8 @@ function App() {
     "/info",
     "/privacy-policy",
     "/contact",
-    "/usermanager"
+    "/usermanager",
+    "/ranking"
   ];
 
   const { dontShowInstructions } = useSelector((state) => state.userReducer);
@@ -108,6 +110,7 @@ function App() {
       <Routes>
       <Route path="/" element={userIdReady ? <GameComponent /> : <div className="loader"></div>} />
         <Route path="/oldgames" element={<OldGames />} />
+        <Route path="/ranking" element={<Ranking />} />
         <Route path="/usermanager" element={<UserManager />} />
         <Route path="/game" element={userIdReady ? <GameComponent /> : <div className="loader"></div>} />
         <Route path="/youshouldntbehere" element={<AddPhraseForm />} />

@@ -63,6 +63,7 @@ const GameComponent = () => {
       dispatch(clearError());
     }
   }, [game.error]);
+  
   useEffect(() => {
     if (!isInitialized) return;
 
