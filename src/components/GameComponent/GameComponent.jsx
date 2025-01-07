@@ -100,9 +100,9 @@ const GameComponent = () => {
 
       dispatch(updateGameData(gameId, gameData));
       if (phrasesWon) {
-        updateUserData(userId, { phrasesWon });
+        updateUserData(userId, gameId, { phrasesWon });
       } else {
-        updateUserData(userId, { phrasesLost });
+        updateUserData(userId, gameId, { phrasesLost });
       }
       localStorage.setItem("myLettersList", "");
     }

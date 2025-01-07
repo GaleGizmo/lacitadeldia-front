@@ -26,7 +26,7 @@ const startGame = (userId, phraseToPlay) => async (dispatch) => {
 
 const updateGameData = (gameId, gameData) => async (dispatch) => {
   dispatch({ type: "UPDATE_GAME_DATA_REQUEST" });
-
+  
   try {
     if (!gameId) gameId = localStorage.getItem("gameId");
     if (gameId && gameData) {

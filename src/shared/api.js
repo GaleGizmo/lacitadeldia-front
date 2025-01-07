@@ -7,11 +7,11 @@ export const APIHeaders = {
 };
 
 export const APIGetPhrase = axios.create({
-  baseURL: import.meta.env.VITE_APP_DAILY_URL,
+  baseURL: import.meta.env.VITE_APP_LOCAL_DAILY_URL,
   headers: APIHeaders,
 });
 export const APIBase = axios.create({
-  baseURL: import.meta.env.VITE_APP_BASE_URL,
+  baseURL: import.meta.env.VITE_APP_LOCAL_BASE_URL,
   headers: APIHeaders,
 });
 
@@ -39,8 +39,9 @@ export const getUserData = async (userId) => {
     .catch(handleError);
 };
 
-export const updateUserData = async (userId, userData) => {
-  return APIBase.patch(`/user/updateuser/${userId}`, {userData})
+export const updateUserData = async (userId, gameId="", userData) => {
+  console.log("updateUserData", userId, gameId, userData)
+  return APIBase.patch(`/user/updateuser/${userId}/${gameId}`, {userData})
     .then(handleResponse)
     .catch(handleError);
 };

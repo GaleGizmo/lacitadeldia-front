@@ -40,7 +40,7 @@ const getUser = (userId) => async (dispatch) => {
 };
 const updateDontShowInstructions = (userId, updates) => async (dispatch) => {
   try {
-    const response = await updateUserData(userId, {
+    const response = await updateUserData(userId,"" ,{
       dontShowInstructions: updates,
     });
     dispatch({ type: "SET_DONT_SHOW_INSTRUCTIONS", payload: response.data });

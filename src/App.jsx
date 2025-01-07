@@ -22,6 +22,7 @@ import ContactForm from "./pages/Contact/Contact";
 import Cookies from "js-cookie";
 import UserManager from "./pages/UserManager/UserManager";
 import Ranking from "./pages/Ranking/Ranking";
+import InfoModal from "./components/InfoModal/InfoModal";
 
 function App() {
   const dispatch = useDispatch();
@@ -100,6 +101,7 @@ function App() {
     getUserData();
   }, [dispatch]);
 
+
   const handleCloseBanner = () => {
     dispatch(closeInstructionsBanner());
   };
@@ -123,7 +125,7 @@ function App() {
       {validRoutes.includes(location.pathname) && !dontShowInstructions && (
         <NewUserBanner onClose={handleCloseBanner} />
       )}
-
+        <InfoModal/>
       <CookieConsent
         location="bottom"
         buttonText="Aceptar"
