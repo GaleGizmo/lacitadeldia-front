@@ -18,6 +18,7 @@ import ShowPoints from "../ShowPoints/ShowPoints";
 import { getPhraseOfTheDayNumber, updateUserData } from "../../shared/api";
 import MyLettersList from "../MyLettersList/MyLettersList";
 import { buyPhraseDetailsAction } from "../../redux/user/user.actions";
+import InfoModal from "../InfoModal/InfoModal";
 
 const GameComponent = () => {
   let oldPhraseNumber = localStorage.getItem("oldPhraseToPlay");
@@ -34,8 +35,11 @@ const GameComponent = () => {
   const gameId = localStorage.getItem("gameId");
   const phraseNumber = oldPhraseNumber;
   const [isInitialized, setIsInitialized] = useState(false);
+  // Estado para manejar el modal genérico
+  const [infoModalOpen, setInfoModalOpen] = useState(false);
+  const [modalConfig, setModalConfig] = useState({ title: "", message: "" });
   let game = useSelector((state) => state.gameReducer);
-  const { userId, userPoints, userRanking } = useSelector(
+  const { userId, userPoints, userRanking, hasPlayingStrikeBonus, hasWinningStrikeBonus } = useSelector(
     (state) => state.userReducer
   );
 
@@ -108,6 +112,32 @@ const GameComponent = () => {
     }
   }, [game.gameStatus]);
 
+  useEffect(() => {
+    // Lógica para mostrar el modal en casos específicos
+    const now = new Date();
+    const isChristmas = now.getDate() === 6 && now.getMonth() === 0 && now.getHours >= 7;
+
+    if (isChristmas) {
+      setModalConfig({
+        title: "¡Pistas gratis el Día de Reyes!",
+        message: "🎄🎁 Los Reyes te han traído todas las pistas gratis en la Cita de hoy. ¡Disfrútalas! 🎄🎁",
+      });
+      setInfoModalOpen(true);
+    } else if (hasPlayingStrikeBonus && game.isDailyPhrase) {
+      setModalConfig({
+        title: "¡Bonificación de racha de juego!",
+        message: "🔥 Por tus diez citas consecutivas jugadas tienes las pistas de Actor y Director sin coste en la Cita de hoy. ¡Enhorabuena!  🔥",
+      });
+      setInfoModalOpen(true);
+    } else if (hasWinningStrikeBonus && game.isDailyPhrase) {
+      setModalConfig({
+        title: "¡Bonificación de racha de victorias!",
+        message: "🏆 Por tus diez victorias consecutivas tienes todas las pistas gratis en la Cita de hoy. ¡Enhorabuena!  🏆",
+      });
+      setInfoModalOpen(true);
+    }
+  }, [hasPlayingStrikeBonus, hasWinningStrikeBonus, game.isDailyPhrase]);
+
   const handleShowDetails = async () => {
     if (game.gameStatus === "lose" && !game.hasBoughtDetails) {
       setShowConfirmationModal(true); // Muestra el modal antes de proceder
@@ -147,6 +177,13 @@ const GameComponent = () => {
 
   return (
     <div className="game">
+       {/* Modal genérico para mostrar mensajes */}
+       <InfoModal
+        isOpen={infoModalOpen}
+        title={modalConfig.title}
+        message={modalConfig.message}
+        onClose={() => setInfoModalOpen(false)}
+      />
       <div className="words-clues-points-container">
         <div className="words">{wordsToTry} </div>
         <div className="clues-points-container">
