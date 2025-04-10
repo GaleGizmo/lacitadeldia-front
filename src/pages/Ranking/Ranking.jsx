@@ -4,6 +4,7 @@ import UserStats from "../../components/UserStats/UserStats";
 import UserRanking from "../../components/UserRanking/UserRanking";
 import Footer from "../../components/Footer/Footer";
 import "./Ranking.css";
+import Strikes from "../../components/Strike/Strike";
 
 const Ranking=()=>{
     const playerId = localStorage.getItem("laCitaDelDiaUserId");
@@ -27,6 +28,7 @@ const Ranking=()=>{
         <div className="ranking-stats-container">
             <h1>Ranking</h1>
             <UserRanking/>
+            <Strikes/>
             <UserStats percentages={percentages} playing={phrasesPlaying} notPlayed={notPlayed}/>
             <Footer/>
         </div>

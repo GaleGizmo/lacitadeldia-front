@@ -118,3 +118,13 @@ export const addMessage = async (messageData) => {
     .then(handleResponse)
     .catch(handleError);
 };
+export const getUserNotifications = async (userId) => {
+  return APIBase.get(`/notifications/${userId}`)
+    .then(handleResponse)
+    .catch(handleError);
+}
+export const markNotificationAsRead = async (userId, notificationId) => {
+  return APIBase.post("/notifications/mark-as-read", { userId, notificationId })
+    .then(handleResponse)
+    .catch(handleError);
+};

@@ -1,0 +1,30 @@
+.strikes-container{
+    border: 1px solid gray;
+    border-radius: 8px;
+    padding: 10px 20px; 
+    margin-bottom: 20px;
+    
+}
+.strike-container{
+    display: inline-block;
+    margin: 0 20px;
+}
+.strike-name{
+    margin: 0 0 5px 0;
+    font-weight: 600;
+    background-color: #c1f3af;
+    color: var(--dark-mode-bg);
+    border: 1px solid var(--dark-mode-secondary_bg);
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+.strike-data{
+    font-weight: 750;
+    margin: 0;
+    font-size: 1.2em;
+}
+.strike-info{
+    margin-top: 10px;
+    font-size: 0.8em;
+    font-weight: 500;
+}

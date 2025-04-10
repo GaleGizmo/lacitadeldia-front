@@ -11,7 +11,11 @@ const INITIAL_STATE = {
   dontShowInstructions: true,
   userStats: null,
   userRanking: 0,
-  
+  playingStrike: 0,
+  winningStrike: 0,
+  hasPlayingStrikeBonus: false,
+  hasWinningStrikeBonus: false,
+
   userPoints: null,
   loading: false,
   error: null,
@@ -27,9 +31,14 @@ export const userReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         loading: false,
-        userId: action.payload._id,
+        userId: action.payload.id,
         userPoints: action.payload.points,
+        playingStrike: action.payload.playingStrike,
+        winningStrike: action.payload.winningStrike,
+        hasPlayingStrikeBonus: action.payload.hasPlayingStrikeBonus,
+        hasWinningStrikeBonus: action.payload.hasWinningStrikeBonus,
         dontShowInstructions: action.payload.dontShowInstructions,
+        error: null,
       };
     case "GET_USER_FAIL":
       return {
@@ -46,9 +55,10 @@ export const userReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         loading: false,
-        userId: action.payload._id,
+        userId: action.payload.id,
         dontShowInstructions: action.payload.instructions,
-        userRanking: action.payload.ranking
+        userRanking: action.payload.ranking,
+        error: null,
       };
 
     case "CREATE_USER_FAIL":
@@ -81,6 +91,7 @@ export const userReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         userStats: action.payload,
+        error: null,
       };
     case "SET_USERSTATS_FAIL":
       return {
@@ -91,6 +102,7 @@ export const userReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         userPoints: action.payload,
+        error: null,
       };
     case "SET_USERPOINTS_FAIL":
       return {
@@ -102,6 +114,7 @@ export const userReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         userRanking: action.payload,
+        error: null,
       };
     
     case "SET_USERRANKING_FAIL":
@@ -111,5 +124,32 @@ export const userReducer = (state = INITIAL_STATE, action) => {
       };
     default:
       return state;
+    
+      case "UPDATE_PLAYER_STRIKE_DATA":
+        return {
+          ...state,
+          playingStrike: action.payload.playingStrike,
+          winningStrike: action.payload.winningStrike,
+          hasPlayingStrikeBonus: action.payload.hasPlayingStrikeBonus,
+          hasWinningStrikeBonus: action.payload.hasWinningStrikeBonus,
+          error: null,
+        };
+      case "UPDATE_PLAYER_STRIKE_DATA_FAIL":
+        return {
+          ...state,
+          error: action.payload,
+        };
+      case "UPDATE_PLAYER_STRIKE_BONUS":
+        return {
+          ...state,
+          ...action.payload,
+          error: null,
+        };
+      case "UPDATE_PLAYER_STRIKE_BONUS_FAIL":
+        return {
+          ...state,
+          error: action.payload,
+        };
+
   }
 };

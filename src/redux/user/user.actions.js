@@ -10,8 +10,8 @@ const createUser = () => async (dispatch) => {
   dispatch({ type: "CREATE_USER_REQUEST" });
   try {
     const user = await createNewUser();
-    Cookies.set("laCitaDelDiaUserId", user._id);
-    localStorage.setItem("laCitaDelDiaUserId", user._id);
+    Cookies.set("laCitaDelDiaUserId", user.id);
+    localStorage.setItem("laCitaDelDiaUserId", user.id);
     dispatch({ type: "CREATE_USER_SUCCESS", payload: user });
   } catch (error) {
     dispatch({ type: "CREATE_USER_FAIL", payload: error.message });
@@ -38,12 +38,14 @@ const getUser = (userId) => async (dispatch) => {
     throw error;
   }
 };
+
 const updateDontShowInstructions = (userId, updates) => async (dispatch) => {
   try {
     const response = await updateUserData(userId,"" ,{
       dontShowInstructions: updates,
     });
-    dispatch({ type: "SET_DONT_SHOW_INSTRUCTIONS", payload: response.data });
+    console.log("instrucciones actualizadas:", response);
+    dispatch({ type: "SET_DONT_SHOW_INSTRUCTIONS", payload: response.dontShowInstructions });
   } catch (error) {
     dispatch({
       type: "SET_DONT_SHOW_INSTRUCTIONS_FAIL",
@@ -51,6 +53,42 @@ const updateDontShowInstructions = (userId, updates) => async (dispatch) => {
     });
   }
 };
+
+const updatePlayerStrikeData = (userId, gameId, updates) => async (dispatch) => {
+  try {
+   
+    const response = await updateUserData(userId, gameId, updates);
+    console.log("rachas actualizadas:", response);
+    dispatch({ type: "UPDATE_PLAYER_STRIKE_DATA", payload: response });
+  } catch (error) {
+    dispatch({
+      type: "UPDATE_PLAYER_STRIKE_DATA_FAIL",
+      payload: error.message,
+    });
+  }
+}
+
+const updatePlayerStrikeBonus = (userId, updates) => async (dispatch) => {
+  try {
+    const response = await updateUserData(userId, "", {[updates]:false});
+    console.log("bonus actualizado:", response);
+    const relevantUpdates = {};
+    if (response.hasPlayingStrikeBonus !== undefined) {
+      relevantUpdates.hasPlayingStrikeBonus = response.hasPlayingStrikeBonus;
+    }
+    if (response.hasWinningStrikeBonus !== undefined) {
+      relevantUpdates.hasWinningStrikeBonus = response.hasWinningStrikeBonus;
+    }
+    dispatch({ type: "UPDATE_PLAYER_STRIKE_BONUS", payload: relevantUpdates });
+  } catch (error) {
+    dispatch({
+      type: "UPDATE_PLAYER_STRIKE_BONUS_FAIL",
+      payload: error.message,
+    });
+  }
+}
+
+
 const closeInstructionsBanner = () => ({
   type: "CLOSE_INSTRUCTIONS_BANNER",
 });
@@ -103,4 +141,7 @@ export {
   setUserPointsAction,
   setUserRankingAction,
   buyPhraseDetailsAction,
+  updatePlayerStrikeData,
+
+  updatePlayerStrikeBonus
 };

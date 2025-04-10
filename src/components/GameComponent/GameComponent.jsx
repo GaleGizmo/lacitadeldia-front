@@ -15,9 +15,17 @@ import { PropTypes } from "prop-types";
 import ShareButton from "../ShareButton/ShareButton";
 import Clues from "../Clues/Clues";
 import ShowPoints from "../ShowPoints/ShowPoints";
-import { getPhraseOfTheDayNumber, updateUserData } from "../../shared/api";
+import {
+  getPhraseOfTheDayNumber,
+  getUserNotifications,
+  markNotificationAsRead,
+} from "../../shared/api";
 import MyLettersList from "../MyLettersList/MyLettersList";
-import { buyPhraseDetailsAction } from "../../redux/user/user.actions";
+import {
+  buyPhraseDetailsAction,
+  updatePlayerStrikeData,
+} from "../../redux/user/user.actions";
+import { setBonusModalShown, resetBonusModalShown } from "../redux/notifications/notifications.actions";
 import InfoModal from "../InfoModal/InfoModal";
 
 const GameComponent = () => {
@@ -29,19 +37,22 @@ const GameComponent = () => {
     oldPhraseNumber = 0;
   }
   const dispatch = useDispatch();
+  const [pendingNotifications, setPendingNotifications] = useState([]);
+  const [currentIndex, setCurrentIndex] = useState(0);
   const [showPhraseDetails, setShowPhraseDetails] = useState(false);
   const [showConfirmationModal, setShowConfirmationModal] = useState(false);
   const [wordsToTry, setWordsToTry] = useState([]);
   const gameId = localStorage.getItem("gameId");
   const phraseNumber = oldPhraseNumber;
   const [isInitialized, setIsInitialized] = useState(false);
-  // Estado para manejar el modal genérico
   const [infoModalOpen, setInfoModalOpen] = useState(false);
   const [modalConfig, setModalConfig] = useState({ title: "", message: "" });
-  let game = useSelector((state) => state.gameReducer);
-  const { userId, userPoints, userRanking, hasPlayingStrikeBonus, hasWinningStrikeBonus } = useSelector(
-    (state) => state.userReducer
+  const [currentNotification, setCurrentNotification] = useState(null);
+  const bonusModalShown = useSelector(
+    (state) => state.notifications.bonusModalShown
   );
+  let game = useSelector((state) => state.gameReducer);
+  const user = useSelector((state) => state.userReducer);
 
   useEffect(() => {
     const initializeGame = async () => {
@@ -49,17 +60,17 @@ const GameComponent = () => {
       if (phraseOfTheDayNumber != game.phraseNumber) {
         localStorage.removeItem("gameId");
       }
-      if (userId) {
-        dispatch(startGame(userId, phraseNumber));
+      if (user.userId) {
+        dispatch(startGame(user.userId, phraseNumber));
         setIsInitialized(true);
       } else {
-        console.error("Error: userId no está definido");
+        console.error("Error: user.userId no está definido");
       }
     };
     initializeGame();
 
     localStorage.removeItem("oldPhraseToPlay");
-  }, [userId]);
+  }, [user.userId]);
 
   useEffect(() => {
     if (game.error) {
@@ -67,7 +78,11 @@ const GameComponent = () => {
       dispatch(clearError());
     }
   }, [game.error]);
-  
+  useEffect(() => {
+    if (game.isDailyPhrase) {
+      dispatch(resetBonusModalShown());
+    }
+  }, [game.phraseNumber]);
   useEffect(() => {
     if (!isInitialized) return;
 
@@ -104,39 +119,86 @@ const GameComponent = () => {
 
       dispatch(updateGameData(gameId, gameData));
       if (phrasesWon) {
-        updateUserData(userId, gameId, { phrasesWon });
+        dispatch(updatePlayerStrikeData(user.userId, gameId, { phrasesWon }));
       } else {
-        updateUserData(userId, gameId, { phrasesLost });
+        dispatch(updatePlayerStrikeData(user.userId, gameId, { phrasesLost }));
       }
       localStorage.setItem("myLettersList", "");
     }
   }, [game.gameStatus]);
 
   useEffect(() => {
-    // Lógica para mostrar el modal en casos específicos
-    const now = new Date();
-    const isChristmas = now.getDate() === 6 && now.getMonth() === 0 && now.getHours >= 7;
+    // Lógica para mostrar el modal en el momento que completan la racha
+    if (bonusModalShown) return;
+    if (!game.isDailyPhrase) return;
+   
+     showInfoModal();
 
-    if (isChristmas) {
-      setModalConfig({
-        title: "¡Pistas gratis el Día de Reyes!",
-        message: "🎄🎁 Los Reyes te han traído todas las pistas gratis en la Cita de hoy. ¡Disfrútalas! 🎄🎁",
-      });
-      setInfoModalOpen(true);
-    } else if (hasPlayingStrikeBonus && game.isDailyPhrase) {
-      setModalConfig({
-        title: "¡Bonificación de racha de juego!",
-        message: "🔥 Por tus diez citas consecutivas jugadas tienes las pistas de Actor y Director sin coste en la Cita de hoy. ¡Enhorabuena!  🔥",
-      });
-      setInfoModalOpen(true);
-    } else if (hasWinningStrikeBonus && game.isDailyPhrase) {
-      setModalConfig({
-        title: "¡Bonificación de racha de victorias!",
-        message: "🏆 Por tus diez victorias consecutivas tienes todas las pistas gratis en la Cita de hoy. ¡Enhorabuena!  🏆",
-      });
-      setInfoModalOpen(true);
+    function showInfoModal() {
+      if (user.playingStrike === 7 && user.winningStrike !== 7) {
+        setModalConfig({
+          title: "¡Bonificación de partidas!",
+          message: `🔥 Por tus siete citas consecutivas jugadas tendrás tres pistas gratis en la siguiente Cita del Día. ¡Enhorabuena! 🔥`,
+        });
+        setInfoModalOpen(true);
+       dispatch(setBonusModalShown(true));
+      } else if (user.winningStrike === 7) {
+        setModalConfig({
+          title: "¡Bonificación de victorias!",
+          message:
+            "🏆 Por sumar siete Citas acertadas tendrás todas las pistas gratis en la siguiente Cita del Día. ¡Enhorabuena!  🏆",
+        });
+        setInfoModalOpen(true);
+       dispatch(setBonusModalShown(true));
+      }
     }
-  }, [hasPlayingStrikeBonus, hasWinningStrikeBonus, game.isDailyPhrase]);
+  }, [user.playingStrike, user.winningStrike]);
+
+  useEffect(() => {
+    if (!user.userId) return;
+
+    const checkNotifications = async () => {
+      const notifications = await getUserNotifications(user.userId);
+
+      if (notifications.length > 0) {
+        setPendingNotifications(notifications);
+        setCurrentIndex(0);
+        setModalConfig({
+          title: notifications[0].title,
+          message: notifications[0].message,
+        });
+        setCurrentNotification(notifications[0]);
+        setInfoModalOpen(true);
+        
+      }
+    };
+
+    checkNotifications();
+  }, [user.userId]);
+
+  const handleCloseInfoModal = async () => {
+    const nextIndex = currentIndex + 1;
+
+    // Marca como leída la notificación actual
+    if (currentNotification){
+    await markNotificationAsRead( user.userId, currentNotification._id);}
+
+    if (nextIndex < pendingNotifications.length) {
+      const nextNotif = pendingNotifications[nextIndex];
+      setCurrentIndex(nextIndex);
+      setCurrentNotification(nextNotif);
+      setModalConfig({
+        title: nextNotif.title,
+        message: nextNotif.message,
+      });
+      // El modal sigue abierto, solo cambia el contenido
+    } else {
+      // Ya no hay más notificaciones
+      setInfoModalOpen(false);
+      setPendingNotifications([]);
+      setCurrentIndex(0);
+    }
+  };
 
   const handleShowDetails = async () => {
     if (game.gameStatus === "lose" && !game.hasBoughtDetails) {
@@ -149,18 +211,20 @@ const GameComponent = () => {
   const confirmShowDetails = async () => {
     try {
       if (game.gameStatus === "lose") {
-        const response = await dispatch(buyPhraseDetailsAction(userId));
+        const response = await dispatch(buyPhraseDetailsAction(user.userId));
         console.log(response);
         if (response) {
           toast.error(response);
           dispatch(clearError());
         } else {
-        const gameData = {
-          hasBoughtDetails: true,
-        };
-        await dispatch(updateGameData(gameId, gameData)); // Marca la compra en la partida
-      
-      setShowPhraseDetails(true);}}
+          const gameData = {
+            hasBoughtDetails: true,
+          };
+          await dispatch(updateGameData(gameId, gameData)); // Marca la compra en la partida
+
+          setShowPhraseDetails(true);
+        }
+      }
     } catch (error) {
       console.error(error);
     } finally {
@@ -177,12 +241,12 @@ const GameComponent = () => {
 
   return (
     <div className="game">
-       {/* Modal genérico para mostrar mensajes */}
-       <InfoModal
+      {/* Modal genérico para mostrar mensajes */}
+      <InfoModal
         isOpen={infoModalOpen}
         title={modalConfig.title}
         message={modalConfig.message}
-        onClose={() => setInfoModalOpen(false)}
+        onClose={handleCloseInfoModal}
       />
       <div className="words-clues-points-container">
         <div className="words">{wordsToTry} </div>
@@ -205,7 +269,7 @@ const GameComponent = () => {
               <button className="phrase-link" onClick={handleShowDetails}>
                 <span>Detalles de la cita</span>{" "}
                 {game.gameStatus === "lose" && !game.hasBoughtDetails && (
-                  <span className="clue-price show-phrase-price">20</span>
+                  <span className="clue-price show-phrase-price">5</span>
                 )}
               </button>
             </div>
@@ -214,7 +278,7 @@ const GameComponent = () => {
           {showConfirmationModal && (
             <div className="modal-backdrop">
               <div className="newuser-container">
-                <p>¿Quieres ver los detalles de la cita por 20 puntos?</p>
+                <p>¿Quieres ver los detalles de la cita por 5 puntos?</p>
                 <div className="modal-buttons">
                   <button onClick={confirmShowDetails}>Sí</button>
                   <button onClick={cancelShowDetails}>No</button>
@@ -232,8 +296,8 @@ const GameComponent = () => {
                 phraseNumber={game.phraseNumber}
                 attempts={game.currentTry}
                 maxTries={game.maximumTries}
-                points={userPoints}
-                ranking={userRanking}
+                points={user.userPoints}
+                ranking={user.userRanking}
               />
             </>
           )}
@@ -247,7 +311,7 @@ const GameComponent = () => {
           onModalClose={() => setShowPhraseDetails(false)}
         />{" "}
       </div>
-      <Keyboard userId={userId} />
+      <Keyboard userId={user.userId} />
     </div>
   );
 };
