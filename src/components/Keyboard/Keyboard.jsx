@@ -1,12 +1,11 @@
 /* eslint-disable react/prop-types */
 import "./keyboard.css";
 import { useDispatch, useSelector } from "react-redux";
-import useCheckWord from "../../customhooks/checkWord";
+
 import {
   addLetter,
   deleteLastLetter,
-  clearWord,
-  addWordToTried,
+  setWordToCheck,
 } from "../../redux/game/game.actions";
 import { useEffect, useCallback } from "react";
 import DeleteIcon from "../../assets/DeleteIcon";
@@ -25,25 +24,18 @@ const Keyboard = ({ userId }) => {
 
   const { lettersFound, lettersFailed, wordToTry, gameStatus, isInputFocused } =
     useSelector((reducer) => reducer.gameReducer);
-
-  const [verifyWord, isVerifying] = useCheckWord();
-
-  // Función para manejar el resultado de la verificación
-  const handleWordVerificationResult = useCallback(
-    (result) => {
-      if (result.wordIsValid) {
-        dispatch(addWordToTried(wordToTry)); // Añade la palabra si es válida
+    
+    const sendWord = useCallback(() => {
+      if (wordToTry.length === 5) {
+        dispatch(setWordToCheck(wordToTry));
       } else {
-        toast.error(result.message); // Muestra el error si la palabra es inválida
-        dispatch(clearWord()); // Limpia la palabra actual
+        toast.error("La palabra debe tener 5 letras");
       }
-    },
-    [dispatch, wordToTry]
-  );
+    }, [dispatch, wordToTry]);
   //captura letras desde el teclado en pantalla
   const handleClick = useCallback(
-    async (content) => {
-      if (gameStatus !== "playing" || isVerifying) return;
+    (content) => {
+      if (gameStatus !== "playing" || !userId) return;
 
       if (content === "DELETE") {
         if (wordToTry.length === 0) return;
@@ -51,13 +43,7 @@ const Keyboard = ({ userId }) => {
         return;
       }
       if (content === "SEND") {
-        if (wordToTry.length < 5) {
-          toast.error("La palabra debe tener 5 letras");
-          return;
-        }
-        const result = await verifyWord(wordToTry, userId);
-
-        handleWordVerificationResult(result);
+        sendWord();
         return;
       }
       if (wordToTry.length === 5) {
@@ -65,40 +51,31 @@ const Keyboard = ({ userId }) => {
       }
       dispatch(addLetter(content));
     },
-    [dispatch, wordToTry, userId, verifyWord, gameStatus, isVerifying]
+    [dispatch, wordToTry, gameStatus, userId, sendWord]
   );
 
   //captura letras desde el teclado físico
   const handleKeyDown = useCallback(
-    async (event) => {
+    (event) => {
       const { key } = event;
 
-      if (gameStatus !== "playing" || isInputFocused || isVerifying) return;
+      if (gameStatus !== "playing" || isInputFocused || !userId) return;
 
       if (key === "Backspace") {
+        if (wordToTry.length === 0) return;
         dispatch(deleteLastLetter());
-      } else if (key === "Enter") {
-        if (wordToTry.length < 5) {
-          toast.error("La palabra debe tener 5 letras");
-          return;
-        }
-        const result = await verifyWord(wordToTry, userId); // Verifica la palabra al presionar Enter
-        handleWordVerificationResult(result); // Maneja el resultado
-      } else if (key.length === 1 && key.match(/[a-zñ]/i)) {
-        if (wordToTry.length >= 5) return;
+        return;
+      }
+      if (key === "Enter") {
+        sendWord();
+        return;
+      }
+      if (wordToTry.length >= 5) return;
+      if (key.length === 1 && key.match(/[a-zñ]/i)) {
         dispatch(addLetter(key.toUpperCase()));
       }
     },
-    [
-      dispatch,
-      wordToTry,
-      userId,
-      verifyWord,
-      gameStatus,
-      isInputFocused,
-      isVerifying,
-      handleWordVerificationResult,
-    ]
+    [dispatch, wordToTry, gameStatus, isInputFocused, sendWord, userId]
   );
 
   // Añade el listener del teclado físico
@@ -109,22 +86,7 @@ const Keyboard = ({ userId }) => {
     };
   }, [handleKeyDown]);
 
-  //verifica si la palabra es válida y la añade a triedWords
-  //luego limpia la palabra actual
-  //si no es válida muestra un mensaje de error
 
-  // useEffect(() => {
-  //   if (result !== null && !isVerifying) {
-  //     console.log("Verificación de palabra:", result);
-  //     if (result) {
-  //       dispatch(addWordToTried(wordToTry));
-  //     } else {
-  //       const randomMessage = getRandomInvalidWordMessage();
-  //     toast.error(randomMessage);
-  //       dispatch(clearWord());
-  //     }
-  //   }
-  // }, [result, isVerifying, dispatch]);
 
   return (
     <div className="keyboard">

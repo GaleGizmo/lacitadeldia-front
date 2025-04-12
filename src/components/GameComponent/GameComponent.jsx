@@ -15,26 +15,21 @@ import { PropTypes } from "prop-types";
 import ShareButton from "../ShareButton/ShareButton";
 import Clues from "../Clues/Clues";
 import ShowPoints from "../ShowPoints/ShowPoints";
-import {
-  getPhraseOfTheDayNumber,
-
-} from "../../shared/api";
+import { getPhraseOfTheDayNumber } from "../../shared/api";
 import MyLettersList from "../MyLettersList/MyLettersList";
 import {
   buyPhraseDetailsAction,
   updatePlayerStrikeData,
 } from "../../redux/user/user.actions";
 import {
-
   fetchBackendNotifications,
   nextNotification,
   clearBackendNotifications,
   setBonusModalShown,
   resetBonusModalShown,
-  markCurrentNotificationAsRead
+  markCurrentNotificationAsRead,
 } from "../../redux/notifications/notifications.actions";
 import InfoModal from "../InfoModal/InfoModal";
-
 
 const GameComponent = () => {
   let oldPhraseNumber = localStorage.getItem("oldPhraseToPlay");
@@ -45,7 +40,7 @@ const GameComponent = () => {
     oldPhraseNumber = 0;
   }
   const dispatch = useDispatch();
- 
+
   const [showPhraseDetails, setShowPhraseDetails] = useState(false);
   const [showConfirmationModal, setShowConfirmationModal] = useState(false);
   const [wordsToTry, setWordsToTry] = useState([]);
@@ -57,7 +52,7 @@ const GameComponent = () => {
 
   const {
     bonusModalShown,
-   
+
     currentNotificationIndex,
     backendNotifications,
   } = useSelector((state) => state.notificationsReducer);
@@ -89,11 +84,24 @@ const GameComponent = () => {
       dispatch(clearError());
     }
   }, [game.error]);
+
   useEffect(() => {
     if (game.isDailyPhrase) {
       dispatch(resetBonusModalShown());
     }
   }, [game.phraseNumber]);
+
+  useEffect(() => {
+    if (!isInitialized) return;
+    if (gameId && game.wordToCheck && game.wordToCheck.length === 5 && game.currentTry < game.maximumTries) {
+      const gameData = {
+        triedWord: game.wordToCheck,
+      };
+
+      dispatch(updateGameData(gameId, gameData));
+    }
+  }, [game.wordToCheck]);
+
   useEffect(() => {
     if (!isInitialized) return;
 
@@ -102,14 +110,6 @@ const GameComponent = () => {
       words.push(<TryWord key={i} index={i} />);
     }
     setWordsToTry(words);
-
-    if (gameId && game.wordToTry && game.currentTry < game.maximumTries) {
-      const gameData = {
-        triedWord: game.wordToTry,
-      };
-
-      dispatch(updateGameData(gameId, gameData));
-    }
   }, [game.triedWords]);
 
   useEffect(() => {
@@ -118,7 +118,7 @@ const GameComponent = () => {
       let phrasesLost = null;
       if (game.gameStatus === "win") {
         toast.success("¡Bien hecho!", { style: { background: "#51e651" } });
-       
+
         phrasesWon = game.phraseNumber;
         setShowPhraseDetails(true);
       } else if (game.gameStatus === "lose") {
@@ -145,7 +145,7 @@ const GameComponent = () => {
   useEffect(() => {
     // Lógica para mostrar el modal en el momento que completan la racha
     if (bonusModalShown || !game.isDailyPhrase) return;
-    
+
     showInfoModal();
 
     function showInfoModal() {
@@ -185,7 +185,9 @@ const GameComponent = () => {
   const handleCloseInfoModal = async () => {
     const currentNotif = backendNotifications[currentNotificationIndex];
     if (currentNotif) {
-      await dispatch(markCurrentNotificationAsRead(user.userId, currentNotif._id));
+      await dispatch(
+        markCurrentNotificationAsRead(user.userId, currentNotif._id)
+      );
     }
 
     if (currentNotificationIndex + 1 < backendNotifications.length) {

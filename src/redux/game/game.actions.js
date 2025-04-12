@@ -35,23 +35,29 @@ const updateGameData = (gameId, gameData) => async (dispatch) => {
       });
 
       if (updatedData.data.deleteFromTried) {
-        dispatch({
-          type: "DELETE_WORD_FROM_TRIEDWORDS",
-          payload: updatedData.data,
-        });
+        console.log(updatedData)
+        dispatch(wordNotValid(updatedData.data.message));
+      
+        
       } else {
         localStorage.setItem("activeGame", JSON.stringify(updatedData.data));
         dispatch({
           type: "UPDATE_GAME_DATA_SUCCESS",
           payload: updatedData.data,
         });
+        dispatch(setWordToCheck(""));
       }
     }
   } catch (err) {
     dispatch({ type: "UPDATE_GAME_DATA_FAILURE", payload: err.message });
   }
 };
-
+const wordNotValid = (message) =>{
+  return{
+    type: "WORD_NOT_VALID",
+    payload: message
+  }
+}
 const handleClues = (clue, wordToTry) => async (dispatch) => {
   dispatch({ type: "HANDLE_CLUES_REQUEST" });
   try {
@@ -107,7 +113,10 @@ const addWordToTried = (verifiedWord) => ({
   type: "ADD_WORD_TO_TRIEDWORDS",
   payload: verifiedWord,
 });
-
+const setWordToCheck = (word) => ({
+  type: "SET_WORD_TO_CHECK",
+  payload: word,
+});
 const clearWord = () => ({ type: "CLEAR_WORD" });
 
 const clearError = () => ({
@@ -133,5 +142,5 @@ export {
   updateGameData,
   handleClues,
   setInputFocus,
-  
+  setWordToCheck,
 };

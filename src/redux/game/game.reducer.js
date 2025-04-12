@@ -11,6 +11,7 @@ const INITIAL_STATE = (() => {
         successMessage: null,
         newLetters: [],
         wordToTry: "",
+        wordToCheck: "",
         isInputFocused: false,
         hasBoughtDetails: false,
       };
@@ -35,6 +36,7 @@ function getDefaultState() {
     lettersFound: [],
     newLetters: [],
     wordToTry: "",
+    wordToCheck: "",
     triedWords: [],
     gameStatus: "playing",
     gameResultNotification: null,
@@ -56,8 +58,9 @@ export const gameReducer = (state = INITIAL_STATE, action) => {
         ...state,
         loading: false,
         error: null,
+        _id: action.payload._id,
         userId: action.payload.userId,
-        newLetters:[],
+        newLetters: [],
         phrase: action.payload.phrase,
         lettersFound: action.payload.lettersFound,
         lettersFailed: action.payload.lettersFailed,
@@ -84,6 +87,7 @@ export const gameReducer = (state = INITIAL_STATE, action) => {
         ...state,
         loading: false,
         wordToTry: "",
+        triedWords: action.payload.triedWords,
         newLetters: action.payload.newLetters,
         phrase: action.payload.phrase,
         lettersFound: action.payload.lettersFound,
@@ -103,7 +107,11 @@ export const gameReducer = (state = INITIAL_STATE, action) => {
         loading: false,
         error: action.payload,
       };
-
+    case "SET_WORD_TO_CHECK":
+      return {
+        ...state,
+        wordToCheck: action.payload,
+      };
     case "ADD_LETTER":
       return { ...state, wordToTry: state.wordToTry + action.payload };
     case "DELETE_LAST_LETTER":
@@ -117,23 +125,20 @@ export const gameReducer = (state = INITIAL_STATE, action) => {
       return { ...state, phrase: null };
     case "ADD_WORD_TO_TRIEDWORDS": {
       const newTriedWords = [...state.triedWords, action.payload];
-    
+
       return {
         ...state,
         triedWords: newTriedWords,
       };
     }
-    case "DELETE_WORD_FROM_TRIEDWORDS": {
-      const newTriedWords = state.triedWords.filter(
-        (word) => word !== action.payload.deleteFromTried
-      );
-
+    case "WORD_NOT_VALID": {
       return {
         ...state,
-        triedWords: newTriedWords,
+        wordToCheck: "",
         wordToTry: "",
-        error:action.payload.message,
-        loading:false,
+        newLetters:[],
+        error: action.payload,
+        loading: false,
       };
     }
     case "UPDATE_LETTERS_FOUND": {
@@ -155,7 +160,6 @@ export const gameReducer = (state = INITIAL_STATE, action) => {
         successMessage: action.payload.data.message,
         clues: action.payload.clues,
         newLetters: [],
-       
 
         ...(action.payload.data.updatedLettersFound && {
           lettersFound: action.payload.data.updatedLettersFound,
@@ -168,7 +172,12 @@ export const gameReducer = (state = INITIAL_STATE, action) => {
         }),
       };
     case "HANDLE_CLUES_FAILURE":
-      return { ...state, loading: false, error: action.payload, newLetters: [] };
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+        newLetters: [],
+      };
     case "CLEAR_SUCCESS_MESSAGE":
       return { ...state, successMessage: "" };
     case "UPDATE_GAME_STATUS":
