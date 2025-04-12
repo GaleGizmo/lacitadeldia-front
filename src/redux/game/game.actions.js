@@ -35,7 +35,7 @@ const updateGameData = (gameId, gameData) => async (dispatch) => {
       });
 
       if (updatedData.data.deleteFromTried) {
-        console.log(updatedData)
+     
         dispatch(wordNotValid(updatedData.data.message));
       
         
@@ -90,6 +90,10 @@ const handleClues = (clue, wordToTry) => async (dispatch) => {
     });
     //Si la pista de letra devuelve la última letra, espera y muestra los detalles de la cita
     if (response.data.clueResult.lastLetterRemaining) {
+      dispatch({
+        type: "UPDATE_GAME_POINTS",
+        payload: response.data.clueResult.gamePoints,
+      });
       setTimeout(
         () =>
           dispatch({

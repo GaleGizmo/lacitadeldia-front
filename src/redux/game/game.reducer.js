@@ -182,6 +182,8 @@ export const gameReducer = (state = INITIAL_STATE, action) => {
       return { ...state, successMessage: "" };
     case "UPDATE_GAME_STATUS":
       return { ...state, gameStatus: action.payload };
+    case "UPDATE_GAME_POINTS":
+      return { ...state, earnedPoints: action.payload };
     case "SET_INPUT_FOCUS":
       return {
         ...state,

@@ -27,7 +27,7 @@ export const fetchBackendNotifications = (userId) => async (dispatch) => {
 export const markCurrentNotificationAsRead = (userId, notificationId) => async (dispatch, getState) => {
   try {
     await markNotificationAsRead(userId, notificationId);
-    const state = getState().notifications;
+    const state = getState().notificationsReducer;
     const nextIndex = state.currentNotificationIndex + 1;
     const remaining = state.backendNotifications;
 

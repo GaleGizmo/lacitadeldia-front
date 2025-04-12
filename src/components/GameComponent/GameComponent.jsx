@@ -86,7 +86,7 @@ const GameComponent = () => {
   }, [game.error]);
 
   useEffect(() => {
-    if (game.isDailyPhrase) {
+    if (game.isDailyPhrase && game.gameStatus==="playing") {
       dispatch(resetBonusModalShown());
     }
   }, [game.phraseNumber]);
