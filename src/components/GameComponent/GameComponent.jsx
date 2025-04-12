@@ -259,7 +259,7 @@ const GameComponent = () => {
           )}
           {game.gameStatus === "playing" && (
             <div className="right-div-container helpers-container">
-              <MyLettersList />
+              <MyLettersList lettersFound={game.lettersFound} />
             </div>
           )}
           {game.gameStatus != "playing" && (
