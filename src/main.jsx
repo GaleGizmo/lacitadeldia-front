@@ -15,6 +15,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
       <App />
       <Toaster
         position="top-center"
+        visibleToasts={1}
         toastOptions={{
          
         }}

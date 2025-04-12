@@ -32,7 +32,6 @@ const Keyboard = ({ userId }) => {
   const handleWordVerificationResult = useCallback(
     (result) => {
       if (result.wordIsValid) {
-       
         dispatch(addWordToTried(wordToTry)); // Añade la palabra si es válida
       } else {
         toast.error(result.message); // Muestra el error si la palabra es inválida
@@ -57,7 +56,7 @@ const Keyboard = ({ userId }) => {
           return;
         }
         const result = await verifyWord(wordToTry, userId);
-        
+
         handleWordVerificationResult(result);
         return;
       }
