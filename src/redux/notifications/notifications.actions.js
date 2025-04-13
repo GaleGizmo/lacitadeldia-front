@@ -24,26 +24,14 @@ export const fetchBackendNotifications = (userId) => async (dispatch) => {
   }
 };
 
-export const markCurrentNotificationAsRead = (userId, notificationId) => async (dispatch, getState) => {
+export const markCurrentNotificationAsRead = (userId, notificationId) => async () => {
   try {
     await markNotificationAsRead(userId, notificationId);
-    const state = getState().notificationsReducer;
-    const nextIndex = state.currentNotificationIndex + 1;
-    const remaining = state.backendNotifications;
-
-    if (nextIndex < remaining.length) {
-      dispatch({ type: "NEXT_NOTIFICATION" });
-      dispatch({
-        type: SET_CURRENT_NOTIFICATION,
-        payload: remaining[nextIndex],
-      });
-    } else {
-      dispatch({ type: CLEAR_BACKEND_NOTIFICATIONS });
-      dispatch({ type: SET_CURRENT_NOTIFICATION, payload: null });
-    }
   } catch (error) {
     console.error("Error marcando como leída la notificación:", error);
+    throw error;
   }
+
 };
 export const setNotifications = (notifications) => ({
   type: SET_NOTIFICATIONS,

@@ -86,14 +86,19 @@ const GameComponent = () => {
   }, [game.error]);
 
   useEffect(() => {
-    if (game.isDailyPhrase && game.gameStatus==="playing") {
+    if (game.isDailyPhrase && game.gameStatus === "playing") {
       dispatch(resetBonusModalShown());
     }
   }, [game.phraseNumber]);
 
   useEffect(() => {
     if (!isInitialized) return;
-    if (gameId && game.wordToCheck && game.wordToCheck.length === 5 && game.currentTry < game.maximumTries) {
+    if (
+      gameId &&
+      game.wordToCheck &&
+      game.wordToCheck.length === 5 &&
+      game.currentTry < game.maximumTries
+    ) {
       const gameData = {
         triedWord: game.wordToCheck,
       };
@@ -183,18 +188,31 @@ const GameComponent = () => {
   }, [backendNotifications, currentNotificationIndex]);
 
   const handleCloseInfoModal = async () => {
-    const currentNotif = backendNotifications[currentNotificationIndex];
-    if (currentNotif) {
-      await dispatch(
-        markCurrentNotificationAsRead(user.userId, currentNotif._id)
-      );
-    }
+    const isBackendNotification = backendNotifications.length > 0;
 
-    if (currentNotificationIndex + 1 < backendNotifications.length) {
-      dispatch(nextNotification());
+    if (isBackendNotification) {
+      const currentNotif = backendNotifications[currentNotificationIndex];
+  
+      if (currentNotif) {
+        try {
+          await dispatch(markCurrentNotificationAsRead(user.userId, currentNotif._id));
+        } catch (error) {
+          console.error("No se pudo marcar la notificación como leída");
+        }
+      }
+  
+      if (currentNotificationIndex + 1 < backendNotifications.length) {
+        dispatch(nextNotification());
+      } else {
+        dispatch(clearBackendNotifications());
+        setInfoModalOpen(false);
+      }
+  
     } else {
-      dispatch(clearBackendNotifications());
+      // Notificación de bonificación: solo cerrar
       setInfoModalOpen(false);
+      // Si quieres permitir que vuelva a mostrarse (en debug/testing o en el futuro)
+      // dispatch(setBonusModalShown(false));
     }
   };
 
