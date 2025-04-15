@@ -75,3 +75,7 @@
     padding: 0;
 }
 }
+
+.app-container {
+  padding-bottom: env(safe-area-inset-bottom, 20px); /* Espacio para la barra de navegación */
+}
