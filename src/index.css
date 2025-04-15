@@ -50,6 +50,7 @@ body {
   place-items: center;
   min-width: 320px;
   height: 100%;
+   /* Espacio para la barra de navegación */
 }
 
 button {
@@ -118,3 +119,4 @@ button:focus-visible {
     background-color: var( --dark-mode-movie_field);
   }
 }
+

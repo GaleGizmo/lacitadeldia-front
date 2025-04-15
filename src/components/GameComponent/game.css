@@ -9,6 +9,8 @@
     align-items:center;
     position: relative;
     overflow-y: auto;
+    padding-bottom: max(20px, env(safe-area-inset-bottom));
+  scroll-padding-bottom: max(20px, env(safe-area-inset-bottom)); 
 }
 .phrase-and-button-container {
     display: flex;
