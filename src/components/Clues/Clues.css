@@ -1,19 +1,7 @@
-.clues-container {
- 
-  display: flex;
-  flex-direction: column;
-  border: 2px solid gray;
-  border-radius: 8px;
-  z-index: 100;
-  /* position: absolute; */
-  width: 170px;
-  height: fit-content;
-  /* top: 0px;
-  left: calc(
-    50% - 360px
-  );  */
-}
 
+.clues{
+  width: 100%;
+}
 .clues-button {
   padding: 1px 0 3px 0;
   border: 1px solid gray;
@@ -52,11 +40,7 @@
   background-color: var(--color-yellow-dark);
 }
 @media (max-width: 767px) {
-  .clues-container {
-    /* top: 3px;
-    left: calc(50% - 174px); */
-    width: 130px;
-  }
+ 
   .clue-icon {
     width: 24px;
     height: 24px;

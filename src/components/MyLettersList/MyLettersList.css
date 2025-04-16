@@ -31,12 +31,12 @@
   } */
 @media (max-width: 767px) {
 .my-letters-input{
-    width: 90px;
+    width: 100%;
     height: 18px;
     padding: 1px;
     font-size: 12px;
 }
 .my-letters-list{
-    height: 28px;
+    height: 26px;
 }
 }

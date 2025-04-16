@@ -55,7 +55,7 @@ const ClueDetails = ({ typeOfClue }) => {
   return (
     <div className="clue-details">
       <p className="clue-description">{clueDescription}</p>
-      <div className="button-input-container">
+      <div className={`button-input-container${typeOfClue === "lettersRight" ? " letters-right" : ""}`}>
         {typeOfClue === "lettersRight" && clues.lettersRight.status && (
           <input
             type="text"
@@ -63,12 +63,13 @@ const ClueDetails = ({ typeOfClue }) => {
             onChange={(e) => setWordToTry(e.target.value.toLocaleUpperCase())}
             onFocus={() => dispatch(setInputFocus(true))}
             onBlur={() => dispatch(setInputFocus(false))}
+            autoCapitalize="characters"
           />
         )}
         {clueDescription && clues[typeOfClue] && clues[typeOfClue].status ? (
           <>
             {" "}
-            <button onClick={useClue}>Usar</button>
+            <button onClick={useClue}>USAR</button>
             <p className="clue-price">{clues[typeOfClue].price}</p>
           </>
         ) : (

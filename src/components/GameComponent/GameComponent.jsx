@@ -271,7 +271,7 @@ const GameComponent = () => {
             <ShowPoints />{" "}
           </div>{" "}
           {game.gameStatus === "playing" && (
-            <div className="clues-container helpers-container">
+            <div className="right-div-container helpers-container">
               <Clues />{" "}
             </div>
           )}

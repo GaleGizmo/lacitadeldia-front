@@ -23,19 +23,20 @@
   margin: 0;
 }
 .button-input-container{
- 
+  
   display: flex;
   justify-content: center;
 }
 .clue-details input {
   border-radius: 8px;
-  height: 14px;
+  height: 16px;
   margin: auto 0;
-  width: 45px;
+  width: 60px;
   text-align: center;
   padding: 3px;
   color: var(--color-orange-dark);
   font-weight: 600;
+  text-transform: uppercase;
 }
 .consumed-message {
   width: fit-content;
@@ -69,8 +70,12 @@
 .show-phrase-price{
   position: unset;
   font-size: 15px;
-  
-}
+  }
+  .letters-right{
+   
+    margin-right: 20px;
+    margin-left: 2px;
+  }
 @media (max-width: 767px) {
   .clue-details {
     font-size: 10px;
@@ -86,9 +91,7 @@
   .clue-details input {
     padding: 1px;
     font-size: 12px;
-   /* position: absolute;
-   left: 2px;
-   bottom: 4px; */
+   width: 50px;
   }
   .clue-details button{
     padding: 1px 5px 2px 5px;
@@ -100,4 +103,5 @@
     right: 2px;
     bottom: 4px;
   }
+ 
 }

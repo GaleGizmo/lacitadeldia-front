@@ -1,130 +1,147 @@
-.game{
-    width: 100%;
-    flex-grow: 1;
-    margin: 0;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items:center;
-    position: relative;
-    overflow-y: auto;
-    padding-bottom: max(20px, env(safe-area-inset-bottom));
-  scroll-padding-bottom: max(20px, env(safe-area-inset-bottom)); 
+.game {
+  width: 100%;
+  flex-grow: 1;
+  margin: 0;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  overflow-y: auto;
+  padding-bottom: max(24px, env(safe-area-inset-bottom));
+  scroll-padding-bottom: max(24px, env(safe-area-inset-bottom));
 }
 .phrase-and-button-container {
-    display: flex;
-    flex-direction: column;
-    
-    
+  display: flex;
+  flex-direction: column;
 }
 
-.right-div-container{
-    background-color: var(--color-transparent-black);
-    display: flex;
-    /* justify-content: center;*/
-    align-items: center;
-    border: 2px solid gray;
-    border-radius: 8px;
-    z-index: 100;
-    box-sizing: border-box;
-    width: 175px;
-    font-weight: 500;
-    /* box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.3); */
+.right-div-container {
+  background-color: var(--color-transparent-black);
+  display: flex;
+
+  align-items: center;
+  border: 2px solid gray;
+  border-radius: 8px;
+  z-index: 100;
+  box-sizing: border-box;
+  width: 175px;
+  font-weight: 500;
 }
-.helpers-container{
-    background-color: var(--color-yellow-light);
-  }
-.right-div-container p {
-   
-    margin: 0;
-}
-.phrase-link  {
-    display: flex;
-    justify-content: center;
-    gap: 5px;
-    color: var(--active-box-color);
-    border: none;
-    background-image: 
-      linear-gradient(to bottom, var(--color-yellow-light), var(--color-yellow-dark)),
-      linear-gradient(to bottom, var(--color-yellow-dark), var(--color-yellow-light));
-    background-size: 100% 200%;
-    background-position: 0 0, 0 100%;
-    background-repeat: no-repeat;
-    transition: background-position 0.5s ease;
-    width: 100%;
-    padding: 0.2em 0;
-    
-  }
+.clues-container {
  
-  .phrase-link:hover {
-    background-position: 0 100%, 0 0;
-  }
-.words-clues-points-container{
-    position: relative;
-    overflow: visible;
-    min-height: 130px;
-    width: 100%;
-    display: flex;
-    /* justify-content: center; */
-    gap: 20px
+ 
+  flex-direction: column;
+ 
+
+ 
+  height: fit-content;
+
 }
-.clues-points-container{
-    position: absolute;
-    right: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 5px
+.helpers-container {
+  background-color: var(--color-yellow-light);
 }
-  
-.phrase-link-container{
-   
-    width: 174px;
+.right-div-container p {
+  margin: 0;
+}
+.phrase-link {
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+  color: var(--active-box-color);
+  border: none;
+  background-image: linear-gradient(
+      to bottom,
+      var(--color-yellow-light),
+      var(--color-yellow-dark)
+    ),
+    linear-gradient(
+      to bottom,
+      var(--color-yellow-dark),
+      var(--color-yellow-light)
+    );
+  background-size: 100% 200%;
+  background-position: 0 0, 0 100%;
+  background-repeat: no-repeat;
+  transition: background-position 0.5s ease;
+  width: 100%;
+  padding: 0.2em 0;
 }
 
-  
-  .modal-buttons {
-    display: flex;
-    justify-content: space-around;
-    margin-top: 15px;
-  }
-  
-  .confirm-button {
-    background-color: #51e651;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  .cancel-button {
-    background-color: red;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  .confirm-button:hover,
-  .cancel-button:hover {
-    opacity: 0.9;
-  }
-@media (width<767px){
-    .game{
-        margin-top: 5px;
-        margin-bottom: 0;
-    }
-    .phrase-link-container{
-   
-        width: 134px;
-    }
-    .right-div-container{
-        width: 134px;
-        font-size: 12px;
-    }
-    .words-clues-points-container{
-        width: 92%;}
+.phrase-link:hover {
+  background-position: 0 100%, 0 0;
+}
+.words-clues-points-container {
+  position: relative;
+  overflow: visible;
+  min-height: 130px;
+  width: 100%;
+  display: flex;
+  /* justify-content: center; */
+  gap: 20px;
+}
+.clues-points-container {
+  position: absolute;
+  right: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
 
+.phrase-link-container {
+  width: 174px;
+}
+
+.modal-buttons {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 15px;
+}
+
+.confirm-button {
+  background-color: #51e651;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.cancel-button {
+  background-color: red;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.confirm-button:hover,
+.cancel-button:hover {
+  opacity: 0.9;
+}
+@media (width<767px) {
+  .game {
+    margin-top: 5px;
+    margin-bottom: 0;
+  }
+  .phrase-link-container {
+    width: 134px;
+  }
+  .right-div-container {
+    width: 134px;
+    
+    font-size: 12px;
+  }
+  .clues-points-container {
+    max-width: 150px;
+  }
+  .words-clues-points-container {
+    width: 92%;
+  }
+
+  .clues-container {
+    width: 134px;
+  }
 }
