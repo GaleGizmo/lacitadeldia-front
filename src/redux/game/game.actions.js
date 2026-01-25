@@ -26,7 +26,7 @@ const startGame = (userId, phraseToPlay) => async (dispatch) => {
 
 const updateGameData = (gameId, gameData) => async (dispatch) => {
   dispatch({ type: "UPDATE_GAME_DATA_REQUEST" });
-  
+
   try {
     if (!gameId) gameId = localStorage.getItem("gameId");
     if (gameId && gameData) {
@@ -35,10 +35,7 @@ const updateGameData = (gameId, gameData) => async (dispatch) => {
       });
 
       if (updatedData.data.deleteFromTried) {
-     
         dispatch(wordNotValid(updatedData.data.message));
-      
-        
       } else {
         localStorage.setItem("activeGame", JSON.stringify(updatedData.data));
         dispatch({
@@ -52,12 +49,12 @@ const updateGameData = (gameId, gameData) => async (dispatch) => {
     dispatch({ type: "UPDATE_GAME_DATA_FAILURE", payload: err.message });
   }
 };
-const wordNotValid = (message) =>{
-  return{
+const wordNotValid = (message) => {
+  return {
     type: "WORD_NOT_VALID",
-    payload: message
-  }
-}
+    payload: message,
+  };
+};
 const handleClues = (clue, wordToTry) => async (dispatch) => {
   dispatch({ type: "HANDLE_CLUES_REQUEST" });
   try {
@@ -100,7 +97,7 @@ const handleClues = (clue, wordToTry) => async (dispatch) => {
             type: "UPDATE_GAME_STATUS",
             payload: "win",
           }),
-        3000
+        3000,
       );
     }
   } catch (err) {

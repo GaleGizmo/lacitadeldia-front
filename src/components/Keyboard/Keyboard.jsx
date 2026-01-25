@@ -24,14 +24,14 @@ const Keyboard = ({ userId }) => {
 
   const { lettersFound, lettersFailed, wordToTry, gameStatus, isInputFocused } =
     useSelector((reducer) => reducer.gameReducer);
-    
-    const sendWord = useCallback(() => {
-      if (wordToTry.length === 5) {
-        dispatch(setWordToCheck(wordToTry));
-      } else {
-        toast.error("La palabra debe tener 5 letras");
-      }
-    }, [dispatch, wordToTry]);
+
+  const sendWord = useCallback(() => {
+    if (wordToTry.length === 5) {
+      dispatch(setWordToCheck(wordToTry));
+    } else {
+      toast.error("La palabra debe tener 5 letras");
+    }
+  }, [dispatch, wordToTry]);
   //captura letras desde el teclado en pantalla
   const handleClick = useCallback(
     (content) => {
@@ -51,7 +51,7 @@ const Keyboard = ({ userId }) => {
       }
       dispatch(addLetter(content));
     },
-    [dispatch, wordToTry, gameStatus, userId, sendWord]
+    [dispatch, wordToTry, gameStatus, userId, sendWord],
   );
 
   //captura letras desde el teclado físico
@@ -75,7 +75,7 @@ const Keyboard = ({ userId }) => {
         dispatch(addLetter(key.toUpperCase()));
       }
     },
-    [dispatch, wordToTry, gameStatus, isInputFocused, sendWord, userId]
+    [dispatch, wordToTry, gameStatus, isInputFocused, sendWord, userId],
   );
 
   // Añade el listener del teclado físico
@@ -85,8 +85,6 @@ const Keyboard = ({ userId }) => {
       window.removeEventListener("keydown", handleKeyDown);
     };
   }, [handleKeyDown]);
-
-
 
   return (
     <div className="keyboard">

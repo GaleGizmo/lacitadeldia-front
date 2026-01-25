@@ -43,7 +43,7 @@ const GameComponent = () => {
 
   const [showPhraseDetails, setShowPhraseDetails] = useState(false);
   const [showConfirmationModal, setShowConfirmationModal] = useState(false);
-  const [wordsToTry, setWordsToTry] = useState([]);
+  const [wordToTry, setWordToTry] = useState(null);
   const gameId = localStorage.getItem("gameId");
   const phraseNumber = oldPhraseNumber;
   const [isInitialized, setIsInitialized] = useState(false);
@@ -109,13 +109,14 @@ const GameComponent = () => {
 
   useEffect(() => {
     if (!isInitialized) return;
-
-    const words = [];
-    for (let i = 0; i < game.maximumTries; i++) {
-      words.push(<TryWord key={i} index={i} />);
-    }
-    setWordsToTry(words);
-  }, [game.triedWords]);
+    setWordToTry(
+      <TryWord
+        lettersFound={game.lettersFound}
+        lettersFailed={game.lettersFailed}
+        wordToTry={game.wordToTry}
+      />,
+    );
+  }, [game.triedWords, game.wordToTry]);
 
   useEffect(() => {
     if (game.gameStatus != "playing" && !game.gameResultNotification) {
@@ -192,22 +193,23 @@ const GameComponent = () => {
 
     if (isBackendNotification) {
       const currentNotif = backendNotifications[currentNotificationIndex];
-  
+
       if (currentNotif) {
         try {
-          await dispatch(markCurrentNotificationAsRead(user.userId, currentNotif._id));
+          await dispatch(
+            markCurrentNotificationAsRead(user.userId, currentNotif._id),
+          );
         } catch (error) {
           console.error("No se pudo marcar la notificación como leída");
         }
       }
-  
+
       if (currentNotificationIndex + 1 < backendNotifications.length) {
         dispatch(nextNotification());
       } else {
         dispatch(clearBackendNotifications());
         setInfoModalOpen(false);
       }
-  
     } else {
       // Notificación de bonificación: solo cerrar
       setInfoModalOpen(false);
@@ -265,7 +267,19 @@ const GameComponent = () => {
         onClose={handleCloseInfoModal}
       />
       <div className="words-clues-points-container">
-        <div className="words">{wordsToTry} </div>
+        {game.gameStatus == "playing" && (
+          <div className="words">
+           
+            <p className="right-div-container words-counter">
+              {" "}
+              JUGADAS RESTANTES:
+              <span className="remaining-tries-text">
+                {game.maximumTries - game.currentTry}{" "}
+              </span>
+            </p>
+             {wordToTry}
+          </div>
+        )}
         <div className="clues-points-container">
           <div className="right-div-container">
             <ShowPoints />{" "}
