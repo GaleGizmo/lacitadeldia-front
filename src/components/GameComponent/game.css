@@ -29,6 +29,9 @@
   width: 175px;
   font-weight: 500;
 }
+.words {
+  max-width: 50%;
+}
 .words-counter {
   margin: 0 auto 5px auto;
   justify-content: center;
@@ -84,21 +87,17 @@
     0 0;
 }
 .words-clues-points-container {
-  /* position: relative; */
   overflow: visible;
   min-height: 187px;
-  width: 100%;
+  width: calc(100% - 10px);
   display: flex;
-  justify-content: space-between;
-  gap: 20px;
+  justify-content: center;
+  gap: 15px;
 }
 .clues-points-container {
-  /* position: absolute;
-  right: 0; */
   display: flex;
   flex-direction: column;
   gap: 5px;
-  margin-right: 3px;
 }
 
 .phrase-link-container {
@@ -143,21 +142,17 @@
   }
   .right-div-container {
     width: 154px;
-
     font-size: 12px;
   }
-  .clues-points-container {
-    max-width: 150px;
-  }
+
   .words-clues-points-container {
-    width: calc(100% - 10px);
     min-height: 137px;
   }
 
   .clues-container {
     width: 154px;
   }
-  .words-counter{
+  .words-counter {
     height: 28px;
   }
 }

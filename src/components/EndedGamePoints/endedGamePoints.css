@@ -1,0 +1,41 @@
+.ended-game-points-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  max-width: 50%;
+}
+
+.ended-game-points-container ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+.ended-game-points-details {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  width: 100%;
+  padding: 0 5px;
+}
+
+.ended-game-points-container li {
+  margin: 3px 0;
+  font-size: .9em;
+}
+
+.ended-game-points-container p {
+  font-size: 1.1em;
+  font-weight: 600;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+}
+
+.won-game-text {
+  color: var(--color-green-dark);
+}
+.lost-game-text {
+  color: var(--color-orange-dark);
+}

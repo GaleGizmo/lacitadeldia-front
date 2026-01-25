@@ -30,6 +30,7 @@ import {
   markCurrentNotificationAsRead,
 } from "../../redux/notifications/notifications.actions";
 import InfoModal from "../InfoModal/InfoModal";
+import EndedGamePoints from "../EndedGamePoints/EndedGamePoints";
 
 const GameComponent = () => {
   let oldPhraseNumber = localStorage.getItem("oldPhraseToPlay");
@@ -267,9 +268,8 @@ const GameComponent = () => {
         onClose={handleCloseInfoModal}
       />
       <div className="words-clues-points-container">
-        {game.gameStatus == "playing" && (
+        {game.gameStatus == "playing" ? (
           <div className="words">
-           
             <p className="right-div-container words-counter">
               {" "}
               JUGADAS RESTANTES:
@@ -277,9 +277,16 @@ const GameComponent = () => {
                 {game.maximumTries - game.currentTry}{" "}
               </span>
             </p>
-             {wordToTry}
+            {wordToTry}
           </div>
-        )}
+        ) : (
+          <EndedGamePoints
+            earnedPoints={game.earnedPoints}
+            gameClues={game.clues}
+            gameResult={game.gameStatus}
+            remainingChances={game.maximumTries - game.currentTry}
+          />
+        )}{" "}
         <div className="clues-points-container">
           <div className="right-div-container">
             <ShowPoints />{" "}
