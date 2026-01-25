@@ -33,7 +33,8 @@
   margin: 0 auto 5px auto;
   justify-content: center;
   gap: 5px;
-  width: fit-content;
+  width: 100%;
+  height: 40px;
   .remaining-tries-text {
     font-weight: 800;
     font-size: 1.3em;
@@ -155,5 +156,8 @@
 
   .clues-container {
     width: 154px;
+  }
+  .words-counter{
+    height: 28px;
   }
 }
