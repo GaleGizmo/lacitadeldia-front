@@ -37,17 +37,25 @@ const RulesPage = () => {
             </li>
             <img
               className="try-word-gif"
-              src="assets/try_word.gif"
+              src="assets/one-word-try.jpg"
               alt="tryword"
             />
             <li>
-              Las letras de cada palabra que estén en la cita se mostrarán en
+              Las letras de la palabra introducida que estén en la cita se mostrarán en
               verde.
             </li>
             <img
               className="phrase-gif"
               src="assets/phrase_discover.gif"
               alt="Letra"
+            />
+            <li>
+              En el teclado verás las letras correctas en verde y las incorrectas en gris.
+            </li>
+            <img
+              className="phrase-gif"
+              src="assets/keyboard.jpg"
+              alt="Teclado"
             />
             <li>
               <span className="lose-txt">No existe la opción</span> de resolver
@@ -58,7 +66,7 @@ const RulesPage = () => {
               considerarán <span className="lose-txt">PERDIDAS</span>.
             </li>
             <li>
-              Si pierdes la partida necesitarás usar 5 puntos para ver los
+              Si pierdes la partida necesitarás gastar 5 puntos para ver los
               detalles de la cita.
             </li>
             <li>
@@ -105,7 +113,7 @@ const RulesPage = () => {
           <ul>
             <li>
               <img className="clue-icon" src="assets/letra.png" alt="Letra" />{" "}
-              Revelar una letra al azar (20 puntos).
+              Revela la letra más difícil (20 puntos).
             </li>
             <li>
               <img

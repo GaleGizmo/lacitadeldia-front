@@ -8,13 +8,13 @@
   justify-content: space-between;
   align-items: center;
   position: relative;
-  overflow-y: auto;
   padding-bottom: max(24px, env(safe-area-inset-bottom));
   scroll-padding-bottom: max(24px, env(safe-area-inset-bottom));
 }
 .phrase-and-button-container {
   display: flex;
   flex-direction: column;
+  max-width: 100%;
 }
 
 .right-div-container {

@@ -22,20 +22,33 @@
 
 .ended-game-points-container li {
   margin: 3px 0;
-  font-size: .9em;
+  font-size: 0.9em;
 }
 
 .ended-game-points-container p {
   font-size: 1.1em;
-  font-weight: 600;
+  font-weight: 700;
   margin: 0;
   display: flex;
   justify-content: center;
 }
-
+.points-wrapper {
+  width: 24px;
+  height: 24px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
 .won-game-text {
   color: var(--color-green-dark);
 }
 .lost-game-text {
   color: var(--color-orange-dark);
+}
+@media (width<480px) {
+  .points-wrapper {
+    width: 20px;
+    height: 20px;
+  }
+  
 }

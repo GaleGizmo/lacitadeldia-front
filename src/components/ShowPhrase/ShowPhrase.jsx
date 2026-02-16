@@ -15,10 +15,9 @@ const ShowPhrase = ({ displayPhraseLink, showModal, onModalClose }) => {
   const [imageError, setImageError] = useState(false);
   const [imageSrc, setImageSrc] = useState("");
   const [retryAttempted, setRetryAttempted] = useState(false); // Nuevo estado para rastrear si ya se ha intentado recargar la imagen
-  
 
   // Obtener la frase y las nuevas letras desde el store
-  const { phrase, newLetters } = useSelector((state) => state.gameReducer);
+  const { phrase, newLetters, hasLongWord } = useSelector((state) => state.gameReducer);
 
   //Muestra secuencialmente las nuevas letras descubiertas
   useEffect(() => {
@@ -77,11 +76,8 @@ const ShowPhrase = ({ displayPhraseLink, showModal, onModalClose }) => {
     fetchPhrase();
   }, [displayPhraseLink]);
 
-
-
   const handleCloseModal = () => {
     onModalClose();
-    
   };
 
   const handleImageError = () => {
@@ -118,11 +114,11 @@ const ShowPhrase = ({ displayPhraseLink, showModal, onModalClose }) => {
                     displayChar === "_"
                       ? "letter-box"
                       : isLetter(displayChar)
-                      ? `in-phrase ${
-                          animatedLetters[globalIndex] ? "animate-reveal" : ""
-                        }`
-                      : "visible-char"
-                  }`}
+                        ? `in-phrase ${
+                            animatedLetters[globalIndex] ? "animate-reveal" : ""
+                          }`
+                        : "visible-char"
+                  } ${hasLongWord ? "long-word-letter" : ""}`}
                 >
                   {displayChar}
                 </span>

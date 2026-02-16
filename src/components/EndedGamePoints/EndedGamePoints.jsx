@@ -47,15 +47,15 @@ const EndedGamePoints = ({
         <ul>
           <li>
             Letras:{" "}
-            <span className="win-txt">{calculateLetterPoints()}</span>
+            <span className="rank points-wrapper win-txt">{calculateLetterPoints()}</span>
           </li>
           <li>
            Victoria:{" "}
-            <span className="win-txt">{winPoints || "0"}</span>
+            <span className="rank points-wrapper win-txt">{winPoints || "0"}</span>
           </li>
           <li>
            Intentos sobrantes:{" "}
-            <span className="win-txt">{extraPoints || "0"}</span>
+            <span className="rank points-wrapper win-txt">{extraPoints || "0"}</span>
           </li>
           <li>
             Usados en pistas:{" "}
