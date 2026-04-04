@@ -75,9 +75,8 @@ const RulesPage = () => {
         <section>
           <h2>Dificultad</h2>
           <p>
-            El número de jugadas disponibles varía{" "}
-            <strong> entre 3 y 7</strong> según la longitud de la cita y las
-            letras poco comunes que contenga.
+            El número de jugadas disponibles varía <strong> entre 3 y 7</strong>{" "}
+            según la longitud de la cita y las letras poco comunes que contenga.
           </p>
         </section>
         <section>
@@ -141,16 +140,7 @@ const RulesPage = () => {
               Apunta las letras que te faltan (gratuito).
             </li>
           </ul>
-
-          <p>
-            Tus puntos y resultados de partidas se conservarán si juegas en el
-            mismo dispositivo y navegador{" "}
-            <strong className="lose-txt">
-              {" "}
-              SALVO QUE TENGAS ACTIVADOS LOS MODOS INCÓGNITO (Android) O PRIVADO
-              (iOS).
-            </strong>
-          </p>
+          <p>Cada día, y de forma aleatoria (o casi), una de las pistas estará disponible <strong>de manera gratuita</strong> para la Cita de ese día.</p>
         </section>
         <section>
           <h2 id="bonificaciones">Bonificaciones por rachas</h2>
@@ -239,6 +229,15 @@ const RulesPage = () => {
           <p>
             Ante un borrado de las cookies podrás restaurar tus datos con el
             botón <strong>&quot;Cargar Usuario&quot;</strong>.
+          </p>
+          <p>
+            Tus puntos y resultados de partidas se conservarán si juegas en el
+            mismo dispositivo y navegador{" "}
+            <strong className="lose-txt">
+              {" "}
+              SALVO QUE TENGAS ACTIVADOS LOS MODOS INCÓGNITO (Android) O PRIVADO
+              (iOS).
+            </strong>
           </p>
         </section>
       </div>
