@@ -17,6 +17,7 @@ import Clues from "../Clues/Clues";
 import ShowPoints from "../ShowPoints/ShowPoints";
 import { getPhraseOfTheDayNumber } from "../../shared/api";
 import MyLettersList from "../MyLettersList/MyLettersList";
+import CurrentGamePoints from "../CurrentGamePoints/CurrentGamePoints";
 import {
   buyPhraseDetailsAction,
   updatePlayerStrikeData,
@@ -53,7 +54,6 @@ const GameComponent = () => {
 
   const {
     bonusModalShown,
-
     currentNotificationIndex,
     backendNotifications,
   } = useSelector((state) => state.notificationsReducer);
@@ -132,9 +132,6 @@ const GameComponent = () => {
         toast.error("Has perdido, lo siento");
         phrasesLost = game.phraseNumber;
       }
-      setTimeout(() => {
-        toast.info(`Has ganado ${game.earnedPoints} puntos`);
-      }, 3000 + 100);
       const gameData = {
         gameResultNotification: true,
       };
@@ -278,6 +275,7 @@ const GameComponent = () => {
               </span>
             </p>
             {wordToTry}
+            <CurrentGamePoints />
           </div>
         ) : (
           <EndedGamePoints

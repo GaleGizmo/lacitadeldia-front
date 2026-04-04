@@ -1,0 +1,30 @@
+.current-game-points {
+  margin: 5px auto 0 auto;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  height: 36px;
+  font-size: 0.95em;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+
+.current-game-points__label {
+  color: inherit;
+}
+
+.current-game-points__value {
+  font-weight: 800;
+  font-size: 1.3em;
+  color: var(--color-green-dark);
+}
+@media (max-width: 767px) {
+  .current-game-points {
+    font-size: 0.75em;
+    height: 28px;
+  }
+
+  .current-game-points__value {
+    font-size: 1.1em;
+  }
+}

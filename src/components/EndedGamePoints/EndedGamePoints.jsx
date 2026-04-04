@@ -30,10 +30,10 @@ const EndedGamePoints = ({
   const calculateCluesPoints = () => {
     if (!gameClues || Object.keys(gameClues).length === 0) return 0;
     return Object.values(gameClues).reduce((total, clue) => {
-      if (!clue) return total;
-      // Las pistas usadas tienen `status === false`; sumar su `price`
+      if (!clue) return total; // Si la pista no existe, no sumar nada
+      // Las pistas usadas tienen `status === false`; restar su `price`
       if (clue.status === false) {
-        return total + clue.price;
+        return total - clue.price;
       }
       return total;
     }, 0);
@@ -43,7 +43,7 @@ const EndedGamePoints = ({
     <div className="ended-game-points-container">
       <p className={`right-div-container ${className}`}>{gameResultText}</p>
       <div className="right-div-container ended-game-points-details">
-        <p>TOTAL PUNTOS:<span className="points"> {earnedPoints - calculateCluesPoints()}</span></p>
+        <p>TOTAL PUNTOS:<span className="points"> {earnedPoints + calculateCluesPoints()}</span></p>
         <ul>
           <li>
             Letras:{" "}
@@ -59,7 +59,7 @@ const EndedGamePoints = ({
           </li>
           <li>
             Usados en pistas:{" "}
-            <span className="lose-txt">-{calculateCluesPoints()}</span>
+            <span className="points-wrapper lose-txt">{calculateCluesPoints()}</span>
           </li>
         </ul>
       </div>
