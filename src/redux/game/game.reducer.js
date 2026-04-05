@@ -46,6 +46,7 @@ function getDefaultState() {
     clues: { actor: {}, director: {}, letters: {}, lettersRight: {} },
     isInputFocused: false,
     hasBoughtDetails: false,
+    hasLongWord: false,
   };
 }
 
@@ -72,6 +73,7 @@ export const gameReducer = (state = INITIAL_STATE, action) => {
         gameStatus: action.payload.gameStatus,
         gameResultNotification: action.payload.gameResultNotification,
         hasBoughtDetails: action.payload.hasBoughtDetails,
+        hasLongWord: action.payload.gameHasLongWord,
         clues: action.payload.clues,
       };
     case "START_GAME_FAILURE":
@@ -99,6 +101,7 @@ export const gameReducer = (state = INITIAL_STATE, action) => {
         gameStatus: action.payload.gameStatus,
         gameResultNotification: action.payload.gameResultNotification,
         hasBoughtDetails: action.payload.hasBoughtDetails,
+        hasLongWord: action.payload.gameHasLongWord,
         clues: action.payload.clues,
       };
     case "UPDATE_GAME_DATA_FAILURE":

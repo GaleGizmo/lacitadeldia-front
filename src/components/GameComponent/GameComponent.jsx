@@ -17,6 +17,7 @@ import Clues from "../Clues/Clues";
 import ShowPoints from "../ShowPoints/ShowPoints";
 import { getPhraseOfTheDayNumber } from "../../shared/api";
 import MyLettersList from "../MyLettersList/MyLettersList";
+import CurrentGamePoints from "../CurrentGamePoints/CurrentGamePoints";
 import {
   buyPhraseDetailsAction,
   updatePlayerStrikeData,
@@ -30,6 +31,7 @@ import {
   markCurrentNotificationAsRead,
 } from "../../redux/notifications/notifications.actions";
 import InfoModal from "../InfoModal/InfoModal";
+import EndedGamePoints from "../EndedGamePoints/EndedGamePoints";
 
 const GameComponent = () => {
   let oldPhraseNumber = localStorage.getItem("oldPhraseToPlay");
@@ -43,7 +45,7 @@ const GameComponent = () => {
 
   const [showPhraseDetails, setShowPhraseDetails] = useState(false);
   const [showConfirmationModal, setShowConfirmationModal] = useState(false);
-  const [wordsToTry, setWordsToTry] = useState([]);
+  const [wordToTry, setWordToTry] = useState(null);
   const gameId = localStorage.getItem("gameId");
   const phraseNumber = oldPhraseNumber;
   const [isInitialized, setIsInitialized] = useState(false);
@@ -52,7 +54,6 @@ const GameComponent = () => {
 
   const {
     bonusModalShown,
-
     currentNotificationIndex,
     backendNotifications,
   } = useSelector((state) => state.notificationsReducer);
@@ -109,13 +110,14 @@ const GameComponent = () => {
 
   useEffect(() => {
     if (!isInitialized) return;
-
-    const words = [];
-    for (let i = 0; i < game.maximumTries; i++) {
-      words.push(<TryWord key={i} index={i} />);
-    }
-    setWordsToTry(words);
-  }, [game.triedWords]);
+    setWordToTry(
+      <TryWord
+        lettersFound={game.lettersFound}
+        lettersFailed={game.lettersFailed}
+        wordToTry={game.wordToTry}
+      />,
+    );
+  }, [game.triedWords, game.wordToTry]);
 
   useEffect(() => {
     if (game.gameStatus != "playing" && !game.gameResultNotification) {
@@ -130,9 +132,6 @@ const GameComponent = () => {
         toast.error("Has perdido, lo siento");
         phrasesLost = game.phraseNumber;
       }
-      setTimeout(() => {
-        toast.info(`Has ganado ${game.earnedPoints} puntos`);
-      }, 3000 + 100);
       const gameData = {
         gameResultNotification: true,
       };
@@ -192,22 +191,23 @@ const GameComponent = () => {
 
     if (isBackendNotification) {
       const currentNotif = backendNotifications[currentNotificationIndex];
-  
+
       if (currentNotif) {
         try {
-          await dispatch(markCurrentNotificationAsRead(user.userId, currentNotif._id));
+          await dispatch(
+            markCurrentNotificationAsRead(user.userId, currentNotif._id),
+          );
         } catch (error) {
           console.error("No se pudo marcar la notificación como leída");
         }
       }
-  
+
       if (currentNotificationIndex + 1 < backendNotifications.length) {
         dispatch(nextNotification());
       } else {
         dispatch(clearBackendNotifications());
         setInfoModalOpen(false);
       }
-  
     } else {
       // Notificación de bonificación: solo cerrar
       setInfoModalOpen(false);
@@ -265,7 +265,26 @@ const GameComponent = () => {
         onClose={handleCloseInfoModal}
       />
       <div className="words-clues-points-container">
-        <div className="words">{wordsToTry} </div>
+        {game.gameStatus == "playing" ? (
+          <div className="words">
+            <p className="right-div-container words-counter">
+              {" "}
+              JUGADAS RESTANTES:
+              <span className="remaining-tries-text">
+                {game.maximumTries - game.currentTry}{" "}
+              </span>
+            </p>
+            {wordToTry}
+            <CurrentGamePoints />
+          </div>
+        ) : (
+          <EndedGamePoints
+            earnedPoints={game.earnedPoints}
+            gameClues={game.clues}
+            gameResult={game.gameStatus}
+            remainingChances={game.maximumTries - game.currentTry}
+          />
+        )}{" "}
         <div className="clues-points-container">
           <div className="right-div-container">
             <ShowPoints />{" "}

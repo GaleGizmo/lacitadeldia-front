@@ -15,10 +15,11 @@ const ShowPhrase = ({ displayPhraseLink, showModal, onModalClose }) => {
   const [imageError, setImageError] = useState(false);
   const [imageSrc, setImageSrc] = useState("");
   const [retryAttempted, setRetryAttempted] = useState(false); // Nuevo estado para rastrear si ya se ha intentado recargar la imagen
-  
 
   // Obtener la frase y las nuevas letras desde el store
-  const { phrase, newLetters } = useSelector((state) => state.gameReducer);
+  const { phrase, newLetters, hasLongWord } = useSelector(
+    (state) => state.gameReducer,
+  );
 
   //Muestra secuencialmente las nuevas letras descubiertas
   useEffect(() => {
@@ -77,11 +78,8 @@ const ShowPhrase = ({ displayPhraseLink, showModal, onModalClose }) => {
     fetchPhrase();
   }, [displayPhraseLink]);
 
-
-
   const handleCloseModal = () => {
     onModalClose();
-    
   };
 
   const handleImageError = () => {
@@ -118,17 +116,17 @@ const ShowPhrase = ({ displayPhraseLink, showModal, onModalClose }) => {
                     displayChar === "_"
                       ? "letter-box"
                       : isLetter(displayChar)
-                      ? `in-phrase ${
-                          animatedLetters[globalIndex] ? "animate-reveal" : ""
-                        }`
-                      : "visible-char"
-                  }`}
+                        ? `in-phrase ${
+                            animatedLetters[globalIndex] ? "animate-reveal" : ""
+                          }`
+                        : "visible-char"
+                  } ${hasLongWord ? "long-word-letter" : ""}`}
                 >
                   {displayChar}
                 </span>
               );
             })}
-            <span className="space">&nbsp;</span>
+            {/* <span className="space">&nbsp;</span> */}
           </span>
         ))}
       </div>
@@ -152,34 +150,35 @@ const ShowPhrase = ({ displayPhraseLink, showModal, onModalClose }) => {
 
             <div className="details-container">
               <p className="fade-in delay-1">
-                <span className="field-title">Película: </span>
-                <span className="field-content">
-                  {phraseDetails.movie} ({phraseDetails.year})
-                </span>
+                <span className="field-title">Cita: </span>
+                <span className="field-content quote">{phraseDetails.quote}</span>
               </p>
               <p className="fade-in delay-2">
-                <span className="field-title">Dirección: </span>
-                <span className="field-content">{phraseDetails.director}</span>
-              </p>
-              <p className="fade-in delay-3">
-                <span className="field-title">Cita: </span>
-                <span className="field-content">{phraseDetails.quote}</span>
-              </p>
-              {phraseDetails.original && (
-                <p className="fade-in delay-4">
-                  <span className="field-title">Original: </span>
-                  <span className="field-content">
-                    {phraseDetails.original}
-                  </span>
-                </p>
-              )}
-              <p className="fade-in delay-5">
                 <span className="field-title">Personaje: </span>
                 <span className="field-content">
                   {phraseDetails.who_said_it.character} (
                   {phraseDetails.who_said_it.actor})
                 </span>
               </p>
+              <p className="fade-in delay-3">
+                <span className="field-title">Película: </span>
+                <span className="field-content">
+                  {phraseDetails.movie} ({phraseDetails.year})
+                </span>
+              </p>
+              <p className="fade-in delay-4">
+                <span className="field-title">Dirección: </span>
+                <span className="field-content">{phraseDetails.director}</span>
+              </p>
+              {phraseDetails.original && (
+                <p className="fade-in delay-5">
+                  <span className="field-title">Original: </span>
+                  <span className="field-content">
+                    {phraseDetails.original}
+                  </span>
+                </p>
+              )}
+
               <p className="fade-in delay-6">
                 <span className="field-content">
                   {phraseDetails.who_said_it.context}

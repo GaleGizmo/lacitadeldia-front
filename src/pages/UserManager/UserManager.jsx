@@ -87,15 +87,18 @@ const UserManager = () => {
         />{" "}
       </div>
       <p>
-        <strong className="win-txt">GUARDADO DEL USUARIO: </strong> Haz click en Guardar Usuario y se creará en la carpeta de descargas de tu
-        dispositivo un archivo con el nombre <strong>userLaCitaDelDia</strong>.
+        <strong className="win-txt">GUARDADO DEL USUARIO: </strong> Haz click en
+        Guardar Usuario y se creará un archivo con el nombre{" "}
+        <strong>userLaCitaDelDia.json</strong> en la carpeta de descargas de tu
+        dispositivo .
         <p>
-          <strong className="win-txt">RESTAURAR USUARIO: </strong> Haz click en Cargar Usuario y busca el archivo <strong>userLaCitaDelDia</strong>{" "}
-          en tu dispositivo.
+          <strong className="win-txt">RESTAURAR USUARIO: </strong> Haz click en
+          Cargar Usuario y busca el archivo <strong>userLaCitaDelDia.json</strong> en
+          tu dispositivo.
         </p>
         <small>
-          <strong className="lose-txt">IMPORTANTE: </strong> Si vacías
-          la carpeta de descargas recuerda copiar este archivo a otra ubicación.
+          <strong className="lose-txt">IMPORTANTE: </strong> Si vacías la
+          carpeta de descargas recuerda copiar este archivo a otra ubicación.
         </small>
       </p>
     </div>

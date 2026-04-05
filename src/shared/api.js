@@ -6,17 +6,22 @@ export const APIHeaders = {
    
 };
 
+const baseURL = import.meta.env.VITE_APP_BASE_URL;
+const dailyPhraseURL = baseURL + import.meta.env.VITE_APP_DAILY_URL;
+const addPhraseURL = baseURL + import.meta.env.VITE_APP_ADD_PHRASE; 
+
+
 export const APIGetPhrase = axios.create({
-  baseURL: import.meta.env.VITE_APP_LOCAL_DAILY_URL,
+  baseURL: dailyPhraseURL,
   headers: APIHeaders,
 });
 export const APIBase = axios.create({
-  baseURL: import.meta.env.VITE_APP_LOCAL_BASE_URL,
+  baseURL: baseURL,
   headers: APIHeaders,
 });
 
 export const APIAddPhrase = axios.create({
-  baseURL: import.meta.env.VITE_APP_ADD_PHRASE,
+  baseURL: addPhraseURL,
   headers: APIHeaders,
 });
 //Manejo común de errores y respuestas

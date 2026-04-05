@@ -14,7 +14,7 @@ dist-ssr
 *.local
 package-lock.json
 captain-definition
-deploy-frontend.tar
+deploy-moviequiz-frontend.tar
 
 # Editor directories and files
 .vscode/*

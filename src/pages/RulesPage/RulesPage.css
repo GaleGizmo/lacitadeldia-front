@@ -1,29 +1,25 @@
 .rules-container {
-  
- 
- 
   font-family: Arial, sans-serif;
-
   display: flex;
   flex-direction: column;
   overflow: hidden;
   height: 100vh;
 }
 .rules-header {
- 
- 
   z-index: 10;
 }
-
+.try-word-gif {
+width: 200px;
+}
 .rules-content {
   flex-grow: 1;
-  overflow-y: scroll; 
+  overflow-y: scroll;
   scrollbar-width: none;
-  
 }
-.rules-content .clue-icon{
+.rules-content .clue-icon {
   display: inline;
-  padding-bottom: 5px;}
+  padding-bottom: 5px;
+}
 
 h1 {
   color: #333;
@@ -50,7 +46,6 @@ section {
 
 ol,
 ul {
-
   list-style-position: outside;
   padding: 0;
   margin: 0;
@@ -58,18 +53,17 @@ ul {
   text-align: center;
   padding-left: 1em;
 }
-.ranking-phrase{
+.ranking-phrase {
   display: inline-block;
- margin: 0;
- height: min-content;
+  margin: 0;
+  height: min-content;
 }
 
 li {
   margin-bottom: 10px;
   text-align: justify;
-  
 }
-.playing-txt{
+.playing-txt {
   color: var(--playing-color);
   font-weight: bold;
 }
@@ -82,7 +76,7 @@ li {
   color: gray;
   font-weight: bold;
 }
-.lose-txt{
+.lose-txt {
   color: var(--color-orange-dark);
   font-weight: bold;
 }
@@ -92,37 +86,37 @@ footer {
   gap: 7px;
   margin-top: 10px;
 }
-footer>small{
-  margin: 0 ;
+footer > small {
+  margin: 0;
 }
-li>img{
+li > img {
   width: 30px;
   vertical-align: middle;
 }
-.bonus-container{
+.bonus-container {
   border: 2px solid var(--dark-mode-secondary_bg);
   border-radius: 12px;
   background-color: #c1f3af;
   padding: 10px 20px;
 }
 @media (max-width: 767px) {
-  .rules-container{
+  .rules-container {
     padding: 0 10px;
   }
-    h1{
-        font-size: 1.7em;
-    }
-    .try-word-gif{
-      width: 150px;
-    }
-    .phrase-gif{
-      width: 320px;
-    }
-    .clues-png{
-      width: 130px;
-    }
-    .ranking-icon{
-      width: 24px;
-      height: 24px;
-    }
+  h1 {
+    font-size: 1.7em;
+  }
+  .try-word-gif {
+    width: 150px;
+  }
+  .phrase-gif {
+    width: 320px;
+  }
+  .clues-png {
+    width: 130px;
+  }
+  .ranking-icon {
+    width: 24px;
+    height: 24px;
+  }
 }

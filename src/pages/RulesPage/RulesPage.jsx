@@ -37,17 +37,26 @@ const RulesPage = () => {
             </li>
             <img
               className="try-word-gif"
-              src="assets/try_word.gif"
+              src="assets/one-word-try.jpg"
               alt="tryword"
             />
             <li>
-              Las letras de cada palabra que estén en la cita se mostrarán en
-              verde.
+              Las letras de la palabra introducida que estén en la cita se
+              mostrarán en verde.
             </li>
             <img
               className="phrase-gif"
               src="assets/phrase_discover.gif"
               alt="Letra"
+            />
+            <li>
+              En el teclado verás las letras correctas en verde y las
+              incorrectas en gris.
+            </li>
+            <img
+              className="phrase-gif"
+              src="assets/keyboard.jpg"
+              alt="Teclado"
             />
             <li>
               <span className="lose-txt">No existe la opción</span> de resolver
@@ -58,21 +67,16 @@ const RulesPage = () => {
               considerarán <span className="lose-txt">PERDIDAS</span>.
             </li>
             <li>
-              Si pierdes la partida necesitarás usar 5 puntos para ver los
-              detalles de la cita.
-            </li>
-            <li>
-              Al terminar una partida, podrás compartir el resultado de la misma
-              en tus RRSS.
+              Si pierdes la partida necesitarás gastar 5 puntos si quieres ver
+              los detalles de la cita.
             </li>
           </ol>
         </section>
         <section>
           <h2>Dificultad</h2>
           <p>
-            El número de intentos disponibles varía{" "}
-            <strong> entre 3 y 7</strong> según la longitud de la cita y las
-            letras poco comunes que contenga.
+            El número de jugadas disponibles varía <strong> entre 3 y 7</strong>{" "}
+            según la longitud de la cita y las letras poco comunes que contenga.
           </p>
         </section>
         <section>
@@ -105,7 +109,7 @@ const RulesPage = () => {
           <ul>
             <li>
               <img className="clue-icon" src="assets/letra.png" alt="Letra" />{" "}
-              Revelar una letra al azar (20 puntos).
+              Revela la letra más difícil (20 puntos).
             </li>
             <li>
               <img
@@ -136,44 +140,46 @@ const RulesPage = () => {
               Apunta las letras que te faltan (gratuito).
             </li>
           </ul>
-         
-          <p>
-            Tus puntos y resultados de partidas se conservarán si juegas en el
-            mismo dispositivo y navegador{" "}
-            <strong className="lose-txt">
-              {" "}
-              SALVO QUE TENGAS ACTIVADOS LOS MODOS INCÓGNITO (Android) O PRIVADO
-              (iOS).
-            </strong>
-          </p>
-          </section>
-          <section>
+          <p>Cada día, y de forma aleatoria (o casi), una de las pistas estará disponible <strong>de manera gratuita</strong> para la Cita de ese día.</p>
+        </section>
+        <section>
           <h2 id="bonificaciones">Bonificaciones por rachas</h2>
-          <div  className="bonus-container">
-          
-          <ul>
-            <li>
-              {" "}
-              Jugar <span className="playing-txt">7</span> citas del día{" "}
-              <strong>consecutivas:</strong> pistas <strong>ACTOR</strong>,{" "}
-              <strong>DIRECTOR</strong> y <strong>COMPARAR LETRAS <span className="playing-txt">GRATIS  </span> </strong>en la cita del día siguiente.
-            </li>
-            <li>
-              {" "}
-              Ganar <span className="playing-txt">7</span> citas del día{" "}
-              <strong>consecutivas:</strong> <strong>TODAS LAS PISTAS
-              <span className="playing-txt"> GRATIS  </span> </strong>en la cita del día siguiente.
-            </li>
-            <li>
-              Las rachas se reinician si no juegas la Cita del Día antes de las 7AM del día siguiente.
-            </li>
-            <li>
-              Las citas de días anteriores <strong>no cuentan </strong>para las rachas.
-            </li>
-            <li>
-              Las bonificaciones funcionarán <strong>SOLAMENTE</strong> el día posterior a completar una racha.
-            </li>
-          </ul>
+          <div className="bonus-container">
+            <ul>
+              <li>
+                {" "}
+                Jugar <span className="playing-txt">7</span> citas del día{" "}
+                <strong>consecutivas:</strong> pistas <strong>ACTOR</strong>,{" "}
+                <strong>DIRECTOR</strong> y{" "}
+                <strong>
+                  COMPARAR LETRAS{" "}
+                  <span className="playing-txt">GRATIS </span>{" "}
+                </strong>
+                en la cita del día siguiente.
+              </li>
+              <li>
+                {" "}
+                Ganar <span className="playing-txt">7</span> citas del día{" "}
+                <strong>consecutivas:</strong>{" "}
+                <strong>
+                  TODAS LAS PISTAS
+                  <span className="playing-txt"> GRATIS </span>{" "}
+                </strong>
+                en la cita del día siguiente.
+              </li>
+              <li>
+                Las rachas se reinician si no juegas la Cita del Día antes de
+                las 7AM del día siguiente.
+              </li>
+              <li>
+                Las citas de días anteriores <strong>no cuentan </strong>para
+                las rachas.
+              </li>
+              <li>
+                Las bonificaciones funcionarán <strong>SOLAMENTE</strong> el día
+                posterior a completar una racha.
+              </li>
+            </ul>
           </div>
         </section>
         <section>
@@ -210,7 +216,9 @@ const RulesPage = () => {
         <section>
           <h2>Guardar/Restaurar Usuario</h2>
           <UserManagementIcon width="30" height="30" viewBox="2 3 20 18" />{" "}
-          <p>La Cita Del Día guarda tu identificador de usuario en una cookie.</p>
+          <p>
+            La Cita Del Día guarda tu identificador de usuario en una cookie.
+          </p>
           <p>
             {" "}
             Para evitar perder tu progreso en el juego es{" "}
@@ -221,6 +229,15 @@ const RulesPage = () => {
           <p>
             Ante un borrado de las cookies podrás restaurar tus datos con el
             botón <strong>&quot;Cargar Usuario&quot;</strong>.
+          </p>
+          <p>
+            Tus puntos y resultados de partidas se conservarán si juegas en el
+            mismo dispositivo y navegador{" "}
+            <strong className="lose-txt">
+              {" "}
+              SALVO QUE TENGAS ACTIVADOS LOS MODOS INCÓGNITO (Android) O PRIVADO
+              (iOS).
+            </strong>
           </p>
         </section>
       </div>
